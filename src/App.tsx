@@ -1,37 +1,85 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './App.css'
 import albumArt from './assets/fauxlennium-album-art.jpg'
 import discoverIcon from './assets/search-icon.png'
 import newPostIcon from './assets/new-post-icon.png'
 import profilePicture from './assets/profile-picture-icon.png'
 import profileIcon from './assets/profile-icon.png'
+import listenIcon from './assets/listen-icon.png'
 import pauseIcon from './assets/pause-icon.png'
+import playIcon from './assets/play-icon.png'
 import likeIcon from './assets/like-icon.png'
 import commentIcon from './assets/comment-icon.png'
+import volumeOnIcon from './assets/volume-on-icon.png'
+import volumeMuteIcon from './assets/volume-mute-icon.png'
+import song from './assets/summer-2000-baby-preview.mp3'
 
 function App() {
+  const [isMuted, setIsMuted] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const audioRef = useRef<HTMLAudioElement>(new Audio(song))
+
+  useEffect(() => {
+    const audio = audioRef.current
+    const updateProgress = () => {
+      if (audio.duration) {
+        setProgress((audio.currentTime / audio.duration) * 100)
+      }
+    }
+    audio.addEventListener('timeupdate', updateProgress)
+    return () => audio.removeEventListener('timeupdate', updateProgress)
+  }, [])
+
+  function handleMuteClick() {
+    const newMuted = !isMuted
+    setIsMuted(newMuted)
+    audioRef.current.muted = newMuted
+  }
+
+  function handlePlayPauseClick() {
+    const audio = audioRef.current
+    if (isPlaying) {
+      audio.pause()
+    } else {
+      audio.play()
+    }
+    setIsPlaying(!isPlaying)
+  }
+
   return (
     <>
       <div className='main-container'>
         <div className='header'>
+          <div style={{width: '30px'}}></div>
           <h1>queue</h1>
+          <img src={isMuted ? volumeMuteIcon : volumeOnIcon} alt="Volume icon" onClick={handleMuteClick} style={{ width: '30px', height: '30px', cursor: 'pointer' }} />
         </div>
         <div className='content'>
           <div className='song-area'>
             <div className='song-card-inner'>
-              <img src={albumArt} alt="Album cover" style={{ width: '300px', height: '300px' }} />
-              <div className='song-text'>
-                <span>Summer 2000 Baby</span>
-                <span>TV Girl</span>
+              <img src={albumArt} alt="Album cover" className='album-cover' />
+              <div className='song-meta-listen'>
+                <div className='song-text'>
+                  <span>Summer 2000 Baby</span>
+                  <span>TV Girl</span>
+                </div>
+                <div className='listen-button'>
+                  <img src={listenIcon} alt="Listen icon" style={{ width: '40px', height: '40px' }} />
+                  <span>listen</span>
+                </div>
               </div>
-            </div>
-            <div className='controls-social-area'>
-              <div className='song-controls'>
-                <img src={pauseIcon} alt="Pause icon" style={{ width: '40px', height: '40px' }} />
+              <div className='player-progress-bar'>
+                <div className='player-progress-fill' style={{ width: `${progress}%` }}></div>
               </div>
-              <div className='social-controls'>
-                <img src={commentIcon} alt="Comment icon" style={{ width: '40px', height: '40px' }} />
-                <img src={likeIcon} alt="Like icon" style={{ width: '40px', height: '40px' }} />              
+              <div className='controls-social-area'>
+                <div className='song-controls'>
+                  <img src={isPlaying ? pauseIcon : playIcon} alt={isPlaying ? "Pause icon" : "Play icon"} onClick={handlePlayPauseClick} style={{ width: '40px', height: '40px', cursor: 'pointer' }} />
+                </div>
+                <div className='social-controls'>
+                  <img src={commentIcon} alt="Comment icon" style={{ width: '40px', height: '40px' }} />
+                  <img src={likeIcon} alt="Like icon" style={{ width: '40px', height: '40px' }} />              
+                </div>
               </div>
             </div>
           </div>
