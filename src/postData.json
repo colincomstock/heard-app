@@ -1,0 +1,38 @@
+{
+    "post": {
+        "songInfo": {
+            "title": "Summer 2000 Baby",
+            "artist": "TV Girl",
+            "album": "Fauxlennium",
+            "coverUrl": "https://f4.bcbits.com/img/a0423822630_10.jpg",
+            "externalUrl": "http://open.spotify.com/track/188JTF6dEXKksYBt9t05TJ",
+            "songPreviewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/42/c4/af/42c4afce-82d5-0ef9-54f5-2b93fad98fdf/mzaf_13624330118869350029.plus.aac.ep.m4a",
+            "genres": {
+                "primary": "Indie Pop",
+                "secondary": ["Indie Rock", "Alternative"]}
+        },
+        "postInfo": {
+            "username": "user123",
+            "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
+            "timestamp": "2024-06-15T14:30:00Z",
+            "caption": "This song is a vibe! The nostalgic feel and catchy melody make it perfect for summer days. Highly recommend giving it a listen!",
+            "likes": 120,
+            "comments": [
+                {
+                    "username": "musiclover123",
+                    "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
+                    "comment": "I love this song! It brings back so many memories.",
+                    "likes": 15,
+                    "time": "2024-06-15T15:00:00Z"
+                },
+                {
+                    "username": "indie_fanatic",
+                    "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
+                    "comment": "This track is amazing! The production quality is top-notch.",
+                    "likes": 20,
+                    "time": "2024-06-15T16:00:00Z"
+                }
+            ]
+        }
+    }
+}
