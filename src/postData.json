@@ -1,38 +1,139 @@
-{
-    "post": {
-        "songInfo": {
-            "title": "Summer 2000 Baby",
-            "artist": "TV Girl",
-            "album": "Fauxlennium",
-            "coverUrl": "https://f4.bcbits.com/img/a0423822630_10.jpg",
-            "externalUrl": "http://open.spotify.com/track/188JTF6dEXKksYBt9t05TJ",
-            "songPreviewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/42/c4/af/42c4afce-82d5-0ef9-54f5-2b93fad98fdf/mzaf_13624330118869350029.plus.aac.ep.m4a",
-            "genres": {
-                "primary": "Indie Pop",
-                "secondary": ["Indie Rock", "Alternative"]}
-        },
-        "postInfo": {
-            "username": "user123",
-            "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
-            "timestamp": "2024-06-15T14:30:00Z",
-            "caption": "This song is a vibe! The nostalgic feel and catchy melody make it perfect for summer days. Highly recommend giving it a listen!",
-            "likes": 120,
-            "comments": [
-                {
-                    "username": "musiclover123",
-                    "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
-                    "comment": "I love this song! It brings back so many memories.",
-                    "likes": 15,
-                    "time": "2024-06-15T15:00:00Z"
+{   "posts": [
+        {
+            "post": {
+                "id": 1,
+                "songInfo": {
+                    "title": "Summer 2000 Baby",
+                    "artists": {
+                        "primary": "TV Girl",
+                        "secondary": []
+                    },
+                    "album": "Fauxlennium",
+                    "coverUrl": "https://f4.bcbits.com/img/a0423822630_10.jpg",
+                    "coverColorVibrant": "#D61FE6",
+                    "coverColorDarkVibrant": "#B314D5",
+                    "coverColorBlackContrast": "#250429",
+                    "externalUrl": "http://open.spotify.com/track/188JTF6dEXKksYBt9t05TJ",
+                    "songPreviewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/42/c4/af/42c4afce-82d5-0ef9-54f5-2b93fad98fdf/mzaf_13624330118869350029.plus.aac.ep.m4a",
+                    "genres": {
+                        "primary": "Indie Pop",
+                        "secondary": ["Indie Rock", "Alternative"]}
                 },
-                {
-                    "username": "indie_fanatic",
+                "postInfo": {
+                    "username": "user123",
                     "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
-                    "comment": "This track is amazing! The production quality is top-notch.",
-                    "likes": 20,
-                    "time": "2024-06-15T16:00:00Z"
+                    "timestamp": "2026-05-15T14:30:00Z",
+                    "caption": "This song is a vibe! The nostalgic feel and catchy melody make it perfect for summer days. Highly recommend giving it a listen!",
+                    "likes": 120,
+                    "comments": [
+                        {
+                            "username": "musiclover123",
+                            "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
+                            "comment": "I love this song! It brings back so many memories.",
+                            "likes": 15,
+                            "time": "2026-05-15T15:00:00Z"
+                        },
+                        {
+                            "username": "indie_fanatic",
+                            "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
+                            "comment": "This track is amazing! The production quality is top-notch.",
+                            "likes": 20,
+                            "time": "2026-05-15T16:00:00Z"
+                        }
+                    ]
                 }
-            ]
+            }
+        },
+                {
+            "post": {
+                "id": 2,
+                "songInfo": {
+                    "title": "Words (Higgo Remix)",
+                    "artists": {
+                        "primary": "piri",
+                        "secondary": ["tommy villiers", "Higgo"]
+                    },
+                    "album": "Words (Higgo Remix)",
+                    "coverUrl": "https://i1.sndcdn.com/artworks-1oNPo1FraCSx-0-t500x500.jpg",
+                    "coverColorVibrant": "#b0a4b8",
+                    "coverColorDarkVibrant": "#5a3467",
+                    "coverColorBlackContrast": "#170d1a",
+                    "externalUrl": "https://open.spotify.com/track/1HzVoPGDJajmXaEOzjEdwN",
+                    "songPreviewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/02/fe/6b/02fe6bbb-cf0a-dd27-8500-3bf2e45978e8/mzaf_12580120913045861411.plus.aac.ep.m4a",
+                    "genres": {
+                        "primary": "Electronic",
+                        "secondary": ["Dance", "EDM"]}
+                },
+                "postInfo": {
+                    "username": "user123",
+                    "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
+                    "timestamp": "2026-05-15T14:30:00Z",
+                    "caption": "been listening to this for years it goes so crazy 💯",
+                    "likes": 120,
+                    "comments": [
+                        {
+                            "username": "musiclover123",
+                            "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
+                            "comment": "I love this song! It brings back so many memories.",
+                            "likes": 15,
+                            "time": "2026-05-15T15:00:00Z"
+                        },
+                        {
+                            "username": "indie_fanatic",
+                            "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
+                            "comment": "This track is amazing! The production quality is top-notch.",
+                            "likes": 20,
+                            "time": "2026-05-15T16:00:00Z"
+                        }
+                    ]
+                }
+            }
+        },
+                {
+            "post": {
+                "id": 3,
+                "songInfo": {
+                    "title": "Home",
+                    "artists": {
+                        "primary": "Mac Demarco",
+                        "secondary": []
+                    },
+                    "album": "Fauxlennium",
+                    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/4/4a/Mac_DeMarco_Guitar_album_cover.webp",
+                    "coverColorVibrant": "#ffb514",
+                    "coverColorDarkVibrant": "#324b3d",
+                    "coverColorBlackContrast": "#132d16",
+                    "externalUrl": "https://open.spotify.com/track/6e1LCVpjkOXQ65iZ7RRRyC",
+                    "songPreviewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/7b/12/06/7b120606-c5d6-a8b1-3196-e758c28fa69b/mzaf_10338072377225767681.plus.aac.p.m4a",
+                    "genres": {
+                        "primary": "Indie Rock",
+                        "secondary": ["Chill", "Alternative"]}
+                },
+                "postInfo": {
+                    "username": "user123",
+                    "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
+                    "timestamp": "2026-05-15T14:30:00Z",
+                    "caption": "im chillin to this fr",
+                    "likes": 120,
+                    "comments": [
+                        {
+                            "username": "musiclover123",
+                            "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
+                            "comment": "I love this song! It brings back so many memories.",
+                            "likes": 15,
+                            "time": "2026-05-15T15:00:00Z"
+                        },
+                        {
+                            "username": "indie_fanatic",
+                            "profilePicture": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
+                            "comment": "This track is amazing! The production quality is top-notch.",
+                            "likes": 20,
+                            "time": "2026-05-15T16:00:00Z"
+                        }
+                    ]
+                }
+            }
         }
-    }
+
+    ]
 }
