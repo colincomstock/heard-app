@@ -37,7 +37,8 @@ body {
   align-items: flex-start;
   justify-content: space-between;
   padding: 0.75rem 3rem;
-  backdrop-filter: blur(10px);
+  backdrop-filter: saturate(150%) blur(10px);
+  border-top: 1px solid rgba(0, 0, 0, 0.164);
 }
 
 .header {
@@ -58,6 +59,11 @@ body {
 .header h1 {
   font-weight: 200;
   font-size: 1.75rem;
+  text-shadow: 0px 0px 15px #000000;
+}
+
+.header img {
+  filter: drop-shadow(0px 0px 15px #000000de);
 }
 
 .feed {
@@ -85,7 +91,7 @@ body {
   max-width: 1200px;
   padding: 8vh 2rem 1rem 2rem;
   margin: 0 1rem;
-  border-radius: 1rem;
+  border-radius: 2rem;
 }
 
 .feed-buffer {
@@ -229,7 +235,7 @@ body {
   align-items: flex-start;
   justify-content: center;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.61);
+  background-color: rgba(0, 0, 0, 0.39);
   height: auto;
   padding: 0.5rem;
   border-radius: 0.75rem;
@@ -243,4 +249,78 @@ body {
   color: #ffffffa9;
   margin-top: auto;
   font-size: small;
+}
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  margin-top: 8vh;
+  padding: 1rem;
+  background: #D61FE6;
+  background: linear-gradient(10deg, rgba(214, 31, 230, 1) 0%, rgba(37, 4, 41, 1) 38%);
+}
+
+.profile-header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.profile-header > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.39);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+}
+
+.pfp-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.pfp-user img {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+
+.profile-stats {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.profile-stats > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-posts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
+  padding-top: 1rem;
+  gap: 0.5rem;
+}
+
+.profile-posts img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 0.5rem;
 }

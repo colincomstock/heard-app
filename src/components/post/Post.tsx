@@ -84,7 +84,7 @@ export default function Post(post: any) {
     return (
         <>
             <div className='post-card-container' style={{ scrollSnapAlign: 'start' }}>
-                <div className='post-card' ref={cardRef} style={{background: `linear-gradient(180deg, ${post.songInfo.coverColorVibrant} 0%, ${post.songInfo.coverColorDarkVibrant} 39%, ${post.songInfo.coverColorBlackContrast} 100%)` }}>
+                <div className='post-card' ref={cardRef} style={{background: `linear-gradient(180deg, ${post.songInfo.coverColorVibrant} 0%, ${post.songInfo.coverColorDarkVibrant} 39%, ${post.songInfo.coverColorBlackContrast} 100%)`, border: `solid 1px ${post.songInfo.coverColorDarkVibrant}` }}>
                     <div className='song-area'>
                         <div className='song-card-inner'>
                             <img src={post.songInfo.coverUrl} alt="Album cover" className='album-cover' />

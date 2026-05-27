@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import postDataAll from '../../postData.json'
 import Post from '../post/Post'
 
