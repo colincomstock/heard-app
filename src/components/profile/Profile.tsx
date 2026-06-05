@@ -1,93 +1,57 @@
-import profileIcon from '../../assets/profile-picture-icon.png';
 import albumArt from '../../assets/fauxlennium-album-art.jpg';
+import { Button } from '../ui/button';
+import profileData from '../../ProfileData.json';
+import timeAgo from '@/lib/utils';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function Profile() {
     return (
         <div className='profile-page'>
             <div className='profile-header'>
-                <div className='profile-header-top'>
-                    <div className='pfp-card'>
-                        <img src={profileIcon} alt="Profile" />
-                        <h3>@userhandle</h3>
-                    </div>
+                <div className='pfp-card'>
+                    <img src={profileData.profile.pfpUrl} alt="Profile" />
+                </div>
+                <div className='profile-header-top glass-area'>
                     <div className='profile-info-card'>
                         <div className='profile-stats'>
                             <div>
-                                <span>100</span>
+                                <span>{profileData.profile.post_count}</span>
                                 <span>Posts</span>
                             </div>
                             <div>
-                                <span>250</span>
+                                <span>{profileData.profile.followers}</span>
                                 <span>Followers</span>
                             </div>
                             <div>
-                                <span>180</span>
+                                <span>{profileData.profile.following}</span>
                                 <span>Following</span>
                             </div>
                         </div>
                     </div>
+                    <div className='follow-btn-area'>
+                        <Button className='follow-btn glass-area'>Follow</Button>
+                    </div>
                 </div>
-                <div className='profile-header-bottom'>
-                    <div className='usr-top-genre-card'>
-                        <h4>Top Genres</h4>
-                        <div className='post-genre-badges'>
-                            <span className='indv-badge' style={{backgroundColor: '#ff0000'}}>rock</span>
-                            <span className='indv-badge' style={{backgroundColor: '#00ff00'}}>hiphop</span>
-                            <span className='indv-badge' style={{backgroundColor: '#0000ff'}}>electronic</span>
+                
+            </div>
+            <h2>Recent Posts</h2>
+            <div className='profile-post'>
+                <div className='profile-post-card glass-area'>
+                    <img src={profileData.posts[0].post.songInfo.coverUrl} alt="Album cover" className='album-cover' />
+                    <div className='profile-post-body'>
+                        <div className='profile-post-info'>
+                            <span>{profileData.posts[0].post.songInfo.title}</span>
+                            <span className='profile-post-secondary-text'>{profileData.posts[0].post.songInfo.artists.primary}</span>
+                            <div className='profile-post-caption'>
+                                <span className='profile-post-secondary-text'>{profileData.posts[0].post.postInfo.caption}</span>
+                            </div>
+                        </div>
+                        <div className='profile-post-meta'>
+                            <ArrowUpRight size={20} />
+                            <span className='profile-post-secondary-text'>{timeAgo(profileData.posts[0].post.postInfo.timestamp)}</span>
                         </div>
                     </div>
-                    <div className='follow-btn-area'>
-                        <button className='follow-btn'>Follow</button>
-                    </div>
                 </div>
-            </div>
-            <div className='profile-posts'>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-                <div className='post-placeholder'>
-                    <img src={albumArt} alt="Album Art"/>
-                </div>
-
             </div>
         </div>
     )

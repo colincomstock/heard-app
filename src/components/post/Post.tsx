@@ -88,6 +88,9 @@ export default function Post(post: any) {
                     <div className='song-area'>
                         <div className='song-card-inner'>
                             <img src={post.songInfo.coverUrl} alt="Album cover" className='album-cover' />
+                            <div className='apple-music-attr'>
+                                <span>Preview provided by Apple Music</span>
+                            </div>
                             <div className='song-meta-listen'>
                                 <div className='song-text'>
                                     <span>{post.songInfo.title}</span>
@@ -98,12 +101,13 @@ export default function Post(post: any) {
                                     <span>listen</span>
                                 </a>
                             </div>
-                            <div className='player-progress-bar'>
+
+                            <div className='player-progress-bar glass-area'>
                                 <div className='player-progress-fill' style={{ width: `${progress}%` }}></div>
                             </div>
                             <div className='controls-social-area'>
                                 <div className='song-controls'>
-                                    <img src={isPlaying ? pauseIcon : playIcon} alt={isPlaying ? "Pause icon" : "Play icon"} onClick={handlePlayPauseClick} style={{ width: '40px', height: '40px', cursor: 'pointer' }} />
+                                    <img src={isPlaying ? pauseIcon : playIcon} alt={isPlaying ? "Pause icon" : "Play icon"} onClick={handlePlayPauseClick} style={{ width: '40px', height: '40px', cursor: 'pointer'}} />
                                 </div>
                                 <div className='social-controls'>
                                     <img src={commentIcon} alt="Comment icon" style={{ width: '40px', height: '40px', cursor: 'pointer' }} onClick={() => setCommentsOpen(true)} />
@@ -114,14 +118,14 @@ export default function Post(post: any) {
                     </div>
                     <div className='user-post-area'>
                         <div className='user-info-metadata'>
-                            <img src={post.postInfo.profilePicture} alt="User profile picture" style={{ width: '40px', height: '40px' }} />
+                            <img src={post.postInfo.profilePicture} alt="User profile picture"/>
                             <div className='username-tags'>
                                 <span>{post.postInfo.username}</span>
                                 <div className='post-genre-badges'>
-                                    <div className='indv-badge' style={{ backgroundColor: '#d2c900', color: 'black' }}>
+                                    <div className='indv-badge glass-area' style={{ backgroundColor: '#FFA50060', color: 'white' }}>
                                         <span>{post.songInfo.genres.primary}</span>
                                     </div>
-                                    <div className='indv-badge ' style={{ backgroundColor: '#8f00ff', color: 'white' }}>
+                                    <div className='indv-badge glass-area' style={{ backgroundColor: '#8f00ff60', color: 'white' }}>
                                         <span>{post.songInfo.genres.secondary[0]}</span>
                                     </div>
                                 </div>
@@ -130,7 +134,7 @@ export default function Post(post: any) {
                                 <span>{timeAgo(post.postInfo.timestamp)}</span>
                             </div>
                         </div>
-                        <div className='user-text-post'>
+                        <div className='user-text-post glass-area'>
                             <span>{post.postInfo.caption}</span>
                         </div>
                     </div>
