@@ -29,7 +29,16 @@ export default function ProfileHeader(profileData: any) {
                 <h1 className='profile-name'>{`${profileData.profile.displayName}`}</h1>
                 <p className='profile-bio'>{profileData.profile.bio}</p>
             </div>
-            
+            <div className='profile-top-genres-area'>
+                <span className='profile-top-genres-label'>Top genres:</span>
+                <div className='profile-top-genres-badges'>
+                    {profileData.profile.topGenres.map((genre: string, index: number) => (
+                        <div key={index} className='indv-badge glass-area' style={{ backgroundColor: '#8f00ff60', color: 'white' }}>
+                            <span>{genre}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
             <div className='profile-follow-btn-area'>
                 <Button className='glass-area'>Follow <UserRoundPlus size={16}/></Button>
             </div>

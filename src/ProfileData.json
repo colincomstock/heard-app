@@ -1,9 +1,10 @@
 {   
     "profile": {
-        "username": "musicblaster67",
-        "displayName": "Musiculator",
-        "pfpUrl": "https://pathwayactivities.co.uk/wp-content/uploads/2016/04/Profile_avatar_placeholder_large-circle.png",
-        "bio": "yeah, we do a lil listening",
+        "username": "john_music",
+        "displayName": "John Music",
+        "pfpUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdLFN2my8g2Oq4BDojUMvbnCpPyixkwIJ3XQ&s",
+        "bio": "do you accept music pay",
+        "topGenres": ["Indie Pop", "Electronic", "Chill"],
         "isPrivate": false,
         "followers": 1500,
         "following": 300,
@@ -24,7 +25,7 @@
                     "album": "Fauxlennium",
                     "coverUrl": "https://f4.bcbits.com/img/a0423822630_10.jpg",
                     "coverColorVibrant": "#c31dd1",
-                    "coverColorDarkVibrant": "#B314D5",
+                    "coverColorDarkVibrant": "#9610b3",
                     "coverColorBlackContrast": "#250429",
                     "externalUrl": "http://open.spotify.com/track/188JTF6dEXKksYBt9t05TJ",
                     "songPreviewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/42/c4/af/42c4afce-82d5-0ef9-54f5-2b93fad98fdf/mzaf_13624330118869350029.plus.aac.ep.m4a",
