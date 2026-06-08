@@ -3,6 +3,11 @@ node_modules/
 .pnp
 .pnp.js
 
+# Monorepo - only root lock file is tracked
+apps/*/package-lock.json
+apps/*/yarn.lock
+apps/*/pnpm-lock.yaml
+
 # Build outputs
 dist/
 dist-ssr/
@@ -56,6 +61,11 @@ coverage/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Cloudflare Workers / Wrangler
+.wrangler/
+.dev.vars
+.env.production
 
 # Misc
 *.local

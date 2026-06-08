@@ -1,0 +1,13 @@
+{
+  "name": "heard-app",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=apps/api",
+    "dev:web": "npm run dev:host --workspace=apps/web",
+    "build:api": "npm run deploy --workspace=apps/api",
+    "build:web": "npm run build --workspace=apps/web"
+  }
+}
