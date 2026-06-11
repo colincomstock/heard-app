@@ -3,6 +3,10 @@ node_modules/
 .pnp
 .pnp.js
 
+# Local environment files
+.env.development
+.env.local
+
 # Monorepo - only root lock file is tracked
 apps/*/package-lock.json
 apps/*/yarn.lock
@@ -65,6 +69,7 @@ Desktop.ini
 # Cloudflare Workers / Wrangler
 .wrangler/
 .dev.vars
+apps/api/.dev.vars
 .env.production
 
 # Misc

@@ -2,11 +2,13 @@
   "name": "heard-api",
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
+    "dev": "wrangler dev --ip 0.0.0.0",
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
+    "@heard/types": "*",
+    "@supabase/supabase-js": "^2.108.0",
     "hono": "^4.12.24"
   },
   "devDependencies": {
