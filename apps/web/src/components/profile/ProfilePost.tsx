@@ -6,6 +6,7 @@ import type { ProfilePost as ProfilePostType } from '@heard/types';
 
 export default function ProfilePost(post: ProfilePostType & { style?: React.CSSProperties }) {
     if (!post.track) return null;
+
     return (
         <div className='profile-post glass-area' style={post.style}>
             <div className='profile-post-card'>
@@ -43,6 +44,6 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
             <div  className='profile-post-caption glass-area'>
                 <span className='single-line-clamp'>{post.caption}</span>
             </div>
-            </div>
-        )
+        </div>
+    )
 }

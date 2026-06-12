@@ -1,12 +1,13 @@
 import postDataAll from '../../postData.json'
 import Post from '../post/Post'
+import { useOutletContext } from 'react-router-dom'
 
-// Define the props for the QueueFeed component
-interface QueueFeedProps {
+type AppContext = {
     isMuted: boolean
 }
 
-export default function QueueFeed({ isMuted }: QueueFeedProps) {
+export default function QueueFeed() {
+    const { isMuted } = useOutletContext<AppContext>()
     return (
         <>
             <div className='feed'>

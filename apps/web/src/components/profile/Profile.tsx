@@ -4,11 +4,27 @@ import ProfileHeader from './ProfileHeader';
 import type { ProfilePost as ProfilePostType } from '@heard/types';
 import type { Profile } from '@heard/types';
 import { useEffect, useState } from 'react';
+import { UserAuth } from '@/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
 
     const [profile, setProfile] = useState<Profile | null>(null);
     const [posts, setPosts] = useState<ProfilePostType[]>([]);
+
+    const { session, signOutUser } = UserAuth()!;
+    const navigate = useNavigate();
+
+    async function handleSignOut(e: React.MouseEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        try {
+            await signOutUser();
+            navigate('/signin');
+        } catch (error) {
+            console.error('Error signing out:', error);
+            alert('An error occurred while signing out. Please try again.');
+        }
+    }
 
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/profile/john_music`)
@@ -39,6 +55,9 @@ export default function Profile() {
             </div>
             <div className='profile-page-bottom'>
                 <span>end of posts.</span>
+            </div>
+            <div>
+                <button onClick={handleSignOut}>Sign Out {session?.user?.email}</button>
             </div>
         </div>
     )
