@@ -2,7 +2,9 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import type { Bindings } from './types/bindings'
 import { healthRoute } from './routes/health'
+import { requireAuth } from './lib/auth'
 import { profilesRoute } from './routes/profiles'
+import { meRoute } from './routes/me'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -20,7 +22,11 @@ app.get('/', (c) => {
 
 app.route('/health', healthRoute);
 
+app.use('*', requireAuth);
+
 app.route('/profile', profilesRoute);
+
+app.route('/me', meRoute);
 
 app.notFound((c) => {
   return c.json(

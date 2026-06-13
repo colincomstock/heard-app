@@ -27,22 +27,28 @@ export default function Profile() {
     }
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/profile/john_music`)
+        if (!session?.access_token) return;
+
+        fetch(`${import.meta.env.VITE_API_URL}/me`, {
+            headers: {
+                Authorization: `Bearer ${session.access_token}`,
+            },
+        })
             .then(response => response.json())
             .then(data => {
                 setProfile(data.profile);
                 setPosts(data.posts);
             })
-            .catch(error => 
+            .catch(error =>
                 console.error('Error fetching profile data:', error)
             );
-    }, []);
+    }, [session]);
 
     return (
         <div className='profile-page'>
             <ProfileHeader {...profileData} />
             <div className='profile-posts-area'>
-                {posts.map((post) => (
+                {posts && posts.length > 0 ? posts.map((post) => (
                     <ProfilePost
                         key={post.id}
                         style={{
@@ -51,7 +57,7 @@ export default function Profile() {
                         }}
                         {...post}
                     />
-                ))}
+                )) : <p>No posts available.</p>}
             </div>
             <div className='profile-page-bottom'>
                 <span>end of posts.</span>
