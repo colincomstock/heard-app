@@ -1,3 +1,5 @@
+import type { GenreProfile } from './genre';
+
 export type Profile = {
   id: string;
   handle: string;
@@ -10,4 +12,5 @@ export type Profile = {
   followerCount: number;
   createdAt: string;
   updatedAt: string;
+  topGenres: GenreProfile[];
 };
