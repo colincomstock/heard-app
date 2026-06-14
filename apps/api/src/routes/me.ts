@@ -19,6 +19,8 @@ meRoute.get("/", async (c) => {
             bio,
             is_private,
             post_count,
+            following_count,
+            follower_count,
             created_at,
             updated_at
         `)

@@ -13,7 +13,11 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <QueueFeed />,
+                element: (
+                    <PrivateRoute>
+                        <QueueFeed />
+                    </PrivateRoute>
+                ),
                 handle: { title: 'queue' },
             },
             {
@@ -37,17 +41,29 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/new-post',
-                element: <div>New Post Page</div>,
+                element: (
+                    <PrivateRoute>
+                        <div>New Post Page</div>
+                    </PrivateRoute>
+                ),
                 handle: { title: 'new post' },
             },
             {
                 path: '/saved',
-                element: <div>Saved Page</div>,
+                element: (
+                    <PrivateRoute>
+                        <div>Saved Page</div>
+                    </PrivateRoute>
+                ),
                 handle: { title: 'saved' },
             },
             {
                 path: '/profile',
-                element: <Profile />,
+                element: (
+                    <PrivateRoute>
+                        <Profile />
+                    </PrivateRoute>
+                ),
                 handle: { title: 'profile' },
             },
         ],

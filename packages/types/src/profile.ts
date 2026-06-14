@@ -6,6 +6,8 @@ export type Profile = {
   bio: string | null;
   isPrivate: boolean;
   postCount: number;
+  followingCount: number;
+  followerCount: number;
   createdAt: string;
   updatedAt: string;
 };
