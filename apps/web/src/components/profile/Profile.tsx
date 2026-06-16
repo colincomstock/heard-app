@@ -1,4 +1,3 @@
-import profileData from '../../ProfileData.json';
 import ProfilePost from './ProfilePost';
 import ProfileHeader from './ProfileHeader';
 import type { ProfilePost as ProfilePostType } from '@heard/types';
@@ -46,7 +45,7 @@ export default function Profile() {
 
     return (
         <div className='profile-page'>
-            <ProfileHeader {...profileData} />
+            <ProfileHeader {...profile} />
             <div className='profile-posts-area'>
                 {posts && posts.length > 0 ? posts.map((post) => (
                     <ProfilePost

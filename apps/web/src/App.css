@@ -360,6 +360,11 @@ body {
   gap: 0.25rem;
 }
 
+.profile-stat-number {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
 .profile-stat-divider {
   width: 1px;
   height: 3rem;

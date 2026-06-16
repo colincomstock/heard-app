@@ -21,7 +21,7 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                             <span className='profile-post-artist single-line-clamp'>{post.track.artistName}</span>
                         </div>
                         <div className='post-genre-badges'>
-                            <div className='indv-badge glass-area' style={{ backgroundColor: '#8f00ff60', color: 'white' }}>
+                            <div className='indv-badge glass-area' style={{ backgroundColor: `${post.track.genres[0].badgeColor}99`, color: 'white' }}>
                                 <span>{post.track.genres[0].name}</span>
                             </div>
                         </div>
