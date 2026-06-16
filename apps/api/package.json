@@ -9,7 +9,8 @@
   "dependencies": {
     "@heard/types": "*",
     "@supabase/supabase-js": "^2.108.0",
-    "hono": "^4.12.24"
+    "hono": "^4.12.24",
+    "jose": "^6.2.3"
   },
   "devDependencies": {
     "wrangler": "^4.4.0"
