@@ -1,18 +1,21 @@
 import ProfilePost from './ProfilePost';
 import ProfileHeader from './ProfileHeader';
-import type { ProfilePost as ProfilePostType } from '@heard/types';
-import type { Profile } from '@heard/types';
-import { useEffect, useState } from 'react';
 import { UserAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { getMe } from '@/lib/api/me';
 
 export default function Profile() {
 
-    const [profile, setProfile] = useState<Profile | null>(null);
-    const [posts, setPosts] = useState<ProfilePostType[]>([]);
-
     const { session, signOutUser } = UserAuth()!;
     const navigate = useNavigate();
+
+    const { data, isPending, isError } = useQuery({
+        queryKey: ['me', session?.user?.id],
+        queryFn: () => getMe(session!.access_token),
+        placeholderData: (previousData) => previousData,
+        enabled: !!session?.access_token,
+    });
 
     async function handleSignOut(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
@@ -25,29 +28,14 @@ export default function Profile() {
         }
     }
 
-    useEffect(() => {
-        if (!session?.access_token) return;
-
-        fetch(`${import.meta.env.VITE_API_URL}/me`, {
-            headers: {
-                Authorization: `Bearer ${session.access_token}`,
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                setProfile(data.profile);
-                setPosts(data.posts);
-            })
-            .catch(error =>
-                console.error('Error fetching profile data:', error)
-            );
-    }, [session]);
+    if (isPending) return <div>Loading...</div>;
+    if (isError) return <div>Something went wrong.</div>;
 
     return (
         <div className='profile-page'>
-            <ProfileHeader {...profile} />
+            <ProfileHeader {...data.profile} />
             <div className='profile-posts-area'>
-                {posts && posts.length > 0 ? posts.map((post) => (
+                {data.posts && data.posts.length > 0 ? data.posts.map((post) => (
                     <ProfilePost
                         key={post.id}
                         style={{

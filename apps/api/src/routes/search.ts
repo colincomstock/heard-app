@@ -6,12 +6,16 @@ import generateAppleMusicToken from "../lib/appleMusic";
 export const searchRoute = new Hono<{ Bindings: Bindings, Variables: AuthVariables }>();
 
 searchRoute.get("/", async (c) => {
-    const term = c.req.query("term");
-    if (!term) {
+    const rawTerm = c.req.query("term");
+    if (!rawTerm) {
         return c.json({ error: "Missing search term" }, 400);
     }
+    const term = rawTerm.replace(/\+/g, " ");
 
     const params = new URLSearchParams({ types: "songs", term, limit: "25" });
+
+    console.log("Search term:", term);
+    console.log("Request URL:", `https://api.music.apple.com/v1/catalog/us/search?${params}`);
 
     const token = await generateAppleMusicToken(c.env);
 

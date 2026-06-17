@@ -5,6 +5,7 @@ import Profile from './components/profile/Profile';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import PrivateRoute from './PrivateRoute';
+import NewPost from './components/new-post/NewPost';
 
 export const router = createBrowserRouter([
     {
@@ -43,7 +44,7 @@ export const router = createBrowserRouter([
                 path: '/new-post',
                 element: (
                     <PrivateRoute>
-                        <div>New Post Page</div>
+                        <NewPost />
                     </PrivateRoute>
                 ),
                 handle: { title: 'new post' },
