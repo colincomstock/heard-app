@@ -12,7 +12,7 @@ searchRoute.get("/", async (c) => {
     }
     const term = rawTerm.replace(/\+/g, " ");
 
-    const params = new URLSearchParams({ types: "songs", term, limit: "25" });
+    const params = new URLSearchParams({ types: "songs", term, limit: "10" });
 
     console.log("Search term:", term);
     console.log("Request URL:", `https://api.music.apple.com/v1/catalog/us/search?${params}`);
@@ -34,6 +34,18 @@ searchRoute.get("/", async (c) => {
     }
 
     const data = await response.json();
-    return c.json(keysToCamelCase(data));
+
+    const songs = data.results?.songs?.data.map((song: any) => ({
+        id: song.id,
+        name: song.attributes.name,
+        artistName: song.attributes.artistName,
+        coverUrl: song.attributes.artwork.url.replace("{w}x{h}", "200x200"),
+        genres: song.attributes.genreNames,
+        previewUrl: song.attributes.previews?.[0]?.url || null,
+        appleMusicUrl: song.attributes.url,
+        })) || [];
+
+
+    return c.json({ songs });
 
 });

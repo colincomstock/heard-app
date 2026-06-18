@@ -146,7 +146,7 @@ export default function Post(post: any) {
                     <DrawerHeader>
                         <DrawerTitle style={{padding: "1rem"}}>Comments</DrawerTitle>
                     </DrawerHeader>
-                    <div style={{ padding: '0rem 1rem 5rem 1rem', minHeight: '70vh', display: 'flex', flexDirection: 'column', gap: '1rem', overflowY: 'auto' }}>
+                    <div style={{ padding: '0rem 1rem 5rem 1rem', minHeight: '75vh', display: 'flex', flexDirection: 'column', gap: '1rem', overflowY: 'auto' }}>
                         {post.postInfo.comments.map((c: any, i: number) => (
                             <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
                                 <img src={c.profilePicture} alt={c.username} style={{ width: '36px', height: '36px', borderRadius: '50%' }} />

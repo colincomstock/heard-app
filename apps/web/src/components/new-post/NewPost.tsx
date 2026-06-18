@@ -1,27 +1,126 @@
+import { getSearchResults } from '@/lib/api/search';
 import { useState, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { UserAuth } from '@/context/AuthContext';
+import { Search } from 'lucide-react';
+import { X, Play } from 'lucide-react';
 
-export default function NewPost() {
+type NewPostProps = {
+    onDone: () => void;
+};
+
+export default function NewPost({ onDone: _onDone }: NewPostProps) {
     
-    let [searchTerm, setSearchTerm] = useState('')
+    const [searchTerm, setSearchTerm] = useState('')
+    const [caption, setCaption] = useState('')
+
+    function handleCaptionChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+        setCaption(e.target.value.replace(/[\r\n]+/g, " "))
+    }
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
     
+    const { session } = UserAuth()!;
+
     function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
         setSearchTerm(e.target.value)
     }
+
+    function handlePlayPauseClick(previewUrl: string) {
+        const audio = new Audio(previewUrl);
+        audio.play();
+    }
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setDebouncedSearchTerm(searchTerm);
+        }, 500);
+        return () => clearTimeout(timeout);
+    }, [searchTerm]);
+
+    const { data } = useQuery({
+        queryKey: ['search', debouncedSearchTerm],
+        queryFn: () => getSearchResults(debouncedSearchTerm, session!.access_token),
+        enabled: debouncedSearchTerm.length > 2,
+        placeholderData: (previousData) => previousData,
+    });
+
+    const hasResults = Boolean(data?.songs?.length) && debouncedSearchTerm.length > 2;
 
     useEffect(() => {
         console.log('Search term:', searchTerm)
     }, [searchTerm]);
 
+    useEffect(() => {
+        console.log('Search results:', data)
+    }, [data]);
+
     return (
         <div className='new-post-page'>
-            <h1>New Post</h1>
-            <input 
-                type="text"
-                placeholder='What are you listening to?'
-                className='new-post-input'
-                value={searchTerm}
-                onChange={handleSearchChange}
-            />
+            <div className='new-post-header-area'>
+                <button className='new-post-back-btn' onClick={_onDone}>
+                    <span>back</span>
+                </button>
+                <h1>new post</h1>
+                <button className='new-post-submit-btn glass-area' disabled={!data || !data.songs.length || !caption.trim()} onClick={() => {
+                    _onDone();
+                }}>
+                    post
+                </button>
+            </div>
+            <label htmlFor="song-search" className='new-post-label'>song</label>
+            <div className='search-area'>
+                <div className='search-box-area glass-area' style={{ background: searchTerm.length > 0 ? 'transparent' : undefined }}>
+                    <Search size={24} style={{ marginRight: '0.5rem' }} />
+                    <input
+                        type="text"
+                        placeholder='search a song to post...'
+                        id="song-search"
+                        className='new-post-search-input'
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
+                    {searchTerm.length > 0 && <X size={24} style={{ marginLeft: '0.5rem', cursor: 'pointer' }} onClick={() => setSearchTerm('')} />}
+                </div>
+                <div className={`search-results-area ${hasResults ? 'is-open' : ''} glass-area`}>
+                    {hasResults ? 
+                        (
+                            <div className='search-results-list'>
+                                {data.songs.map((song: any) => (
+                                    <div key={song.id} className='search-result-item'>
+                                        <div className='search-result-cover-meta-container'>
+                                            <img src={song.coverUrl} alt={`${song.name} cover`} className='search-result-cover' />
+                                            <div className='search-result-meta'>
+                                                <span className='search-result-title single-line-clamp'>{song.name}</span>
+                                                <span className='search-result-artist single-line-clamp'>{song.artistName}</span>
+                                            </div>
+                                        </div>
+                                        <div className='play-btn-area glass-area' onClick={() => handlePlayPauseClick(song.previewUrl)}>
+                                            <Play size={20} fill='white' style={{ cursor: 'pointer' }} />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : 
+                            <div className='search-placeholder'></div>
+                    }
+                </div>
+                
+            </div>
+            <label htmlFor="post-caption" className='new-post-label'>caption</label>
+            <div className='caption-area'>
+                    <textarea
+                    id="post-caption"
+                    name="caption"
+                    value={caption}
+                    onChange={handleCaptionChange}
+                    placeholder="share your thoughts..."
+                    className="post-caption-input glass-area"
+                    rows={3}
+                    maxLength={140}
+                    style={caption.length > 0 ? { background: 'transparent' } : {} }
+                />
+            </div>
+            <span className='new-post-character-count'>{caption.length}/140</span>
         </div>
     )
 }

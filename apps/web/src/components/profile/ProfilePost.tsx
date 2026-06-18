@@ -41,7 +41,7 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                     </div>
                 </div>
             </div>
-            <div  className='profile-post-caption glass-area'>
+            <div className='profile-post-caption glass-area'>
                 <span className='single-line-clamp'>{post.caption}</span>
             </div>
         </div>
