@@ -60,7 +60,7 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                 <button className='new-post-back-btn' onClick={_onDone}>
                     <span>back</span>
                 </button>
-                <h1>new post</h1>
+                <h1>New Post</h1>
                 <button className='new-post-submit-btn glass-area' disabled={!data || !data.songs.length || !caption.trim()} onClick={() => {
                     _onDone();
                 }}>

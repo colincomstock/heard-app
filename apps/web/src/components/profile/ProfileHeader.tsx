@@ -3,7 +3,16 @@ import { UserRoundPlus } from "lucide-react";
 
 export default function ProfileHeader(profile: any) {
     return (
-        <div className='profile-header'>
+        <div 
+            className='profile-header'
+            style={
+                {
+                    '--profile-bg-image': `url(${profile.pfpUrl})`,
+                } as React.CSSProperties
+            }
+        >
+            <div className='profile-header-bg' />
+            <div className='profile-header-top-mask' />
             <div className='profile-header-identity-area'>
                 <div className='pfp-area'>
                     <img src={profile.pfpUrl} alt="Profile picture" className='profile-pfp' />

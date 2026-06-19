@@ -4,7 +4,7 @@ import volumeMuteIcon from './assets/volume-mute-icon.png'
 import BottomBar from './components/app-chrome/BottomBar'
 import { useState } from 'react'
 import { Outlet, useMatches } from 'react-router-dom'
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from './components/ui/drawer'
+import { Drawer, DrawerContent } from './components/ui/drawer'
 import NewPost from './components/new-post/NewPost'
 
 export default function App() {
@@ -55,4 +55,3 @@ export default function App() {
     </>
   )
 }
-

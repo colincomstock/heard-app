@@ -28,12 +28,12 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                         <div className='profile-post-interactions'>
                             <div>
                                 <div>
-                                    <Heart size={14} />
-                                    <span>30</span>
-                                </div>
-                                <div>
                                     <MessageSquareMore size={14} />
                                     <span>12</span>
+                                </div>
+                                <div>
+                                    <Heart size={14} />
+                                    <span>30</span>
                                 </div>
                             </div>
                             <span className='profile-post-time'>{timeAgo(post.updatedAt)}</span>
