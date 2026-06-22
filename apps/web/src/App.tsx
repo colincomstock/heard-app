@@ -46,7 +46,6 @@ export default function App() {
         repositionInputs={false}
       >
         <DrawerContent>
-
           <div className='px-4 pb-4 flex h-full flex-col min-h-0'>
             <NewPost onDone={closeNewPostDrawer} />
           </div>
