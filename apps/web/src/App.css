@@ -779,6 +779,11 @@ body {
   width: 100%;
   min-width: 0;
   padding: 1rem 0;
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
   
   border-bottom: 1px solid #ffffff1a;
 }
@@ -799,6 +804,19 @@ body {
   gap: 1rem;
 
   min-width: 0;
+}
+
+.search-result-selected-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+  margin-right: 0.5rem;
+  background: rgba(0, 153, 255, 0.5);
 }
 
 .search-result-cover-meta-container > img {

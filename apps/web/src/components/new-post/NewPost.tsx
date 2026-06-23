@@ -3,16 +3,25 @@ import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { UserAuth } from '@/context/AuthContext';
 import { Search } from 'lucide-react';
-import { X, Play } from 'lucide-react';
+import { X, Play, Check } from 'lucide-react';
 
 type NewPostProps = {
     onDone: () => void;
+};
+
+type SongSearchResult = {
+    id: string;
+    name: string;
+    artistName: string;
+    coverUrl: string;
+    previewUrl: string;
 };
 
 export default function NewPost({ onDone: _onDone }: NewPostProps) {
     
     const [searchTerm, setSearchTerm] = useState('')
     const [caption, setCaption] = useState('')
+    const [selectedSong, setSelectedSong] = useState<SongSearchResult | null>(null)
 
     function handleCaptionChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
         setCaption(e.target.value.replace(/[\r\n]+/g, " "))
@@ -28,6 +37,10 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
     function handlePlayPauseClick(previewUrl: string) {
         const audio = new Audio(previewUrl);
         audio.play();
+    }
+
+    function handleSongSelect(song: SongSearchResult) {
+        setSelectedSong(song)
     }
 
     useEffect(() => {
@@ -61,7 +74,7 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                     <span>back</span>
                 </button>
                 <h1>New Post</h1>
-                <button className='new-post-submit-btn glass-area' disabled={!data || !data.songs.length || !caption.trim()} onClick={() => {
+                <button className='new-post-submit-btn glass-area' disabled={!selectedSong || !caption.trim()} onClick={() => {
                     _onDone();
                 }}>
                     post
@@ -85,8 +98,18 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                     {hasResults ? 
                         (
                             <div className='search-results-list'>
-                                {data.songs.map((song: any) => (
-                                    <div key={song.id} className='search-result-item'>
+                                {data.songs.map((song: SongSearchResult) => (
+                                    <button
+                                        key={song.id}
+                                        type='button'
+                                        className={`search-result-item`}
+                                        onClick={() => handleSongSelect(song)}
+                                    >
+                                        {selectedSong?.id === song.id && (
+                                            <div className='search-result-selected-indicator glass-area'>
+                                                <Check size={16} />
+                                            </div>
+                                        )}
                                         <div className='search-result-cover-meta-container'>
                                             <img src={song.coverUrl} alt={`${song.name} cover`} className='search-result-cover' />
                                             <div className='search-result-meta'>
@@ -94,10 +117,16 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                                                 <span className='search-result-artist single-line-clamp'>{song.artistName}</span>
                                             </div>
                                         </div>
-                                        <div className='play-btn-area glass-area' onClick={() => handlePlayPauseClick(song.previewUrl)}>
+                                        <div
+                                            className='play-btn-area glass-area'
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                handlePlayPauseClick(song.previewUrl);
+                                            }}
+                                        >
                                             <Play size={20} fill='white' style={{ cursor: 'pointer' }} />
                                         </div>
-                                    </div>
+                                    </button>
                                 ))}
                             </div>
                         ) : 
