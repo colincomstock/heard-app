@@ -1,9 +1,12 @@
 import { Hono } from "hono";
 import keysToCamelCase from "../lib/case";
 import type { Bindings, AuthVariables } from "../types/bindings";
-import generateAppleMusicToken from "../lib/appleMusic";
+import generateAppleMusicToken from "../lib/appleMusicAuth";
 
-export const searchRoute = new Hono<{ Bindings: Bindings, Variables: AuthVariables }>();
+export const searchRoute = new Hono<{ 
+    Bindings: Bindings, 
+    Variables: AuthVariables 
+}>();
 
 searchRoute.get("/", async (c) => {
     const rawTerm = c.req.query("term");

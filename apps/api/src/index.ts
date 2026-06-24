@@ -2,10 +2,11 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import type { Bindings } from './types/bindings'
 import { healthRoute } from './routes/health'
-import { requireAuth } from './lib/auth'
+import { requireAuth } from './lib/supabaseAuth'
 import { profilesRoute } from './routes/profiles'
 import { meRoute } from './routes/me'
 import { searchRoute } from './routes/search'
+import { postRoute } from './routes/posts'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -30,6 +31,8 @@ app.route('/profile', profilesRoute);
 app.route('/me', meRoute);
 
 app.route('/search', searchRoute);
+
+app.route('/post', postRoute);
 
 app.notFound((c) => {
   return c.json(
