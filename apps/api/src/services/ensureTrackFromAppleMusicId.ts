@@ -1,5 +1,5 @@
 import type { Bindings } from "../types/bindings";
-import { getAppleMusicTrackById } from "./appleMusic";
+import { getAppleMusicTrackById } from "./getAppleMusicResource";
 
 type EnsureTrackArgs = {
     supabase: any;
@@ -7,6 +7,7 @@ type EnsureTrackArgs = {
     appleMusicTrackId: string;
 };
 
+// This function ensures that a track with the given Apple Music ID exists in the database. If it doesn't exist, it fetches the track from Apple Music and inserts it into the database.
 export async function ensureTrackFromAppleMusicId({
     supabase,
     env,
@@ -28,6 +29,7 @@ export async function ensureTrackFromAppleMusicId({
         return existingTrack;
     }
 
+    // If the track doesn't exist, fetch it from Apple Music and insert it into the database
     const appleTrack = await getAppleMusicTrackById(env, appleMusicTrackId);
 
     if (!appleTrack) {
@@ -50,6 +52,7 @@ export async function ensureTrackFromAppleMusicId({
     return insertedTrack;
 }
 
+// Helper function to map Apple Music track data to the database schema
 function mapAppleSongToTrackInsert(song: any): any {
     const attrs = song.attributes;
     

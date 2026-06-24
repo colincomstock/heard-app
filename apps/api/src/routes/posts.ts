@@ -1,14 +1,16 @@
 import { Hono } from "hono";
 import type { Bindings, AuthVariables } from "../types/bindings";
 import { createSupabaseClient } from "../lib/supabase";
-import { ensureTrackFromAppleMusicId } from "../services/tracks";
+import { ensureTrackFromAppleMusicId } from "../services/ensureTrackFromAppleMusicId";
+import { searchTracksToPost } from "../services/searchTracksToPost";
 
-export const postRoute = new Hono<{ 
+export const PostsRoute = new Hono<{ 
     Bindings: Bindings, 
     Variables: AuthVariables 
 }>();
 
-postRoute.post("/", async (c) => {
+// Endpoint to create a new post
+PostsRoute.post("/", async (c) => {
     try {
         const { caption, appleMusicTrackId } = await c.req.json();
         
@@ -25,7 +27,7 @@ postRoute.post("/", async (c) => {
         });
 
         return c.json({
-            message: "Song created successfully",
+            message: "Post created successfully",
             caption,
             track,
         });
@@ -38,5 +40,27 @@ postRoute.post("/", async (c) => {
             },
             500
         );
+    }
+});
+
+// Endpoint to search for tracks to post
+PostsRoute.get("/search-tracks", async (c) => {
+    try {
+        const rawTerm = c.req.query("term");
+        if (!rawTerm) {
+            return c.json({ error: "Missing search term" }, 400);
+        }
+        const term = rawTerm.replace(/\+/g, " ");
+    
+        const results = await searchTracksToPost({ env: c.env, query: term });
+
+        return c.json({ tracks: results });
+
+    } catch (error) {
+        console.error("Search error:", error);
+        
+        return c.json(
+            { 
+                error: "Search failed", detail: error instanceof Error ? error.message : String(error) }, 500);
     }
 });

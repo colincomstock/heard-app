@@ -1,5 +1,5 @@
 export async function getSearchResults(query: string, token: string): Promise<any> {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/search?term=${encodeURIComponent(query)}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/posts/search-tracks?term=${encodeURIComponent(query)}`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`
