@@ -10,22 +10,49 @@ export async function getAppleMusicTrackById(
 
     const appleMusicTrackUrl = `https://api.music.apple.com/v1/catalog/us/songs/${appleMusicTrackId}/?include=genres`;
         
-        const res = await fetch(appleMusicTrackUrl, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-    
-        if (!res.ok) {
-            const detail = await res.text();
-            throw new Error(
-                `Apple Music API error: ${res.status}: ${detail}`
-            );
-        }
+    const res = await fetch(appleMusicTrackUrl, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
 
-        const json = await res.json() as any;
-        return json.data[0] ?? null;
-}
+    if (!res.ok) {
+        const detail = await res.text();
+        throw new Error(
+            `Apple Music API GET song error: ${res.status}: ${detail}`
+        );
+    }
+
+    const json = await res.json() as any;
+    return json.data[0] ?? null;
+};
+
+// This function fetches a genre from Apple Music by its ID and returns the genre data.
+export async function getAppleMusicGenreById(
+    env: Bindings,
+    appleMusicGenreId: string
+) {
+    const token = await generateAppleMusicToken(env);
+
+    const appleMusicGenreUrl = `https://api.music.apple.com/v1/catalog/us/genres/${appleMusicGenreId}`;
+
+    const res = await fetch(appleMusicGenreUrl, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!res.ok) {
+        const detail = await res.text();
+        throw new Error(
+            `Apple Music API GET genre error: ${res.status}: ${detail}`
+        );
+    }
+
+    const json = await res.json() as any;
+    return json.data[0] ?? null;
+};
+
 
 // This function searches for tracks on Apple Music based on a query string and returns a list of track results.
 export async function searchAppleMusicTracksByQuery(
@@ -53,10 +80,10 @@ export async function searchAppleMusicTracksByQuery(
     if (!res.ok) {
         const detail = await res.text();
         throw new Error(
-            `Apple Music API error: ${res.status}: ${detail}`
+            `Apple Music API search catalog error: ${res.status}: ${detail}`
         );
     }
 
     const json = await res.json() as any;
     return json.results.songs?.data ?? [];
-}
+};

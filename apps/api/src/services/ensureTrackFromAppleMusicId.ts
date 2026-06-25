@@ -1,5 +1,6 @@
 import type { Bindings } from "../types/bindings";
 import { getAppleMusicTrackById } from "./getAppleMusicResource";
+import { ensureGenresFromAppleMusicTrack } from "./ensureGenresFromAppleMusicTrack";
 
 type EnsureTrackArgs = {
     supabase: any;
@@ -31,10 +32,16 @@ export async function ensureTrackFromAppleMusicId({
 
     // If the track doesn't exist, fetch it from Apple Music and insert it into the database
     const appleTrack = await getAppleMusicTrackById(env, appleMusicTrackId);
-
     if (!appleTrack) {
         throw new Error("Apple Music track not found");
     }
+
+    const appleGenres = appleTrack?.relationships?.genres?.data ?? [];
+    const ensuredAppleGenres = await ensureGenresFromAppleMusicTrack({
+        supabase,
+        env,
+        appleMusicTrackGenres: appleGenres,
+    });
 
     const trackInsert = mapAppleSongToTrackInsert(appleTrack);
 
@@ -47,6 +54,20 @@ export async function ensureTrackFromAppleMusicId({
     if (insertError) {
         console.error("Track insert failed:", insertError);
         throw new Error("Failed to insert track");
+    }
+
+    // Associate the ensured genres with the inserted track
+    for (const genre of ensuredAppleGenres) {
+        const { error: trackGenreInsertError } = await supabase
+            .from('track_genre')
+            .insert({
+                track_id: insertedTrack.id,
+                genre_id: genre.id,
+            });
+        if (trackGenreInsertError) {
+            console.error("Track-genre association failed:", trackGenreInsertError);
+            throw new Error("Failed to associate track with genre");
+        }
     }
 
     return insertedTrack;
