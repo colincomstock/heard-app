@@ -1,5 +1,6 @@
-import ProfilePost from './ProfilePost';
-import ProfileHeader from './ProfileHeader';
+import styles from './Profile.module.css';
+import ProfilePost from '../../features/post/PostCondensed';
+import ProfileHeader from '../../features/profile/ProfileHeader';
 import { UserAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -32,9 +33,9 @@ export default function Profile() {
     if (isError) return <div>Something went wrong.</div>;
 
     return (
-        <div className='profile-page'>
+        <div className={styles['profile-page']}>
             <ProfileHeader {...data.profile} />
-            <div className='profile-posts-area'>
+            <div className={styles['profile-posts-area']}>
                 {data.posts && data.posts.length > 0 ? data.posts.map((post) => (
                     <ProfilePost
                         key={post.id}
@@ -46,7 +47,7 @@ export default function Profile() {
                     />
                 )) : <p>No posts available.</p>}
             </div>
-            <div className='profile-page-bottom'>
+            <div className={styles['profile-page-bottom']}>
                 <span>end of posts.</span>
             </div>
             <div>

@@ -1,0 +1,14 @@
+.glass-area {
+  background: #ffffff;
+  background: linear-gradient(10deg, rgba(230, 230, 230, 0.2) 0%, rgba(201, 201, 201, 0.2) 38%, rgba(228, 228, 228, 0.15) 100%);
+  box-shadow: inset 0px 0px 10px #ffffff1f;
+  border: 1px solid rgba(255, 255, 255, 0.164);
+}
+
+.single-line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

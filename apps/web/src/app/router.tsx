@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
-import  App from './App';
-import QueueFeed from './components/queue/QueueFeed';
-import Profile from './components/profile/Profile';
-import SignIn from './components/auth/SignIn';
-import SignUp from './components/auth/SignUp';
+import  App from './AppShell';
+import QueueFeed from '../pages/queue/QueueFeed';
+import Profile from '../pages/profile/Profile';
+import SignIn from '../pages/auth/SignIn';
+import SignUp from '../pages/auth/SignUp';
 import PrivateRoute from './PrivateRoute';
 
 export const router = createBrowserRouter([

@@ -1,3 +1,4 @@
+import styles from './SignUp.module.css';
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
@@ -33,8 +34,8 @@ export default function SignUp() {
 
 
     return (
-        <div className='auth-page'>
-            <div className='sign-up'>
+        <div className={styles['auth-page']}>
+            <div className={styles['sign-up']}>
                 <h1>Sign Up</h1>
                 <span>Already have an account? <Link to='/signin'>Sign In</Link></span>
                 <form onSubmit={handleSignup}>
@@ -45,7 +46,7 @@ export default function SignUp() {
                     <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     <br />
                     <button type="submit" disabled={loading}>Sign Up</button>
-                    {error && <p className="error">{error}</p>}
+                    {error && <p className={styles['error']}>{error}</p>}
                 </form>
             </div>
         </div>

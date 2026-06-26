@@ -1,3 +1,4 @@
+import styles from './BottomBar.module.css'
 import { Link } from 'react-router-dom'
 import queueIcon from '../../assets/queue-icon-4.png'
 import discoverIcon from '../../assets/search-icon-2.png'
@@ -11,7 +12,7 @@ type BottomBarProps = {
 
 export default function BottomBar({ onOpenNewPostDrawer }: BottomBarProps) {
     return (
-        <div className='bottom-bar'>
+        <div className={styles['bottom-bar']}>
             <Link to="/">
                 <button>
                     <img src={queueIcon} alt="Queue icon" style={{ width: '25px', height: '25px' }} />
