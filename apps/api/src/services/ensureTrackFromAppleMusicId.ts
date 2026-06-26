@@ -1,6 +1,7 @@
 import type { Bindings } from "../types/bindings";
 import { getAppleMusicTrackById } from "./getAppleMusicResource";
 import { ensureGenresFromAppleMusicTrack } from "./ensureGenresFromAppleMusicTrack";
+import { getSpotifyTrackByISRC } from "./getSpotifyResource";
 
 type EnsureTrackArgs = {
     supabase: any;
@@ -31,19 +32,22 @@ export async function ensureTrackFromAppleMusicId({
     }
 
     // If the track doesn't exist, fetch it from Apple Music and insert it into the database
-    const appleTrack = await getAppleMusicTrackById(env, appleMusicTrackId);
-    if (!appleTrack) {
+    const appleSong = await getAppleMusicTrackById(env, appleMusicTrackId);
+    if (!appleSong) {
         throw new Error("Apple Music track not found");
     }
 
-    const appleGenres = appleTrack?.relationships?.genres?.data ?? [];
+    const spotifyTrackLinkId = await getSpotifyTrackByISRC(env, appleSong.attributes.isrc);
+    console.log("Spotify track data:", spotifyTrackLinkId);
+
+    const appleGenres = appleSong?.relationships?.genres?.data ?? [];
     const ensuredAppleGenres = await ensureGenresFromAppleMusicTrack({
         supabase,
         env,
         appleMusicTrackGenres: appleGenres,
     });
 
-    const trackInsert = mapAppleSongToTrackInsert(appleTrack);
+    const trackInsert = mapAppleSpotifyToTrackInsert(appleSong, spotifyTrackLinkId);
 
     const { data: insertedTrack, error: insertError } = await supabase
         .from('track')
@@ -74,8 +78,8 @@ export async function ensureTrackFromAppleMusicId({
 }
 
 // Helper function to map Apple Music track data to the database schema
-function mapAppleSongToTrackInsert(song: any): any {
-    const attrs = song.attributes;
+function mapAppleSpotifyToTrackInsert(appleSong: any, spotifyTrackLinkId: any): any {
+    const attrs = appleSong.attributes;
     
     return {
         title: attrs.name ?? null,
@@ -91,8 +95,10 @@ function mapAppleSongToTrackInsert(song: any): any {
             ? attrs.artwork.url.replace('{w}', '500').replace('{h}', '500')
             : null,
         isrc: attrs.isrc ?? null,
-        apple_music_track_id: song.id,
+        apple_music_track_id: appleSong.id,
         apple_music_url: attrs.url ?? null,
+        spotify_track_id: spotifyTrackLinkId?.spotifyTrackId ?? null,
+        spotify_url: spotifyTrackLinkId?.spotifyUrl ?? null,
         song_preview_url: attrs.previews?.[0]?.url ?? null,
         duration_ms: attrs.durationInMillis ?? null,
         release_date: attrs.releaseDate ?? null,

@@ -4,6 +4,7 @@ import { createSupabaseClient } from "../lib/supabase";
 import { ensureTrackFromAppleMusicId } from "../services/ensureTrackFromAppleMusicId";
 import { searchTracksToPost } from "../services/searchTracksToPost";
 import { searchAppleMusicTracksByQuery } from "../services/getAppleMusicResource";
+import createUserPost from "../services/createUserPost";
 
 export const PostsRoute = new Hono<{ 
     Bindings: Bindings, 
@@ -15,8 +16,8 @@ PostsRoute.post("/", async (c) => {
     try {
         const { caption, appleMusicTrackId } = await c.req.json();
         
-        if (!caption || !appleMusicTrackId) {
-            return c.json({ error: "Missing caption or appleMusicTrackId" }, 400);
+        if (!appleMusicTrackId) {
+            return c.json({ error: "Missing appleMusicTrackId" }, 400);
         }
         
         const supabase = createSupabaseClient(c.env);
@@ -27,9 +28,16 @@ PostsRoute.post("/", async (c) => {
             appleMusicTrackId,
         });
 
+        const userPost = await createUserPost({
+            supabase,
+            userId: c.get("userId"),
+            trackId: track.id,
+            caption,
+        });
+
         return c.json({
             message: "Post created successfully",
-            caption,
+            userPost,
             track,
         });
     } catch (error) {
