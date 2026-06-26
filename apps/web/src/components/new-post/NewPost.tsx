@@ -9,7 +9,7 @@ type NewPostProps = {
     onDone: () => void;
 };
 
-type SongSearchResult = {
+type TrackSearchResult = {
     id: string;
     name: string;
     artistName: string;
@@ -21,7 +21,7 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
     
     const [searchTerm, setSearchTerm] = useState('')
     const [caption, setCaption] = useState('')
-    const [selectedSong, setSelectedSong] = useState<SongSearchResult | null>(null)
+    const [selectedSong, setSelectedSong] = useState<TrackSearchResult | null>(null)
 
     function handleCaptionChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
         setCaption(e.target.value.replace(/[\r\n]+/g, " "))
@@ -39,8 +39,8 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
         audio.play();
     }
 
-    function handleSongSelect(song: SongSearchResult) {
-        setSelectedSong(song)
+    function handletrackSelect(track: TrackSearchResult) {
+        setSelectedSong(track)
     }
 
     useEffect(() => {
@@ -57,7 +57,7 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
         placeholderData: (previousData) => previousData,
     });
 
-    const hasResults = Boolean(data?.songs?.length) && debouncedSearchTerm.length > 2;
+    const hasResults = Boolean(data?.tracks?.length) && debouncedSearchTerm.length > 2;
 
     useEffect(() => {
         console.log('Search term:', searchTerm)
@@ -98,30 +98,30 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                     {hasResults ? 
                         (
                             <div className='search-results-list'>
-                                {data.songs.map((song: SongSearchResult) => (
+                                {data.tracks.map((track: TrackSearchResult) => (
                                     <button
-                                        key={song.id}
+                                        key={track.id}
                                         type='button'
                                         className={`search-result-item`}
-                                        onClick={() => handleSongSelect(song)}
+                                        onClick={() => handletrackSelect(track)}
                                     >
-                                        {selectedSong?.id === song.id && (
+                                        {selectedSong?.id === track.id && (
                                             <div className='search-result-selected-indicator glass-area'>
                                                 <Check size={16} />
                                             </div>
                                         )}
                                         <div className='search-result-cover-meta-container'>
-                                            <img src={song.coverUrl} alt={`${song.name} cover`} className='search-result-cover' />
+                                            <img src={track.coverUrl} alt={`${track.name} cover`} className='search-result-cover' />
                                             <div className='search-result-meta'>
-                                                <span className='search-result-title single-line-clamp'>{song.name}</span>
-                                                <span className='search-result-artist single-line-clamp'>{song.artistName}</span>
+                                                <span className='search-result-title single-line-clamp'>{track.name}</span>
+                                                <span className='search-result-artist single-line-clamp'>{track.artistName}</span>
                                             </div>
                                         </div>
                                         <div
                                             className='play-btn-area glass-area'
                                             onClick={(event) => {
                                                 event.stopPropagation();
-                                                handlePlayPauseClick(song.previewUrl);
+                                                handlePlayPauseClick(track.previewUrl);
                                             }}
                                         >
                                             <Play size={20} fill='white' style={{ cursor: 'pointer' }} />
