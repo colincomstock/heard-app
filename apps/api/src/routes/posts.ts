@@ -3,6 +3,7 @@ import type { Bindings, AuthVariables } from "../types/bindings";
 import { createSupabaseClient } from "../lib/supabase";
 import { ensureTrackFromAppleMusicId } from "../services/ensureTrackFromAppleMusicId";
 import { searchTracksToPost } from "../services/searchTracksToPost";
+import { searchAppleMusicTracksByQuery } from "../services/getAppleMusicResource";
 
 export const PostsRoute = new Hono<{ 
     Bindings: Bindings, 
@@ -61,6 +62,23 @@ PostsRoute.get("/search-tracks", async (c) => {
         
         return c.json(
             { 
+                error: "Search failed", detail: error instanceof Error ? error.message : String(error) }, 500);
+    }
+});
+
+PostsRoute.get("/search-tracks-test", async (c) => {
+    try {
+        const rawTerm = c.req.query("term");
+        if (!rawTerm) {
+            return c.json({ error: "Missing search term" }, 400);
+        }
+        const term = rawTerm.replace(/\+/g, " ");
+        const res = await searchAppleMusicTracksByQuery(c.env, term);
+        return c.json({ tracks: res });
+    } catch (error) {
+        console.error("Search error:", error);
+        return c.json(
+            {
                 error: "Search failed", detail: error instanceof Error ? error.message : String(error) }, 500);
     }
 });

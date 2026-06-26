@@ -82,6 +82,11 @@ function mapAppleSongToTrackInsert(song: any): any {
         album: attrs.albumName ?? null,
         artist_name: attrs.artistName ?? null,
         artist_names: attrs.artistName ? [attrs.artistName] : [],
+        apple_bg_color: attrs.artwork?.bgColor ? `#${attrs.artwork.bgColor}` : null,
+        apple_text_color_1: attrs.artwork?.textColor1 ? `#${attrs.artwork.textColor1}` : null,
+        apple_text_color_2: attrs.artwork?.textColor2 ? `#${attrs.artwork.textColor2}` : null,
+        apple_text_color_3: attrs.artwork?.textColor3 ? `#${attrs.artwork.textColor3}` : null,
+        apple_text_color_4: attrs.artwork?.textColor4 ? `#${attrs.artwork.textColor4}` : null,
         cover_url: attrs.artwork?.url
             ? attrs.artwork.url.replace('{w}', '500').replace('{h}', '500')
             : null,
