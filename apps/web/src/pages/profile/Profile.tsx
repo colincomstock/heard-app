@@ -33,9 +33,9 @@ export default function Profile() {
     if (isError) return <div>Something went wrong.</div>;
 
     return (
-        <div className={styles['profile-page']}>
+        <div className={styles.profilePage}>
             <ProfileHeader {...data.profile} />
-            <div className={styles['profile-posts-area']}>
+            <div className={styles.profilePostsArea}>
                 {data.posts && data.posts.length > 0 ? data.posts.map((post) => (
                     <ProfilePost
                         key={post.id}
@@ -47,7 +47,7 @@ export default function Profile() {
                     />
                 )) : <p>No posts available.</p>}
             </div>
-            <div className={styles['profile-page-bottom']}>
+            <div className={styles.profilePageBottom}>
                 <span>end of posts.</span>
             </div>
             <div>

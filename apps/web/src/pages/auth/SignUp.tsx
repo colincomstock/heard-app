@@ -34,8 +34,8 @@ export default function SignUp() {
 
 
     return (
-        <div className={styles['auth-page']}>
-            <div className={styles['sign-up']}>
+        <div className={styles.authPage}>
+            <div className={styles.signUp}>
                 <h1>Sign Up</h1>
                 <span>Already have an account? <Link to='/signin'>Sign In</Link></span>
                 <form onSubmit={handleSignup}>
@@ -46,7 +46,7 @@ export default function SignUp() {
                     <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     <br />
                     <button type="submit" disabled={loading}>Sign Up</button>
-                    {error && <p className={styles['error']}>{error}</p>}
+                    {error && <p className={styles.error}>{error}</p>}
                 </form>
             </div>
         </div>

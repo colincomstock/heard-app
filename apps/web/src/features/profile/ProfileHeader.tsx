@@ -5,51 +5,51 @@ import { UserRoundPlus } from "lucide-react";
 export default function ProfileHeader(profile: any) {
     return (
         <div 
-            className={styles['profile-header']}
+            className={styles.profileHeader}
             style={
                 {
                     '--profile-bg-image': `url(${profile.pfpUrl})`,
                 } as React.CSSProperties
             }
         >
-            <div className={styles['profile-header-bg']} />
-            <div className={styles['profile-header-top-mask']} />
-            <div className={styles['profile-header-identity-area']}>
-                <div className={styles['pfp-area']}>
+            <div className={styles.profileHeaderBg} />
+            <div className={styles.profileHeaderTopMask} />
+            <div className={styles.profileHeaderIdentityArea}>
+                <div className={styles.pfpArea}>
                     <img src={profile.pfpUrl} alt="Profile picture" />
                 </div>
-                <div className={styles['profile-header-stats-area']}>
-                    <div className={styles['profile-stat']}>
-                        <span className={styles['profile-stat-number']}>{profile.postCount}</span>
+                <div className={styles.profileHeaderStatsArea}>
+                    <div className={styles.profileStat}>
+                        <span className={styles.profileStatNumber}>{profile.postCount}</span>
                         <span>Posts</span>
                     </div>
-                    <div className={styles['profile-stat-divider']}></div>
-                    <div className={styles['profile-stat']}>
-                        <span className={styles['profile-stat-number']}>{profile.followerCount}</span>
+                    <div className={styles.profileStatDivider}></div>
+                    <div className={styles.profileStat}>
+                        <span className={styles.profileStatNumber}>{profile.followerCount}</span>
                         <span>Followers</span>
                     </div>
-                    <div className={styles['profile-stat-divider']}></div>
-                    <div className={styles['profile-stat']}>
-                        <span className={styles['profile-stat-number']}>{profile.followingCount}</span>
+                    <div className={styles.profileStatDivider}></div>
+                    <div className={styles.profileStat}>
+                        <span className={styles.profileStatNumber}>{profile.followingCount}</span>
                         <span>Following</span>
                     </div>
                 </div>
             </div>
-            <div className={styles['profile-name-bio-area']}>
-                <h1 className={styles['profile-name']}>{`${profile.displayName}`}</h1>
-                <p className={styles['profile-bio']}>{profile.bio}</p>
+            <div className={styles.profileNameBioArea}>
+                <h1 className={styles.profileName}>{`${profile.displayName}`}</h1>
+                <p className={styles.profileBio}>{profile.bio}</p>
             </div>
-            <div className={styles['profile-top-genres-area']}>
-                <span className={styles['profile-top-genres-label']}>Top genres:</span>
-                <div className={styles['profile-top-genres-badges']}>
+            <div className={styles.profileTopGenresArea}>
+                <span className={styles.profileTopGenresLabel}>Top genres:</span>
+                <div className={styles.profileTopGenresBadges}>
                     {profile.topGenres?.map((genre: any, index: number) => (
-                        <div key={index} className={`${styles['indv-badge']} glass-area`} style={{ backgroundColor: `${genre.badgeColor}99`, color: 'white' }}>
+                        <div key={index} className={`${styles.indvBadge} glass-area`} style={{ backgroundColor: `${genre.badgeColor}99`, color: 'white' }}>
                             <span>{genre.name}</span>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className={styles['profile-follow-btn-area']}>
+            <div className={styles.profileFollowBtnArea}>
                 <Button className={`glass-area`}>Follow <UserRoundPlus size={16}/></Button>
             </div>
         </div>

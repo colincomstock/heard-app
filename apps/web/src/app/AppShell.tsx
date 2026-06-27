@@ -37,7 +37,7 @@ export default function App() {
         <h1>{title}</h1>
         <img src={isMuted ? volumeMuteIcon : volumeOnIcon} alt="Volume icon" onClick={handleMuteClick} style={{ width: '25px', height: '25px', cursor: 'pointer' }} />
       </div>
-      <div className={styles['main-container']}>
+      <div className={styles.mainContainer}>
         <Outlet context={{ isMuted }} />
       </div>
       <BottomBar onOpenNewPostDrawer={openNewPostDrawer} />

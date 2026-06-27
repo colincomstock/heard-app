@@ -12,7 +12,7 @@ type BottomBarProps = {
 
 export default function BottomBar({ onOpenNewPostDrawer }: BottomBarProps) {
     return (
-        <div className={styles['bottom-bar']}>
+        <div className={styles.bottomBar}>
             <Link to="/">
                 <button>
                     <img src={queueIcon} alt="Queue icon" style={{ width: '25px', height: '25px' }} />

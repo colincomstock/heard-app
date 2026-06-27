@@ -1,4 +1,4 @@
-.profile-post {
+.profilePost {
   position: relative;
   isolation: isolate;
   display: flex;
@@ -11,7 +11,7 @@
   padding: 0.5rem;
 }
 
-.profile-post-card {
+.profilePostCard {
   display: grid;
   grid-template-columns: 1fr 2fr;
   align-items: center;
@@ -20,7 +20,7 @@
   gap: 1rem;
 }
 
-.profile-post::before {
+.profilePost::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -31,12 +31,12 @@
   -webkit-backdrop-filter: blur(40px);
 }
 
-.profile-post-card > img {
+.profilePostCard > img {
   width: 100%;
   aspect-ratio: 1 / 1;
 }
 
-.profile-post-body {
+.profilePostBody {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -45,7 +45,7 @@
   aspect-ratio: 2 / 1;
 }
 
-.profile-post-info {
+.profilePostInfo {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -54,7 +54,7 @@
   width: 100%;
 }
 
-.profile-post-title-artist {
+.profilePostTitleArtist {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -62,7 +62,7 @@
   width: 100%;
 }
 
-.profile-post-title-artist > div {
+.profilePostTitleArtist > div {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -71,18 +71,18 @@
   width: 100%;
 }
 
-.profile-post-title {
+.profilePostTitle {
   font-size: 1rem;
   font-weight: 600;
 }
 
-.profile-post-artist {
+.profilePostArtist {
   font-size: 0.875rem;
   font-weight: 600;
   color: #ffffffa2;
 }
 
-.profile-post-interactions {
+.profilePostInteractions {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -90,7 +90,7 @@
   width: 100%;
 }
 
-.profile-post-interactions > div {
+.profilePostInteractions > div {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -98,7 +98,7 @@
   gap: 1rem;
 }
 
-.profile-post-interactions > div > div {
+.profilePostInteractions > div > div {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -107,7 +107,7 @@
   font-size: 0.875rem;
 }
 
-.profile-post-caption {
+.profilePostCaption {
   font-size: 0.875rem;
   color: #ffffff;
   overflow: hidden;
@@ -116,12 +116,12 @@
   width: 100%;
 }
 
-.profile-post-time {
+.profilePostTime {
   font-size: 0.75rem;
   color: #ffffffa9;
 }
 
-.indv-badge {
+.indvBadge {
   border-radius: 5rem;
   font-weight: 500;
   font-size: 0.875rem;
@@ -130,13 +130,13 @@
   letter-spacing: -0.02em;
 }
 
-.post-genre-badges {
+.postGenreBadges {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
 }
 
-.album-cover {
+.albumCover {
   min-height: 0;
   align-self: center;
   width: auto;

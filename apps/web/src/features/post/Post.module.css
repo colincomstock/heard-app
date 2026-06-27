@@ -1,5 +1,5 @@
 
-.post-card {
+.postCard {
   position: relative;
   isolation: isolate;
   display: flex;
@@ -14,7 +14,7 @@
   margin: 0 1rem;
   border-radius: 2rem;
 }
-.post-card::before {
+.postCard::before {
   background: rgba(0, 0, 0, 0.075);
   content: "";
   position: absolute;
@@ -26,12 +26,12 @@
   box-shadow: inset 0px 0px 1rem #ffffff18;
 }
 
-.feed-buffer {
+.feedBuffer {
   height: calc(8vh);
   background-color: rgb(0, 0, 0);
 }
 
-.song-area {
+.songArea {
   flex: 1;
   min-height: 0;
   display: flex;
@@ -42,7 +42,7 @@
   max-width: 600px;
 }
 
-.album-cover {
+.albumCover {
   min-height: 0;
   align-self: center;
   width: auto;
@@ -52,7 +52,7 @@
   box-shadow: #00000052 0px 4px 15px;
 }
 
-.song-card-inner {
+.songCardInner {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -62,7 +62,7 @@
   width: 100%;
 }
 
-.song-meta-listen {
+.songMetaListen {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -71,7 +71,7 @@
   margin-top: 1.5rem;
 }
 
-.song-text {
+.songText {
   font-size: 1.25rem;
   display: flex;
   flex-direction: column;
@@ -81,7 +81,7 @@
   gap: 0.25rem;
 }
 
-.listen-button {
+.listenButton {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,7 +91,7 @@
   height: 40px;
 }
 
-.apple-music-attr {
+.appleMusicAttr {
   font-size: 0.5rem;
   margin-top: 1rem;
   align-self: center;
@@ -103,21 +103,21 @@
   align-items: center;
 }
 
-.player-progress-bar {
+.playerProgressBar {
   width: 100%;
   height: 0.5rem;
   border-radius: 1rem;
   margin-top: 1rem;
 }
 
-.player-progress-fill {
+.playerProgressFill {
   height: 100%;
   background-color: #ffffff;
   border-radius: 1rem;
   transition: width 0.25s linear;
 }
 
-.controls-social-area {
+.controlsSocialArea {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -126,13 +126,13 @@
   margin-top: 1rem;
 }
 
-.social-controls {
+.socialControls {
   display: flex;
   flex-direction: row;
   gap: 1rem;
 }
 
-.user-post-area {
+.userPostArea {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -142,7 +142,7 @@
   margin-top: 2rem;
 }
 
-.user-info-metadata {
+.userInfoMetadata {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -151,7 +151,7 @@
   margin-bottom: 0.5rem;
 }
 
-.user-info-metadata > img {
+.userInfoMetadata > img {
   aspect-ratio: 1 / 1;
   height: 2.75rem;
   width: auto;
@@ -159,19 +159,19 @@
   align-self: flex-end;
 }
 
-.username-tags {
+.usernameTags {
   display: flex;
   flex-direction: column;
   margin-left: 0.5rem;
 }
 
-.post-genre-badges {
+.postGenreBadges {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
 }
 
-.indv-badge {
+.indvBadge {
   border-radius: 5rem;
   font-weight: 500;
   font-size: 0.875rem;
@@ -180,7 +180,7 @@
   letter-spacing: -0.02em;
 }
 
-.user-text-post {
+.userTextPost {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -194,7 +194,7 @@
   font-size: 1rem;
 }
 
-.post-time {
+.postTime {
   display: flex;
   align-items: center;
   justify-content: flex-end;

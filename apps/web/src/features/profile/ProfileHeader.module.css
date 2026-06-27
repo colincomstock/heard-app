@@ -1,4 +1,4 @@
-.profile-header {
+.profileHeader {
   display: flex;
   position: relative;
   isolation: isolate;
@@ -10,7 +10,7 @@
   gap: 0.75rem;
 }
 
-.profile-header-bg {
+.profileHeaderBg {
   position: absolute;
   inset: 0;
   z-index: -1;
@@ -18,7 +18,7 @@
   pointer-events: none;
 }
 
-.profile-header-top-mask {
+.profileHeaderTopMask {
   position: absolute;
   top: 0;
   left: 0;
@@ -29,7 +29,7 @@
   pointer-events: none;
 }
 
-.profile-header-bg::before {
+.profileHeaderBg::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -41,7 +41,7 @@
   filter: blur(100px);
 }
 
-.profile-header-bg::after {
+.profileHeaderBg::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -50,7 +50,7 @@
     linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, #000 100%);
 }
 
-.profile-header-identity-area {
+.profileHeaderIdentityArea {
   display: grid;
   grid-template-columns: 1fr 3fr;
   align-items: center;
@@ -58,14 +58,14 @@
   gap: 1rem;
 }
 
-.pfp-area > img {
+.pfpArea > img {
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 2px solid #c9c9c9;
 }
 
-.profile-name-bio-area {
+.profileNameBioArea {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -73,17 +73,17 @@
   height: 100%;
 }
 
-.profile-name {
+.profileName {
   font-size: 1.5rem;
   font-weight: 600;
 }
 
-.profile-bio {
+.profileBio {
   font-size: 1rem;
   font-weight: 400;
 }
 
-.profile-header-stats-area {
+.profileHeaderStatsArea {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -91,7 +91,7 @@
   width: 100%;
 }
 
-.profile-stat {
+.profileStat {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -102,18 +102,18 @@
   gap: 0.25rem;
 }
 
-.profile-stat-number {
+.profileStatNumber {
   font-size: 1.25rem;
   font-weight: 600;
 }
 
-.profile-stat-divider {
+.profileStatDivider {
   width: 1px;
   height: 3rem;
   background-color: #ffffff;
 }
 
-.profile-follow-btn-area {
+.profileFollowBtnArea {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -121,7 +121,7 @@
   width: 100%;
 }
 
-.profile-top-genres-area {
+.profileTopGenresArea {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -130,13 +130,13 @@
   gap: 0.5rem;
 }
 
-.profile-top-genres-label {
+.profileTopGenresLabel {
   font-size: 0.75rem;
   font-weight: 500;
   color: #ffffffa9;
 }
 
-.profile-top-genres-badges {
+.profileTopGenresBadges {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -144,7 +144,7 @@
   gap: 0.5rem;
 }
 
-.profile-follow-btn-area > Button {
+.profileFollowBtnArea > Button {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -158,7 +158,7 @@
   background: rgba(0, 153, 255, 0.37);
 }
 
-.indv-badge {
+.indvBadge {
   border-radius: 5rem;
   font-weight: 500;
   font-size: 0.875rem;

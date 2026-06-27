@@ -1,4 +1,4 @@
-.main-container {
+.mainContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -16,7 +16,7 @@
   ::-webkit-scrollbar { display: none; }
 }
 
-.bottom-bar {
+.bottomBar {
   position: fixed;
   bottom: -1px;
   left: 0;

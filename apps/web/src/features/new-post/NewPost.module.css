@@ -1,4 +1,4 @@
-.new-post-page {
+.newPostPage {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -11,7 +11,7 @@
   padding: 1rem 1rem calc(8vh + 1rem) 1rem;
 }
 
-.new-post-header-area {
+.newPostHeaderArea {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,7 +24,7 @@
   font-weight: 600;
 }
 
-.new-post-back-btn {
+.newPostBackBtn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,7 +38,7 @@
   border-radius: 9999px;
 }
 
-.new-post-submit-btn {
+.newPostSubmitBtn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,7 +53,7 @@
   background: rgba(0, 153, 255, 0.37);
 }
 
-.new-post-label {
+.newPostLabel {
   margin: 0 0 0.25rem 1rem;
 
   color: #ffffffa9;
@@ -62,11 +62,11 @@
   text-transform: uppercase;
 }
 
-.search-area {
+.searchArea {
   width: 100%;
 }
 
-.search-box-area {
+.searchBoxArea {
   display: flex;
   flex: 1;
   align-items: center;
@@ -82,13 +82,13 @@
   border-radius: 1rem;
 }
 
-.search-box-area:focus-within {
+.searchBoxArea:focus-within {
   background: transparent;
   box-shadow: inset 0px 0px 10px #ffffff1f, 0px 0px 10px #ffffff1f;
   transition: background 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
 }
 
-.new-post-search-input {
+.newPostSearchInput {
   width: 100%;
   height: 100%;
   padding: 0.5rem 0;
@@ -99,11 +99,11 @@
   border: none;
 }
 
-.search-box-area > input:focus {
+.searchBoxArea > input:focus {
   outline: none;
 }
 
-.search-results-area {
+.searchResultsArea {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -129,7 +129,7 @@
     margin-bottom 220ms ease;
 }
 
-.is-open {
+.isOpen {
   max-height: 30vh;
   margin-bottom: 1rem;
   padding: 1rem;
@@ -148,11 +148,11 @@
   ::-webkit-scrollbar { display: none; }
 }
 
-.search-results-list {
+.searchResultsList {
   width: 100%;
 }
 
-.search-result-item {
+.searchResultItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -170,16 +170,16 @@
   border-bottom: 1px solid #ffffff1a;
 }
 
-.search-result-item:first-child {
+.searchResultItem:first-child {
   padding-top: 0;
 }
 
-.search-result-item:last-child {
+.searchResultItem:last-child {
   padding-bottom: 0;
   border-bottom: none;
 }
 
-.search-result-cover-meta-container {
+.searchResultCoverMetaContainer {
   display: flex;
   flex: 1;
   align-items: center;
@@ -188,7 +188,7 @@
   min-width: 0;
 }
 
-.search-result-selected-indicator {
+.searchResultSelectedIndicator {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -201,7 +201,7 @@
   background: rgba(0, 153, 255, 0.5);
 }
 
-.search-result-cover-meta-container > img {
+.searchResultCoverMetaContainer > img {
   flex: 0 0 3rem;
   
   width: 3rem;
@@ -209,7 +209,7 @@
   border-radius: 0.25rem;
 }
 
-.search-result-meta {
+.searchResultMeta {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -220,17 +220,17 @@
   gap: 0.25rem;
 }
 
-.search-result-title {
+.searchResultTitle {
   font-size: 1rem;
   font-weight: 600;
 
 }
-.search-result-artist {
+.searchResultArtist {
   font-size: 0.875rem;
   color: #ffffffa9;
 }
 
-.play-btn-area {
+.playBtnArea {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
@@ -245,7 +245,7 @@
   transition: background-color 0.2s ease;
 }
 
-.caption-area > textarea {
+.captionArea > textarea {
   width: 100%;
   height: auto;
   padding: 1rem;
@@ -256,7 +256,7 @@
   border-radius: 1rem;
 }
 
-.caption-area > textarea:focus {
+.captionArea > textarea:focus {
   outline: none;
   
   background: transparent;
@@ -264,7 +264,7 @@
   transition: background 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
 }
 
-.new-post-character-count {
+.newPostCharacterCount {
   margin-top: 0.25rem;
   margin-right: 1rem;
 

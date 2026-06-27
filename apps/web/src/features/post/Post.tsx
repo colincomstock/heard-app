@@ -85,62 +85,62 @@ export default function Post(post: any) {
     return (
         <>
             <div style={{ scrollSnapAlign: 'start' }}>
-                <div className={styles['post-card']} ref={cardRef} style={{background: `linear-gradient(185deg, ${post.songInfo.coverColorVibrant} 0%, ${post.songInfo.coverColorDarkVibrant} 39%, ${post.songInfo.coverColorBlackContrast} 100%)`, border: `solid 1px ${post.songInfo.coverColorDarkVibrant}` }}>
-                    <div className={styles['song-area']}>
-                        <div className={styles['song-card-inner']}>
-                            <img src={post.songInfo.coverUrl} alt="Album cover" className={styles['album-cover']} />
-                            <div className={styles['apple-music-attr']}>
+                <div className={styles.postCard} ref={cardRef} style={{background: `linear-gradient(185deg, ${post.songInfo.coverColorVibrant} 0%, ${post.songInfo.coverColorDarkVibrant} 39%, ${post.songInfo.coverColorBlackContrast} 100%)`, border: `solid 1px ${post.songInfo.coverColorDarkVibrant}` }}>
+                    <div className={styles.songArea}>
+                        <div className={styles.songCardInner}>
+                            <img src={post.songInfo.coverUrl} alt="Album cover" className={styles.albumCover} />
+                            <div className={styles.appleMusicAttr}>
                                 <span>Preview provided by Apple Music</span>
                             </div>
-                            <div className={styles['song-meta-listen']}>
-                                <div className={styles['song-text']}>
+                            <div className={styles.songMetaListen}>
+                                <div className={styles.songText}>
                                     <span>{post.songInfo.title}</span>
                                     <span>{post.songInfo.artists.primary && post.songInfo.artists.secondary.length > 0 ? `${post.songInfo.artists.primary}, ${post.songInfo.artists.secondary.join(', ')}` : post.songInfo.artists.primary}</span>
                                 </div>
-                                <a href={post.songInfo.externalUrl} className={styles['listen-button']} target="_blank" rel="noopener noreferrer">
+                                <a href={post.songInfo.externalUrl} className={styles.listenButton} target="_blank" rel="noopener noreferrer">
                                     <img src={listenIcon} alt="Listen icon" style={{ width: '40px', height: '40px' }} />
                                     <span>listen</span>
                                 </a>
                             </div>
 
-                            <div className={`${styles['player-progress-bar']} glass-area`}>
-                                <div className={styles['player-progress-fill']} style={{ width: `${progress}%` }}></div>
+                            <div className={`${styles.playerProgressBar} glass-area`}>
+                                <div className={styles.playerProgressFill} style={{ width: `${progress}%` }}></div>
                             </div>
-                            <div className={styles['controls-social-area']}>
+                            <div className={styles.controlsSocialArea}>
                                 <div>
                                     <img src={isPlaying ? pauseIcon : playIcon} alt={isPlaying ? "Pause icon" : "Play icon"} onClick={handlePlayPauseClick} style={{ width: '40px', height: '40px', cursor: 'pointer'}} />
                                 </div>
-                                <div className={styles['social-controls']}>
+                                <div className={styles.socialControls}>
                                     <img src={commentIcon} alt="Comment icon" style={{ width: '40px', height: '40px', cursor: 'pointer' }} onClick={() => setCommentsOpen(true)} />
                                     <img src={likeIcon} alt="Like icon" style={{ width: '40px', height: '40px' }} />              
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className={styles['user-post-area']}>
-                        <div className={styles['user-info-metadata']}>
+                    <div className={styles.userPostArea}>
+                        <div className={styles.userInfoMetadata}>
                             <img src={post.postInfo.profilePicture} alt="User profile picture"/>
-                            <div className={styles['username-tags']}>
+                            <div className={styles.usernameTags}>
                                 <span>{post.postInfo.username}</span>
-                                <div className={styles['post-genre-badges']}>
-                                    <div className={`${styles['indv-badge']} glass-area`} style={{ backgroundColor: '#FFA50060', color: 'white' }}>
+                                <div className={styles.postGenreBadges}>
+                                    <div className={`${styles.indvBadge} glass-area`} style={{ backgroundColor: '#FFA50060', color: 'white' }}>
                                         <span>{post.songInfo.genres.primary}</span>
                                     </div>
-                                    <div className={`${styles['indv-badge']} glass-area`} style={{ backgroundColor: '#8f00ff60', color: 'white' }}>
+                                    <div className={`${styles.indvBadge} glass-area`} style={{ backgroundColor: '#8f00ff60', color: 'white' }}>
                                         <span>{post.songInfo.genres.secondary[0]}</span>
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles['post-time']}>
+                            <div className={styles.postTime}>
                                 <span>{timeAgo(post.postInfo.timestamp)}</span>
                             </div>
                         </div>
-                        <div className={`${styles['user-text-post']} glass-area`}>
+                        <div className={`${styles.userTextPost} glass-area`}>
                             <span>{post.postInfo.caption}</span>
                         </div>
                     </div>
                 </div>
-                <div className={styles['feed-buffer']}></div>
+                <div className={styles.feedBuffer}></div>
             </div>
             <Drawer open={commentsOpen} onOpenChange={setCommentsOpen}>
                 <DrawerContent>
