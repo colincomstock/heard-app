@@ -1,0 +1,168 @@
+.profileHeader {
+  display: flex;
+  position: relative;
+  isolation: isolate;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  padding: 8vh 1rem 1rem 1rem;
+  gap: 0.75rem;
+}
+
+.profileHeaderBg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.profileHeaderTopMask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: transparent;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.profileHeaderBg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--profile-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(100px);
+}
+
+.profileHeaderBg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, #000 100%);
+}
+
+.profileHeaderIdentityArea {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.pfpArea > img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 2px solid #c9c9c9;
+}
+
+.profileNameBioArea {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+}
+
+.profileName {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.profileBio {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.profileHeaderStatsArea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.profileStat {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  gap: 0.25rem;
+}
+
+.profileStatNumber {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.profileStatDivider {
+  width: 1px;
+  height: 3rem;
+  background-color: #ffffff;
+}
+
+.profileFollowBtnArea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.profileTopGenresArea {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.profileTopGenresLabel {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #ffffffa9;
+}
+
+.profileTopGenresBadges {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.profileFollowBtnArea > Button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 2rem;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  width: 100%;
+  border-radius: 9999px;
+  background: rgba(0, 153, 255, 0.37);
+}
+
+.indvBadge {
+  border-radius: 5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.4rem;
+  padding: 0.25rem 0.5rem;
+  letter-spacing: -0.02em;
+}

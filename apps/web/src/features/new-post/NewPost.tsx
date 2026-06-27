@@ -1,3 +1,4 @@
+import styles from './NewPost.module.css'
 import { getSearchResults } from '@/lib/api/search';
 import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
@@ -68,57 +69,57 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
     }, [data]);
 
     return (
-        <div className='new-post-page'>
-            <div className='new-post-header-area'>
-                <button className='new-post-back-btn' onClick={_onDone}>
+        <div className={styles.newPostPage}>
+            <div className={styles.newPostHeaderArea}>
+                <button className={styles.newPostBackBtn} onClick={_onDone}>
                     <span>back</span>
                 </button>
                 <h1>New Post</h1>
-                <button className='new-post-submit-btn glass-area' disabled={!selectedSong || !caption.trim()} onClick={() => {
+                <button className={`${styles.newPostSubmitBtn} glass-area`} disabled={!selectedSong || !caption.trim()} onClick={() => {
                     _onDone();
                 }}>
                     post
                 </button>
             </div>
-            <label htmlFor="song-search" className='new-post-label'>song</label>
-            <div className='search-area'>
-                <div className='search-box-area glass-area' style={{ background: searchTerm.length > 0 ? 'transparent' : undefined }}>
+            <label htmlFor="song-search" className={styles.newPostLabel}>song</label>
+            <div className={styles.searchArea}>
+                <div className={`${styles.searchBoxArea} glass-area`} style={{ background: searchTerm.length > 0 ? 'transparent' : undefined }}>
                     <Search size={24} style={{ marginRight: '0.5rem' }} />
                     <input
                         type="text"
                         placeholder='search a song to post...'
                         id="song-search"
-                        className='new-post-search-input'
+                        className={styles.newPostSearchInput}
                         value={searchTerm}
                         onChange={handleSearchChange}
                     />
                     {searchTerm.length > 0 && <X size={24} style={{ marginLeft: '0.5rem', cursor: 'pointer' }} onClick={() => setSearchTerm('')} />}
                 </div>
-                <div className={`search-results-area ${hasResults ? 'is-open' : ''} glass-area`}>
+                <div className={`${styles.searchResultsArea} ${hasResults ? styles.isOpen : ''} glass-area`}>
                     {hasResults ? 
                         (
-                            <div className='search-results-list'>
+                            <div className={styles.searchResultsList}>
                                 {data.tracks.map((track: TrackSearchResult) => (
                                     <button
                                         key={track.id}
                                         type='button'
-                                        className={`search-result-item`}
+                                        className={styles.searchResultItem}
                                         onClick={() => handletrackSelect(track)}
                                     >
                                         {selectedSong?.id === track.id && (
-                                            <div className='search-result-selected-indicator glass-area'>
+                                            <div className={`${styles.searchResultSelectedIndicator} glass-area`}>
                                                 <Check size={16} />
                                             </div>
                                         )}
-                                        <div className='search-result-cover-meta-container'>
-                                            <img src={track.coverUrl} alt={`${track.name} cover`} className='search-result-cover' />
-                                            <div className='search-result-meta'>
-                                                <span className='search-result-title single-line-clamp'>{track.name}</span>
-                                                <span className='search-result-artist single-line-clamp'>{track.artistName}</span>
+                                        <div className={styles.searchResultCoverMetaContainer}>
+                                            <img src={track.coverUrl} alt={`${track.name} cover`} />
+                                            <div className={styles.searchResultMeta}>
+                                                <span className={`${styles.searchResultTitle} single-line-clamp`}>{track.name}</span>
+                                                <span className={`${styles.searchResultArtist} single-line-clamp`}>{track.artistName}</span>
                                             </div>
                                         </div>
                                         <div
-                                            className='play-btn-area glass-area'
+                                            className={`${styles.playBtnArea} glass-area`}
                                             onClick={(event) => {
                                                 event.stopPropagation();
                                                 handlePlayPauseClick(track.previewUrl);
@@ -130,26 +131,27 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                                 ))}
                             </div>
                         ) : 
-                            <div className='search-placeholder'></div>
+                            // Search placeholder div
+                            <div></div>
                     }
                 </div>
                 
             </div>
-            <label htmlFor="post-caption" className='new-post-label'>caption</label>
-            <div className='caption-area'>
+            <label htmlFor="post-caption" className={styles.newPostLabel}>caption</label>
+            <div className={styles.captionArea}>
                     <textarea
                     id="post-caption"
                     name="caption"
                     value={caption}
                     onChange={handleCaptionChange}
                     placeholder="share your thoughts..."
-                    className="post-caption-input glass-area"
+                    className={`glass-area`}
                     rows={3}
                     maxLength={140}
                     style={caption.length > 0 ? { background: 'transparent' } : {} }
                 />
             </div>
-            <span className='new-post-character-count'>{caption.length}/140</span>
+            <span className={styles.newPostCharacterCount}>{caption.length}/140</span>
         </div>
     )
 }

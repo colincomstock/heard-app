@@ -1,0 +1,205 @@
+
+.postCard {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: auto;
+  min-height: 0;
+  height: 92vh;
+  max-width: 1200px;
+  padding: 8vh 2rem 1rem 2rem;
+  margin: 0 1rem;
+  border-radius: 2rem;
+}
+.postCard::before {
+  background: rgba(0, 0, 0, 0.075);
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+  backdrop-filter: blur(100px);
+  box-shadow: inset 0px 0px 1rem #ffffff18;
+}
+
+.feedBuffer {
+  height: calc(8vh);
+  background-color: rgb(0, 0, 0);
+}
+
+.songArea {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.albumCover {
+  min-height: 0;
+  align-self: center;
+  width: auto;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.5rem;
+  box-shadow: #00000052 0px 4px 15px;
+}
+
+.songCardInner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.songMetaListen {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.songText {
+  font-size: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  gap: 0.25rem;
+}
+
+.listenButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0rem;
+  margin-top: 0.25rem;
+  height: 40px;
+}
+
+.appleMusicAttr {
+  font-size: 0.5rem;
+  margin-top: 1rem;
+  align-self: center;
+  color: #ffffffa9;
+  letter-spacing: -0.02em;
+  line-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.playerProgressBar {
+  width: 100%;
+  height: 0.5rem;
+  border-radius: 1rem;
+  margin-top: 1rem;
+}
+
+.playerProgressFill {
+  height: 100%;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  transition: width 0.25s linear;
+}
+
+.controlsSocialArea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.socialControls {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.userPostArea {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.userInfoMetadata {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.userInfoMetadata > img {
+  aspect-ratio: 1 / 1;
+  height: 2.75rem;
+  width: auto;
+  border-radius: 50%;
+  align-self: flex-end;
+}
+
+.usernameTags {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem;
+}
+
+.postGenreBadges {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.indvBadge {
+  border-radius: 5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.4rem;
+  padding: 0.25rem 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.userTextPost {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.4rem;
+  font-size: 1rem;
+}
+
+.postTime {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  color: #ffffffa9;
+  margin-top: auto;
+  font-size: 0.75rem;
+}

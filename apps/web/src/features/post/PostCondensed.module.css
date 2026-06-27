@@ -1,0 +1,147 @@
+.profilePost {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
+.profilePostCard {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 1rem;
+}
+
+.profilePost::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+}
+
+.profilePostCard > img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.profilePostBody {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 2 / 1;
+}
+
+.profilePostInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+
+.profilePostTitleArtist {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+
+.profilePostTitleArtist > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.profilePostTitle {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.profilePostArtist {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffffa2;
+}
+
+.profilePostInteractions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.profilePostInteractions > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.profilePostInteractions > div > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.profilePostCaption {
+  font-size: 0.875rem;
+  color: #ffffff;
+  overflow: hidden;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  width: 100%;
+}
+
+.profilePostTime {
+  font-size: 0.75rem;
+  color: #ffffffa9;
+}
+
+.indvBadge {
+  border-radius: 5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.4rem;
+  padding: 0.25rem 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.postGenreBadges {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.albumCover {
+  min-height: 0;
+  align-self: center;
+  width: auto;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.5rem;
+  box-shadow: #00000052 0px 4px 15px;
+}
