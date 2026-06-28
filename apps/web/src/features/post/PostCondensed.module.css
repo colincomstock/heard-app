@@ -1,4 +1,4 @@
-.profilePost {
+.profilePostBase {
   position: relative;
   isolation: isolate;
   display: flex;
@@ -9,6 +9,16 @@
   gap: 0.5rem;
   border-radius: 1rem;
   padding: 0.5rem;
+  background: var(--applebgColor);
+  border: solid 1px var(--bgColorBorder);
+}
+
+.profilePostLight {
+  box-shadow: inset 0px 0px 1rem #ffffff38;
+}
+
+.profilePostDark {
+  box-shadow: inset 0px 0px 1rem #ffffff10;
 }
 
 .profilePostCard {
@@ -18,17 +28,6 @@
   justify-content: flex-start;
   width: 100%;
   gap: 1rem;
-}
-
-.profilePost::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  z-index: -1;
-  pointer-events: none;
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
 }
 
 .profilePostCard > img {
@@ -54,6 +53,12 @@
   width: 100%;
 }
 
+.openPostIcon {
+  color: var(--appleTextColor2);
+  cursor: pointer;
+  margin-left: 0.25rem;
+}
+
 .profilePostTitleArtist {
   display: flex;
   flex-direction: column;
@@ -74,12 +79,13 @@
 .profilePostTitle {
   font-size: 1rem;
   font-weight: 600;
+  color: var(--appleTextColor1);
 }
 
 .profilePostArtist {
   font-size: 0.875rem;
-  font-weight: 600;
-  color: #ffffffa2;
+  font-weight: 400;
+  color: var(--appleTextColor2);
 }
 
 .profilePostInteractions {
@@ -88,6 +94,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  color: var(--appleTextColor2);
 }
 
 .profilePostInteractions > div {
@@ -109,7 +116,7 @@
 
 .profilePostCaption {
   font-size: 0.875rem;
-  color: #ffffff;
+  color: var(--appleTextColor1);
   overflow: hidden;
   padding: 0.5rem;
   border-radius: 0.75rem;
@@ -118,7 +125,7 @@
 
 .profilePostTime {
   font-size: 0.75rem;
-  color: #ffffffa9;
+  color: var(--appleTextColor3);
 }
 
 .indvBadge {
@@ -128,6 +135,23 @@
   line-height: 1.4rem;
   padding: 0.25rem 0.5rem;
   letter-spacing: -0.02em;
+  box-shadow: 0px 0px 1rem #0000002a;
+}
+
+.darkBadge {
+  background-color: var(--badgeColor);
+  color: white;
+}
+
+.lightBadge {
+  border: 1px solid var(--badgeColor);
+  color: var(--badgeColor);
+}
+
+.lowContrastBadge {
+  border: 1px solid var(--appleTextColor4);
+  background-color: var(--badgeColor);
+  color: var(--appleTextColor1);
 }
 
 .postGenreBadges {
@@ -136,12 +160,16 @@
   gap: 0.5rem;
 }
 
-.albumCover {
+.albumCoverBase {
   min-height: 0;
   align-self: center;
   width: auto;
   height: auto;
   aspect-ratio: 1 / 1;
   border-radius: 0.5rem;
-  box-shadow: #00000052 0px 4px 15px;
+  box-shadow: #00000034 0px 0px 1rem;
+}
+
+.albumCoverDark {
+  border: 1px solid #ffffff25;
 }

@@ -49,6 +49,11 @@ meRoute.get("/", async (c) => {
             cover_color_vibrant,
             cover_color_dark_vibrant,
             cover_color_dark_contrast,
+            apple_bg_color,
+            apple_text_color_1,
+            apple_text_color_2,
+            apple_text_color_3,
+            apple_text_color_4,
             track_genre (
                 genre (
                 id,
@@ -103,6 +108,11 @@ meRoute.get("/", async (c) => {
             cover_color_vibrant: track.cover_color_vibrant,
             cover_color_dark_vibrant: track.cover_color_dark_vibrant,
             cover_color_dark_contrast: track.cover_color_dark_contrast,
+            apple_bg_color: track.apple_bg_color,
+            apple_text_color_1: track.apple_text_color_1 ?? '#000000',
+            apple_text_color_2: track.apple_text_color_2 ?? '#000000',
+            apple_text_color_3: track.apple_text_color_3 ?? '#000000',
+            apple_text_color_4: track.apple_text_color_4 ?? '#000000',
             genres:
             (Array.isArray(track.track_genre) ? track.track_genre : [])
                 .map((trackGenre: any) => {
