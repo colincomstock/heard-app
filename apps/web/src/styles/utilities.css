@@ -3,14 +3,14 @@
   background: linear-gradient(10deg, rgba(136, 136, 136, 0.15) 0%, rgba(201, 201, 201, 0.2) 38%, rgba(126, 126, 126, 0.15) 100%);
   box-shadow: inset 0px 0px 10px #ffffff23;
   border: 1px solid rgba(255, 255, 255, 0.233);
-  backdrop-filter:brightness(1.1);
+  backdrop-filter:brightness(1.2);
 }
 
 .glass-area-light-bg {
   background: #ffffff;
   background: linear-gradient(10deg, rgba(136, 136, 136, 0.15) 0%, rgba(201, 201, 201, 0.2) 38%, rgba(126, 126, 126, 0.15) 100%);
   box-shadow: inset 0px 0px 2rem #ffffff5b, 0px 0px 1rem #00000010;
-  backdrop-filter: brightness(1.1);
+  backdrop-filter: brightness(1.2);
   border: 1px solid rgba(255, 255, 255, 0.233);
 }
 

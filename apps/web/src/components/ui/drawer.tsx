@@ -59,7 +59,7 @@ function DrawerContent({
         )}
         {...props}
       >
-        <div className="absolute inset-y-2 inset-x-0 -z-10 rounded-4xl border border-gray-700/80 bg-zinc-800/80 backdrop-blur-md shadow-xl" />
+        <div className="absolute inset-y-2 inset-x-0 -z-10 rounded-4xl border border-gray-700/80 bg-zinc-800/80 backdrop-blur-sm shadow-xl" />
         <div className="self-center mt-4 hidden h-1.5 w-[50vw] shrink-0 rounded-full bg-muted group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
         {children}
       </DrawerPrimitive.Content>

@@ -19,7 +19,6 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                     ...post.style,
                     '--applebgColor': derivedColors.bgColor,
                     '--bgColorBorder': derivedColors.border,
-                    '--badgeColor': post.track.genres[0].badgeColor,
                     '--appleTextColor1': post.track.appleTextColor1,
                     '--appleTextColor2': post.track.appleTextColor2,
                     '--appleTextColor3': post.track.appleTextColor3,
@@ -38,8 +37,17 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                             <span className={`${styles.profilePostArtist} single-line-clamp`}>{post.track.artistName}</span>
                         </div>
                         <div className={styles.postGenreBadges}>
-                            <div className={`${styles.indvBadge} ${derivedColors.isLight ? (derivedColors.lowContrastBgBadge ? styles.lowContrastBadge : styles.lightBadge) : styles.darkBadge} ${derivedColors.isLight && !derivedColors.lowContrastBgBadge ? 'glass-area-light-bg' : 'glass-area'}`}>
-                                <span>{post.track.genres[0].name}</span>
+                            <div className={styles.postGenreBadges}>
+                                {post.track.genres.slice(0, 2).map((genre) => (
+                                    <div
+                                    key={genre.name}
+                                    className={`${styles.indvBadge} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}
+                                    style={{ '--badgeColor': genre.badgeColor } as React.CSSProperties}
+                                    >
+                                    <span className={styles.badgeColorDot}>⬤ </span>
+                                    <span>{genre.name}</span>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                         <div className={styles.profilePostInteractions}>

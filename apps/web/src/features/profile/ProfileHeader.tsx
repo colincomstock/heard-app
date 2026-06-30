@@ -43,7 +43,7 @@ export default function ProfileHeader(profile: any) {
                 <span className={styles.profileTopGenresLabel}>Top genres:</span>
                 <div className={styles.profileTopGenresBadges}>
                     {profile.topGenres?.map((genre: any, index: number) => (
-                        <div key={index} className={`${styles.indvBadge} glass-area`} style={{ backgroundColor: `${genre.badgeColor}99`, color: 'white' }}>
+                        <div key={index} className={`${styles.indvBadge} glass-area`} style={{ backgroundColor: `${genre.badgeColor}`, color: 'white' }}>
                             <span>{genre.name}</span>
                         </div>
                     ))}
