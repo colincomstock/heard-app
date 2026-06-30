@@ -1,6 +1,6 @@
 function toCamel(str: string): string {
-  return str.replace(/([-_][a-z])/gi, (group) =>
-    group.toUpperCase().replace('-', '').replace('_', '')
+  return str.replace(/[-_]+([a-z0-9])/gi, (_, char: string) =>
+    /[a-z]/i.test(char) ? char.toUpperCase() : char
   );
 }
 

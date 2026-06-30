@@ -39,10 +39,6 @@ export default function Profile() {
                 {data.posts && data.posts.length > 0 ? data.posts.map((post) => (
                     <ProfilePost
                         key={post.id}
-                        style={{
-                            background: `linear-gradient(185deg, ${post.track?.coverColorVibrant}99 0%, ${post.track?.coverColorDarkVibrant}99 39%, ${post.track?.coverColorDarkContrast}cc 100%)`,
-                            border: `solid 1px ${post.track?.coverColorDarkVibrant}`
-                        }}
                         {...post}
                     />
                 )) : <p>No posts available.</p>}

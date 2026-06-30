@@ -7,6 +7,11 @@ export type TrackCore = {
   artistName: string;
   artistNames: string[];
   coverUrl: string;
+  appleBgColor: string;
+  appleTextColor1: string;
+  appleTextColor2: string;
+  appleTextColor3: string;
+  appleTextColor4: string;
   coverColorVibrant: string;
   coverColorDarkVibrant: string;
   coverColorDarkContrast: string;
