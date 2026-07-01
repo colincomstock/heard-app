@@ -6,6 +6,7 @@ import { requireAuth } from './lib/supabaseAuth'
 import { profilesRoute } from './routes/profiles'
 import { meRoute } from './routes/me'
 import { PostsRoute } from './routes/posts'
+import { queueRoute } from './routes/queue'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -30,6 +31,8 @@ app.route('/profile', profilesRoute);
 app.route('/me', meRoute);
 
 app.route('/posts', PostsRoute);
+
+app.route('/queue', queueRoute);
 
 app.notFound((c) => {
   return c.json(

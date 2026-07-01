@@ -80,11 +80,11 @@ meRoute.get("/", async (c) => {
     const { data: topGenres, error: topGenresError } = topGenresResult;
 
     if (postsError) {
-    return c.json({ error: postsError?.message || 'Posts not found' }, 500);
+        return c.json({ error: postsError?.message || 'Posts not found' }, 500);
     }
     
     if (topGenresError) {
-    return c.json({ error: topGenresError?.message || 'Failed to fetch top genres' }, 500);
+        return c.json({ error: topGenresError?.message || 'Failed to fetch top genres' }, 500);
     }
 
     const formattedPosts = posts?.map(post => {
