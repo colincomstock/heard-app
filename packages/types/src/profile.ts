@@ -1,10 +1,13 @@
 import type { GenreProfile } from './genre';
 
-export type Profile = {
+export type ProfileCore = {
   id: string;
   handle: string;
   displayName: string;
   pfpUrl: string;
+}
+
+export type ProfileFull = ProfileCore & {
   bio: string | null;
   isPrivate: boolean;
   postCount: number;

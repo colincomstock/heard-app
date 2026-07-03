@@ -19,9 +19,8 @@ export type TrackCore = {
 };
 
 export type TrackQueue = TrackCore & {
-    appleMusicUrl: string;
-    spotifyUrl: string | null;
-    songPreviewUrl: string;
-    durationMs: number;
-    releaseDate: string;
+  appleMusicUrl: string;
+  spotifyUrl: string | null;
+  songPreviewUrl: string;
+  releaseDate: string;
 };

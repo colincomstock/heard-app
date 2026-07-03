@@ -24,7 +24,8 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                     '--appleTextColor3': post.track.appleTextColor3,
                     '--appleTextColor4': post.track.appleTextColor4,
                 } as React.CSSProperties
-            }>
+            }
+        >
             <div className={styles.profilePostCard}>
                 <img src={post.track.coverUrl} alt="Album cover" className={`${styles.albumCoverBase} ${derivedColors.isLight ? '' : styles.albumCoverDark}`} />
                 <div className={styles.profilePostBody}>
@@ -37,18 +38,16 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                             <span className={`${styles.profilePostArtist} single-line-clamp`}>{post.track.artistName}</span>
                         </div>
                         <div className={styles.postGenreBadges}>
-                            <div className={styles.postGenreBadges}>
-                                {post.track.genres.slice(0, 2).map((genre) => (
-                                    <div
-                                    key={genre.name}
-                                    className={`${styles.indvBadge} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}
-                                    style={{ '--badgeColor': genre.badgeColor } as React.CSSProperties}
-                                    >
+                            {post.track.genres.slice(0, 2).map((genre) => (
+                                <div
+                                key={genre.name}
+                                className={`${styles.indvBadge} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}
+                                style={{ '--badgeColor': genre.badgeColor } as React.CSSProperties}
+                                >
                                     <span className={styles.badgeColorDot}>⬤ </span>
                                     <span>{genre.name}</span>
-                                    </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
                         <div className={styles.profilePostInteractions}>
                             <div>
