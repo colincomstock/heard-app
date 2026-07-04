@@ -1,7 +1,7 @@
 import styles from './PostCondensed.module.css';
 import { ArrowUpRight } from "lucide-react";
 import { Heart } from 'lucide-react';
-import { MessageSquareMore } from 'lucide-react';
+import { MessageCircleMore } from 'lucide-react';
 import timeAgo from "@/lib/utils";
 import type { ProfilePost as ProfilePostType } from '@heard/types';
 import derivePostColors from '@/lib/colors';
@@ -52,12 +52,12 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                         <div className={styles.profilePostInteractions}>
                             <div>
                                 <div>
-                                    <MessageSquareMore size={14} />
-                                    <span>12</span>
+                                    <MessageCircleMore size={14} />
+                                    <span>{post.commentCount}</span>
                                 </div>
                                 <div>
                                     <Heart size={14} />
-                                    <span>30</span>
+                                    <span>{post.likeCount}</span>
                                 </div>
                             </div>
                             <span className={styles.profilePostTime}>{timeAgo(post.updatedAt)}</span>

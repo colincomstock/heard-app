@@ -67,7 +67,7 @@ meRoute.get("/", async (c) => {
         .eq('user_id', profile.id)
         .eq('visibility', 'public')
         .order('created_at', { ascending: false })
-        .limit(20),
+        .limit(30),
 
         supabase.rpc('get_user_top_genres', {
             target_user_id: userId,

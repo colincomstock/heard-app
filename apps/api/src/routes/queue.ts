@@ -65,7 +65,7 @@ queueRoute.get("/", async (c) => {
         .eq('user_id', userId)
         .eq('visibility', 'public')
         .order('created_at', { ascending: false })
-        .limit(20);
+        .limit(30);
 
     if (postsError) {
         return c.json({ error: "Failed to fetch queue", details: postsError }, 500);

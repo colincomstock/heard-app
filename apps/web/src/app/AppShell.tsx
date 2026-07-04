@@ -8,9 +8,10 @@ import { useState } from 'react'
 import { Outlet, useMatches } from 'react-router-dom'
 import { Drawer, DrawerContent } from '../components/ui/drawer'
 import NewPost from '../features/new-post/NewPost'
+import { useAudioPlayer } from '@/context/AudioPlayerContext'
 
 export default function App() {
-  const [isMuted, setIsMuted] = useState(false)
+  const { isMuted, setMuted } = useAudioPlayer()
   const [isNewPostDrawerOpen, setIsNewPostDrawerOpen] = useState(false)
 
   const matches = useMatches()
@@ -19,7 +20,7 @@ export default function App() {
 
   // Handler for mute/unmute button click
   function handleMuteClick() {
-    setIsMuted(!isMuted)
+    setMuted(!isMuted)
   }
 
   function openNewPostDrawer() {
@@ -35,7 +36,12 @@ export default function App() {
       <div className={styles.header}>
         <div style={{width: '30px'}}></div>
         <h1>{title}</h1>
-        <img src={isMuted ? volumeMuteIcon : volumeOnIcon} alt="Volume icon" onClick={handleMuteClick} style={{ width: '25px', height: '25px', cursor: 'pointer' }} />
+        <img 
+          src={isMuted ? volumeMuteIcon : volumeOnIcon} 
+          alt="Volume icon" 
+          onClick={handleMuteClick} 
+          style={{ width: '25px', height: '25px', cursor: 'pointer' }} 
+        />
       </div>
       <div className={styles.mainContainer}>
         <Outlet context={{ isMuted }} />

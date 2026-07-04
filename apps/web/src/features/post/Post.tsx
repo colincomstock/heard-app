@@ -9,82 +9,62 @@ import {
     MessageCircleMore, 
     Play, 
     Pause, 
-    Headphones
+    Share,
 } from 'lucide-react'
+import { useAudioPlayer } from '@/context/AudioPlayerContext'
+import appleMusicLockup from '../../assets/apple-music-lockup-white.svg'
+import spotifyFullLogo from '../../assets/spotify-full-logo-white.png'
 
-export default function Post(post: QueuePost & { isMuted: boolean }) {
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [progress, setProgress] = useState(0)
-    const [commentsOpen, setCommentsOpen] = useState(false)
-    const audioRef = useRef<HTMLAudioElement>(new Audio(post.track.songPreviewUrl))
-    
-    // Effect to handle muting/unmuting when post.isMuted changes
-    useEffect(() => {
-        audioRef.current.muted = post.isMuted;
-    }, [post.isMuted]);
-    
-    // Effect to update progress bar as audio plays
-    useEffect(() => {
-        const audio = audioRef.current;
-        const updateProgress = () => {
-            if (audio.duration) {
-                setProgress((audio.currentTime / audio.duration) * 100);
-                if (audio.currentTime === audio.duration) {
-                    setIsPlaying(false);
-                }
-            }
-        }
-        audio.addEventListener('timeupdate', updateProgress);
-        return () => audio.removeEventListener('timeupdate', updateProgress);
-    }, []);
+export default function Post(post: QueuePost) {
 
+    const {
+        activeId,
+        isPlaying,
+        progress,
+        toggle,
+        play,
+        pause,
+    } = useAudioPlayer()
     const cardRef = useRef<HTMLDivElement>(null);
 
-    // Effect to handle auto-play/pause based on visibility using Intersection Observer
-    useEffect(() => {
-        const card = cardRef.current;
+    const isActive = activeId === post.id;
+    const displayProgress = isActive ? progress : 0;
+    const showPause = isActive && isPlaying;
 
-        if (!card) return;
+    const [commentsOpen, setCommentsOpen] = useState(false);
+    const [listenOpen, setListenOpen] = useState(false);
+
+    function handlePlayPauseClick() {
+        void toggle(post.track.songPreviewUrl, post.id);
+    };
+    
+    const inViewRef = useRef(false);
+
+    useEffect(() => {
+        const card = cardRef.current
+        if (!card) return
 
         const observer = new IntersectionObserver(
-            async ([entry]) => {
-            const audio = audioRef.current;
+            ([entry]) => {
+                const isInView = entry.intersectionRatio >= 0.5
+                const wasInView = inViewRef.current
 
-            if (!audio) return;
-
-            if (entry.isIntersecting) {
-                try {
-                await audio.play();
-                setIsPlaying(true);
-                } catch (error) {
-                console.error("Audio failed to play:", error);
-                setIsPlaying(false);
+                if (isInView && !wasInView) {
+                    void play(post.track.songPreviewUrl, post.id)
                 }
-            } else {
-                audio.pause();
-                setIsPlaying(false);
-            }
+
+                if (!isInView && wasInView) {
+                    pause(post.id)
+                }
+
+                inViewRef.current = isInView
             },
-            { threshold: 0.5 }
-        );
+            { threshold: [0, 0.5, 1] }
+        )
 
-        observer.observe(card);
-
-        return () => {
-            observer.unobserve(card);
-        };
-    }, []);
-
-    // Handler for play/pause button click
-    function handlePlayPauseClick() {
-        const audio = audioRef.current;
-        if (isPlaying) {
-            audio.pause();
-        } else {
-            audio.play();
-        }
-        setIsPlaying(!isPlaying);
-    };
+        observer.observe(card)
+        return () => observer.disconnect()
+    }, [post.id, post.track.songPreviewUrl, play, pause])
 
     const derivedColors = derivePostColors(post.track.appleBgColor, post.track.genres[0].badgeColor);
 
@@ -116,18 +96,23 @@ export default function Post(post: QueuePost & { isMuted: boolean }) {
                                     <span className={`${styles.trackTitle} single-line-clamp`}>{post.track.title}</span>
                                     <span className={`${styles.trackArtist} single-line-clamp`}>{post.track.artistName}</span>
                                 </div>
-                                <a href={post.track.spotifyUrl ? post.track.spotifyUrl : '#'} className={styles.listenButton} target="_blank" rel="noopener noreferrer">
-                                    <Headphones size={30} color={post.track.appleTextColor1} />
-                                    <span>listen</span>
-                                </a>
+                                <button onClick={() => setListenOpen(true)}>
+                                    <div className={styles.listenButtonIcon}>
+                                        <Share size={30} color={post.track.appleTextColor1} />
+
+                                    </div>
+                                    <div className={styles.listenButtonText}>
+                                        <span>listen</span>
+                                    </div>
+                                </button>
                             </div>
 
                             <div className={`${styles.playerProgressBar} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
-                                <div className={styles.playerProgressFill} style={{ width: `${progress}%` }}></div>
+                                <div className={styles.playerProgressFill} style={{ width: `${displayProgress}%` }}></div>
                             </div>
                             <div className={styles.controlsSocialArea}>
                                 <div className={`${styles.playerControls} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
-                                    {isPlaying ? (
+                                    {showPause ? (
                                         <Pause size={20} color={post.track.appleTextColor1} fill={post.track.appleTextColor1} onClick={handlePlayPauseClick} />
                                     ) : (
                                         <Play size={20} color={post.track.appleTextColor1} fill={post.track.appleTextColor1} onClick={handlePlayPauseClick} />
@@ -136,11 +121,11 @@ export default function Post(post: QueuePost & { isMuted: boolean }) {
                                 <div className={styles.socialControls}>
                                     <div className={styles.socialControlIndv}>
                                         <MessageCircleMore size={30} color={post.track.appleTextColor1} onClick={() => setCommentsOpen(true)} />
-                                        <span>10</span>
+                                        <span>{post.commentCount}</span>
                                     </div>
                                     <div className={styles.socialControlIndv}>
                                         <Heart size={30} color={post.track.appleTextColor1} />
-                                        <span>30</span>
+                                        <span>{post.likeCount}</span>
                                     </div>
                                 </div>
                             </div>
@@ -192,6 +177,31 @@ export default function Post(post: QueuePost & { isMuted: boolean }) {
                                 </div>
                             </div>
                         )) : null}
+                    </div>
+                </DrawerContent>
+            </Drawer>
+            <Drawer open={listenOpen} onOpenChange={setListenOpen}>
+                <DrawerContent>
+                    <DrawerHeader>
+                        <DrawerTitle style={{padding: "1rem"}}>Open in</DrawerTitle>
+                    </DrawerHeader>
+                    <div className={styles.drawerListenButtons}>
+                        <div></div>
+                        {post.track.appleMusicUrl ? <a href={post.track.appleMusicUrl} target="_blank" rel="noopener noreferrer">
+                            <img 
+                                src={appleMusicLockup} 
+                                alt="Apple Music" 
+                                style={{height: '30px' }} 
+                            />
+                        </a> : null}
+                        {post.track.spotifyUrl ? <a href={post.track.spotifyUrl} target="_blank" rel="noopener noreferrer">
+                            <img 
+                                src={spotifyFullLogo} 
+                                alt="Spotify" 
+                                style={{ height: '30px' }} 
+                            />
+                        </a> : null}
+                        <div></div>
                     </div>
                 </DrawerContent>
             </Drawer>
