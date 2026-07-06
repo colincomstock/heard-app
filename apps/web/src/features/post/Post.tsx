@@ -183,7 +183,7 @@ export default function Post(post: QueuePost) {
             <Drawer open={listenOpen} onOpenChange={setListenOpen}>
                 <DrawerContent>
                     <DrawerHeader>
-                        <DrawerTitle style={{padding: "1rem"}}>Open in</DrawerTitle>
+                        <DrawerTitle style={{padding: "1rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem"}}>Open in <Share size={16} /></DrawerTitle>
                     </DrawerHeader>
                     <div className={styles.drawerListenButtons}>
                         <div></div>

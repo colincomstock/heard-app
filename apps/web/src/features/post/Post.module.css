@@ -14,11 +14,11 @@
 }
 
 .postCardLight {
-  box-shadow: inset 0px 0px 3rem #ffffff38;
+  box-shadow: inset 0px 0px 4rem #ffffff38;
 }
 
 .postCardDark {
-  box-shadow: inset 0px 0px 3rem #ffffff1f;
+  box-shadow: inset 0px 0px 4rem #ffffff1f;
 }
 
 .feedBuffer {
@@ -123,7 +123,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1rem 7rem 1rem;
-
   width: 100%;
 }
 
