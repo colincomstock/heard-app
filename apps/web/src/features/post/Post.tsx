@@ -80,7 +80,6 @@ export default function Post(post: QueuePost) {
     const likeMutation = useMutation({
         mutationFn: () => likePost(session!.access_token, post.id),
         onSuccess: () => {
-            console.log("Post liked successfully");
             queryClient.invalidateQueries({ queryKey: ['queue', session?.user?.id] });
             queryClient.invalidateQueries({ queryKey: ['me', session?.user?.id] });
         },
@@ -95,7 +94,6 @@ export default function Post(post: QueuePost) {
     const unlikeMutation = useMutation({
         mutationFn: () => unlikePost(session!.access_token, post.id),
         onSuccess: () => {
-            console.log("Post unliked successfully");
             queryClient.invalidateQueries({ queryKey: ['queue', session?.user?.id] });
             queryClient.invalidateQueries({ queryKey: ['me', session?.user?.id] });
         },
