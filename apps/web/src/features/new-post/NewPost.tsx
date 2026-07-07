@@ -156,7 +156,6 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                                                 onClick={(event) => {
                                                     event.stopPropagation();
                                                     handlePlayPauseClick(track.previewUrl, track.id);
-                                                    console.log('Play/Pause clicked for track:', track.name, 'Preview URL:', track.previewUrl);
                                                 }}
                                             >
                                                 {showTrackPause ? <Pause size={20} fill='white' /> : <Play size={20} fill='white' />}

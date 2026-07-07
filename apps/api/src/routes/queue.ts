@@ -29,6 +29,8 @@ queueRoute.get("/", async (c) => {
                 id,
                 title,
                 artist_name,
+                album,
+                release_date,
                 cover_url,
                 song_preview_url,
                 apple_music_url,
@@ -82,7 +84,6 @@ queueRoute.get("/", async (c) => {
             updated_at: post.updated_at,
             profile: (() => {
                 const profile = Array.isArray(post.profile) ? post.profile[0] : post.profile;
-                if (!profile) return null;
                 return {
                     id: profile.id,
                     handle: profile.handle,
@@ -92,12 +93,13 @@ queueRoute.get("/", async (c) => {
             })(),
             track: (() => {
                 const track = Array.isArray(post.track) ? post.track[0] : post.track;
-                if (!track) return null;
                 return {
                     id: track.id,
                     title: track.title,
                     artist_name: track.artist_name,
                     artist_names: track.artist_name.split(',').map((name: string) => name.trim()),
+                    album: track.album,
+                    release_date: track.release_date,
                     cover_url: track.cover_url,
                     apple_music_url: track.apple_music_url,
                     spotify_url: track.spotify_url,
@@ -111,7 +113,6 @@ queueRoute.get("/", async (c) => {
                     (Array.isArray(track.track_genre) ? track.track_genre : [])
                         .map((trackGenre: any) => {
                         const genre = Array.isArray(trackGenre.genre) ? trackGenre.genre[0] : trackGenre.genre;
-                        if (!genre) return null;
                             return {
                                 id: genre.id,
                                 name: genre.name,
@@ -120,7 +121,10 @@ queueRoute.get("/", async (c) => {
                             };
                             })
                         .filter(Boolean) ?? [],
-                    comments: (Array.isArray(post.post_comment) ? post.post_comment : []).map((comment: any) => {
+
+                };
+            })(),
+            comments: (Array.isArray(post.post_comment) ? post.post_comment : []).map((comment: any) => {
                         const commentProfile = Array.isArray(comment.profile) ? comment.profile[0] : comment.profile;
                         return {
                             id: comment.id,
@@ -137,9 +141,6 @@ queueRoute.get("/", async (c) => {
                             } : null,
                         };
                     }) ?? [],
-
-                };
-            })(),
         };
     }) ?? [];
 

@@ -12,9 +12,6 @@ export type TrackCore = {
   appleTextColor2: string;
   appleTextColor3: string;
   appleTextColor4: string;
-  coverColorVibrant: string;
-  coverColorDarkVibrant: string;
-  coverColorDarkContrast: string;
   genres: Genre[];
 };
 
