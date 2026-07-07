@@ -16,7 +16,7 @@ import appleMusicLockup from '../../assets/apple-music-lockup-white.svg'
 import spotifyFullLogo from '../../assets/spotify-full-logo-white.png'
 
 export default function Post(post: QueuePost) {
-
+    
     const {
         activeId,
         isPlaying,
@@ -24,7 +24,7 @@ export default function Post(post: QueuePost) {
         toggle,
         play,
         pause,
-    } = useAudioPlayer()
+    } = useAudioPlayer();
     const cardRef = useRef<HTMLDivElement>(null);
 
     const isActive = activeId === post.id;

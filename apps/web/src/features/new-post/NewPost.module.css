@@ -231,6 +231,7 @@
 }
 
 .playBtnArea {
+  position: relative;
   display: flex;
   flex: 0 0 auto;
   align-items: center;
@@ -239,11 +240,38 @@
   width: 2.5rem;
   height: 2.5rem;
 
-  background-color: #ffffff1a;
   border-radius: 50%;
-
+  background-color: #ffffff1a;
   transition: background-color 0.2s ease;
 }
+
+.playBtnArea::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    background:
+      conic-gradient(
+          #ffffff6c var(--track-progress),
+          #00000000 0
+      );
+    padding: 2px;
+
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+
+    z-index: 0;
+    transition: --track-progress 1000ms linear;
+}
+
+@property --track-progress {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 0%;
+}
+
 
 .captionArea > textarea {
   width: 100%;
