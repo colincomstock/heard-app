@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './app/router.tsx'
+import { AudioPlayerProvider } from './context/AudioPlayerContext.tsx'
 import { AuthContextProvider } from './context/AuthContext.tsx'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from './lib/queryClient.ts'
@@ -11,7 +12,9 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
-        <RouterProvider router={router} />
+        <AudioPlayerProvider>
+          <RouterProvider router={router} />
+        </AudioPlayerProvider>
       </AuthContextProvider>
     </QueryClientProvider>
   </StrictMode>,

@@ -1,10 +1,12 @@
 import styles from './NewPost.module.css'
 import { getSearchResults } from '@/lib/api/search';
 import { useState, useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
 import { UserAuth } from '@/context/AuthContext';
 import { Search } from 'lucide-react';
-import { X, Play, Check } from 'lucide-react';
+import { X, Play, Pause, Check } from 'lucide-react';
+import { useAudioPlayer } from '@/context/AudioPlayerContext';
+import { createPost } from '@/lib/api/post';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 type NewPostProps = {
     onDone: () => void;
@@ -24,6 +26,20 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
     const [caption, setCaption] = useState('')
     const [selectedSong, setSelectedSong] = useState<TrackSearchResult | null>(null)
 
+    const queryClient = useQueryClient();
+
+    const {
+        activeId,
+        isPlaying,
+        progress,
+        toggle,
+        pause,
+    } = useAudioPlayer();
+
+    function handlePlayPauseClick(previewUrl: string, trackId: string) {
+        void toggle(previewUrl, trackId);
+    }
+
     function handleCaptionChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
         setCaption(e.target.value.replace(/[\r\n]+/g, " "))
     }
@@ -32,16 +48,19 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
     const { session } = UserAuth()!;
 
     function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
+        pause();
+        setSelectedSong(null);
         setSearchTerm(e.target.value)
     }
 
-    function handlePlayPauseClick(previewUrl: string) {
-        const audio = new Audio(previewUrl);
-        audio.play();
+    function handleTrackSelect(track: TrackSearchResult) {
+        setSelectedSong(track)
     }
 
-    function handletrackSelect(track: TrackSearchResult) {
-        setSelectedSong(track)
+    function handleClearSelection() {
+        setSelectedSong(null);
+        setSearchTerm('');
+        pause();
     }
 
     useEffect(() => {
@@ -58,15 +77,16 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
         placeholderData: (previousData) => previousData,
     });
 
+    const createPostMutation = useMutation({
+        mutationFn: (newPost: { caption: string; appleMusicTrackId: string }) => createPost(session!.access_token, newPost),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['me'] });
+            queryClient.invalidateQueries({ queryKey: ['queue'] });
+            _onDone();
+        }
+    });
+
     const hasResults = Boolean(data?.tracks?.length) && debouncedSearchTerm.length > 2;
-
-    useEffect(() => {
-        console.log('Search term:', searchTerm)
-    }, [searchTerm]);
-
-    useEffect(() => {
-        console.log('Search results:', data)
-    }, [data]);
 
     return (
         <div className={styles.newPostPage}>
@@ -75,8 +95,14 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                     <span>back</span>
                 </button>
                 <h1>New Post</h1>
-                <button className={`${styles.newPostSubmitBtn} glass-area`} disabled={!selectedSong || !caption.trim()} onClick={() => {
-                    _onDone();
+                <button className={`${styles.newPostSubmitBtn} glass-area`} disabled={!selectedSong || !caption.trim()} onClick={async () => {
+                    if (selectedSong && caption.trim()) {
+                        try {
+                            await createPostMutation.mutateAsync({ caption, appleMusicTrackId: selectedSong.id });
+                        } catch (error) {
+                            console.error('Failed to create post:', error);
+                        }
+                    }
                 }}>
                     post
                 </button>
@@ -93,42 +119,50 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                         value={searchTerm}
                         onChange={handleSearchChange}
                     />
-                    {searchTerm.length > 0 && <X size={24} style={{ marginLeft: '0.5rem', cursor: 'pointer' }} onClick={() => setSearchTerm('')} />}
+                    {searchTerm.length > 0 && <X size={24} style={{ marginLeft: '0.5rem', cursor: 'pointer' }} onClick={handleClearSelection} />}
                 </div>
                 <div className={`${styles.searchResultsArea} ${hasResults ? styles.isOpen : ''} glass-area`}>
                     {hasResults ? 
                         (
                             <div className={styles.searchResultsList}>
-                                {data.tracks.map((track: TrackSearchResult) => (
-                                    <button
-                                        key={track.id}
-                                        type='button'
-                                        className={styles.searchResultItem}
-                                        onClick={() => handletrackSelect(track)}
-                                    >
-                                        {selectedSong?.id === track.id && (
-                                            <div className={`${styles.searchResultSelectedIndicator} glass-area`}>
-                                                <Check size={16} />
-                                            </div>
-                                        )}
-                                        <div className={styles.searchResultCoverMetaContainer}>
-                                            <img src={track.coverUrl} alt={`${track.name} cover`} />
-                                            <div className={styles.searchResultMeta}>
-                                                <span className={`${styles.searchResultTitle} single-line-clamp`}>{track.name}</span>
-                                                <span className={`${styles.searchResultArtist} single-line-clamp`}>{track.artistName}</span>
-                                            </div>
-                                        </div>
+                                {data.tracks.map((track: TrackSearchResult) => {
+                                    const isTrackActive = activeId === track.id;
+                                    const showTrackPause = isPlaying && isTrackActive;
+                                    const trackDisplayProgress = isTrackActive ? progress : 0;
+                                    return(
                                         <div
-                                            className={`${styles.playBtnArea} glass-area`}
-                                            onClick={(event) => {
-                                                event.stopPropagation();
-                                                handlePlayPauseClick(track.previewUrl);
-                                            }}
+                                            key={track.id}
+                                        
+                                            className={styles.searchResultItem}
+                                            onClick={() => handleTrackSelect(track)}
                                         >
-                                            <Play size={20} fill='white' style={{ cursor: 'pointer' }} />
+                                            {selectedSong?.id === track.id && (
+                                                <div className={`${styles.searchResultSelectedIndicator} glass-area`}>
+                                                    <Check size={16} />
+                                                </div>
+                                            )}
+                                            <div className={styles.searchResultCoverMetaContainer}>
+                                                <img src={track.coverUrl} alt={`${track.name} cover`} />
+                                                <div className={styles.searchResultMeta}>
+                                                    <span className={`${styles.searchResultTitle} single-line-clamp`}>{track.name}</span>
+                                                    <span className={`${styles.searchResultArtist} single-line-clamp`}>{track.artistName}</span>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className={`${styles.playBtnArea} glass-area`}
+                                                style = {
+                                                    { '--track-progress': `${trackDisplayProgress}%` } as React.CSSProperties
+                                                }
+                                                onClick={(event) => {
+                                                    event.stopPropagation();
+                                                    handlePlayPauseClick(track.previewUrl, track.id);
+                                                }}
+                                            >
+                                                {showTrackPause ? <Pause size={20} fill='white' /> : <Play size={20} fill='white' />}
+                                            </div>
                                         </div>
-                                    </button>
-                                ))}
+                                    )
+                                })}
                             </div>
                         ) : 
                             // Search placeholder div

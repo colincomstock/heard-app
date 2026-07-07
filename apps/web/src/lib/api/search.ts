@@ -5,8 +5,9 @@ export async function getSearchResults(query: string, token: string): Promise<an
             "Authorization": `Bearer ${token}`
         }
     });
+
     if (!response.ok) {
         throw new Error(`Error fetching search results: ${response.statusText}`);
     }
     return response.json();
-}
+};

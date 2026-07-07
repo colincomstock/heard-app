@@ -13,6 +13,6 @@ export default async function generateAppleMusicToken(env: Bindings): Promise<st
         .setProtectedHeader({ alg: "ES256", kid: env.APPLE_MUSIC_KEY_ID })
         .setIssuer(env.APPLE_MUSIC_TEAM_ID)
         .setIssuedAt(now)
-        .setExpirationTime(now + 15777000)
+        .setExpirationTime(now + 60*60) // Token valid for 1 hour
         .sign(privateKey);
 }

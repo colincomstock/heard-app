@@ -2,141 +2,159 @@ import styles from './Post.module.css'
 import { useState, useEffect, useRef } from 'react'
 import timeAgo from '../../lib/utils'
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '../../components/ui/drawer'
-import listenIcon from '../../assets/listen-icon.png'
-import pauseIcon from '../../assets/pause-icon.png'
-import playIcon from '../../assets/play-icon.png'
-import likeIcon from '../../assets/like-icon.png'
-import commentIcon from '../../assets/comment-icon.png'
+import type { QueuePost } from '@heard/types'
+import derivePostColors from '@/lib/colors'
+import { 
+    Heart, 
+    MessageCircleMore, 
+    Play, 
+    Pause, 
+    Share,
+} from 'lucide-react'
+import { useAudioPlayer } from '@/context/AudioPlayerContext'
+import appleMusicLockup from '../../assets/apple-music-lockup-white.svg'
+import spotifyFullLogo from '../../assets/spotify-full-logo-white.png'
 
-export default function Post(post: any) {
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [progress, setProgress] = useState(0)
-    const [commentsOpen, setCommentsOpen] = useState(false)
-    const audioRef = useRef<HTMLAudioElement>(new Audio(post.songInfo.songPreviewUrl))
+export default function Post(post: QueuePost) {
     
-    // Effect to handle muting/unmuting when post.isMuted changes
-    useEffect(() => {
-        audioRef.current.muted = post.isMuted;
-    }, [post.isMuted]);
-    
-    // Effect to update progress bar as audio plays
-    useEffect(() => {
-        const audio = audioRef.current;
-        const updateProgress = () => {
-            if (audio.duration) {
-                setProgress((audio.currentTime / audio.duration) * 100);
-                if (audio.currentTime === audio.duration) {
-                    setIsPlaying(false);
-                }
-            }
-        }
-        audio.addEventListener('timeupdate', updateProgress);
-        return () => audio.removeEventListener('timeupdate', updateProgress);
-    }, []);
-
+    const {
+        activeId,
+        isPlaying,
+        progress,
+        toggle,
+        play,
+        pause,
+    } = useAudioPlayer();
     const cardRef = useRef<HTMLDivElement>(null);
 
-    // Effect to handle auto-play/pause based on visibility using Intersection Observer
-    useEffect(() => {
-        const card = cardRef.current;
+    const isActive = activeId === post.id;
+    const displayProgress = isActive ? progress : 0;
+    const showPause = isActive && isPlaying;
 
-        if (!card) return;
+    const [commentsOpen, setCommentsOpen] = useState(false);
+    const [listenOpen, setListenOpen] = useState(false);
+
+    function handlePlayPauseClick() {
+        void toggle(post.track.songPreviewUrl, post.id);
+    };
+    
+    const inViewRef = useRef(false);
+
+    useEffect(() => {
+        const card = cardRef.current
+        if (!card) return
 
         const observer = new IntersectionObserver(
-            async ([entry]) => {
-            const audio = audioRef.current;
+            ([entry]) => {
+                const isInView = entry.intersectionRatio >= 0.5
+                const wasInView = inViewRef.current
 
-            if (!audio) return;
-
-            if (entry.isIntersecting) {
-                try {
-                await audio.play();
-                setIsPlaying(true);
-                } catch (error) {
-                console.error("Audio failed to play:", error);
-                setIsPlaying(false);
+                if (isInView && !wasInView) {
+                    void play(post.track.songPreviewUrl, post.id)
                 }
-            } else {
-                audio.pause();
-                setIsPlaying(false);
-            }
+
+                if (!isInView && wasInView) {
+                    pause(post.id)
+                }
+
+                inViewRef.current = isInView
             },
-            { threshold: 0.5 }
-        );
+            { threshold: [0, 0.5, 1] }
+        )
 
-        observer.observe(card);
+        observer.observe(card)
+        return () => observer.disconnect()
+    }, [post.id, post.track.songPreviewUrl, play, pause])
 
-        return () => {
-            observer.unobserve(card);
-        };
-    }, []);
-
-    // Handler for play/pause button click
-    function handlePlayPauseClick() {
-        const audio = audioRef.current;
-        if (isPlaying) {
-            audio.pause();
-        } else {
-            audio.play();
-        }
-        setIsPlaying(!isPlaying);
-    };
+    const derivedColors = derivePostColors(post.track.appleBgColor, post.track.genres[0].badgeColor);
 
     return (
         <>
-            <div style={{ scrollSnapAlign: 'start' }}>
-                <div className={styles.postCard} ref={cardRef} style={{background: `linear-gradient(185deg, ${post.songInfo.coverColorVibrant} 0%, ${post.songInfo.coverColorDarkVibrant} 39%, ${post.songInfo.coverColorBlackContrast} 100%)`, border: `solid 1px ${post.songInfo.coverColorDarkVibrant}` }}>
+            <div
+                style={
+                    { 
+                        scrollSnapAlign: 'start',
+                        '--applebgColor': derivedColors.bgColor,
+                        '--bgColorBorder': derivedColors.border,
+                        '--appleTextColor1': post.track.appleTextColor1,
+                        '--appleTextColor2': post.track.appleTextColor2,
+                        '--appleTextColor3': post.track.appleTextColor3,
+                        '--appleTextColor4': post.track.appleTextColor4,
+                        '--coverArt': `url(${post.track.coverUrl})`
+                    } as React.CSSProperties
+                }
+            >
+                <div className={`${styles.postCard} ${derivedColors.isLight ? styles.postCardLight : styles.postCardDark}`} ref={cardRef}>
                     <div className={styles.songArea}>
                         <div className={styles.songCardInner}>
-                            <img src={post.songInfo.coverUrl} alt="Album cover" className={styles.albumCover} />
+                            <img src={post.track.coverUrl} alt="Album cover" className={`${styles.albumCover} ${derivedColors.isLight ? '' : styles.albumCoverDark}`} />
                             <div className={styles.appleMusicAttr}>
                                 <span>Preview provided by Apple Music</span>
                             </div>
                             <div className={styles.songMetaListen}>
                                 <div className={styles.songText}>
-                                    <span>{post.songInfo.title}</span>
-                                    <span>{post.songInfo.artists.primary && post.songInfo.artists.secondary.length > 0 ? `${post.songInfo.artists.primary}, ${post.songInfo.artists.secondary.join(', ')}` : post.songInfo.artists.primary}</span>
+                                    <span className={`${styles.trackTitle} single-line-clamp`}>{post.track.title}</span>
+                                    <span className={`${styles.trackArtist} single-line-clamp`}>{post.track.artistName}</span>
                                 </div>
-                                <a href={post.songInfo.externalUrl} className={styles.listenButton} target="_blank" rel="noopener noreferrer">
-                                    <img src={listenIcon} alt="Listen icon" style={{ width: '40px', height: '40px' }} />
-                                    <span>listen</span>
-                                </a>
+                                <button onClick={() => setListenOpen(true)}>
+                                    <div className={styles.listenButtonIcon}>
+                                        <Share size={30} color={post.track.appleTextColor1} />
+
+                                    </div>
+                                    <div className={styles.listenButtonText}>
+                                        <span>listen</span>
+                                    </div>
+                                </button>
                             </div>
 
-                            <div className={`${styles.playerProgressBar} glass-area`}>
-                                <div className={styles.playerProgressFill} style={{ width: `${progress}%` }}></div>
+                            <div className={`${styles.playerProgressBar} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
+                                <div className={styles.playerProgressFill} style={{ width: `${displayProgress}%` }}></div>
                             </div>
                             <div className={styles.controlsSocialArea}>
-                                <div>
-                                    <img src={isPlaying ? pauseIcon : playIcon} alt={isPlaying ? "Pause icon" : "Play icon"} onClick={handlePlayPauseClick} style={{ width: '40px', height: '40px', cursor: 'pointer'}} />
+                                <div className={`${styles.playerControls} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
+                                    {showPause ? (
+                                        <Pause size={20} color={post.track.appleTextColor1} fill={post.track.appleTextColor1} onClick={handlePlayPauseClick} />
+                                    ) : (
+                                        <Play size={20} color={post.track.appleTextColor1} fill={post.track.appleTextColor1} onClick={handlePlayPauseClick} />
+                                    )}
                                 </div>
                                 <div className={styles.socialControls}>
-                                    <img src={commentIcon} alt="Comment icon" style={{ width: '40px', height: '40px', cursor: 'pointer' }} onClick={() => setCommentsOpen(true)} />
-                                    <img src={likeIcon} alt="Like icon" style={{ width: '40px', height: '40px' }} />              
+                                    <div className={styles.socialControlIndv}>
+                                        <MessageCircleMore size={30} color={post.track.appleTextColor1} onClick={() => setCommentsOpen(true)} />
+                                        <span>{post.commentCount}</span>
+                                    </div>
+                                    <div className={styles.socialControlIndv}>
+                                        <Heart size={30} color={post.track.appleTextColor1} />
+                                        <span>{post.likeCount}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className={styles.userPostArea}>
                         <div className={styles.userInfoMetadata}>
-                            <img src={post.postInfo.profilePicture} alt="User profile picture"/>
-                            <div className={styles.usernameTags}>
-                                <span>{post.postInfo.username}</span>
+                            <img src={post.profile.pfpUrl} alt="User profile picture"/>
+                            <div>
+                                <span className={styles.username}>{post.profile.displayName}</span>
                                 <div className={styles.postGenreBadges}>
-                                    <div className={`${styles.indvBadge} glass-area`} style={{ backgroundColor: '#FFA50060', color: 'white' }}>
-                                        <span>{post.songInfo.genres.primary}</span>
-                                    </div>
-                                    <div className={`${styles.indvBadge} glass-area`} style={{ backgroundColor: '#8f00ff60', color: 'white' }}>
-                                        <span>{post.songInfo.genres.secondary[0]}</span>
-                                    </div>
+                                    {post.track.genres.slice(0, 2).map((genre) => (
+                                        <div
+                                            key={genre.name}
+                                            className={`${styles.indvBadge} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}
+                                            style={{ '--badgeColor': genre.badgeColor } as React.CSSProperties}
+                                        >
+                                            <span className={styles.badgeColorDot}>⬤ </span>
+                                            <span>{genre.name}</span>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                             <div className={styles.postTime}>
-                                <span>{timeAgo(post.postInfo.timestamp)}</span>
+                                <span>{timeAgo(post.updatedAt)}</span>
                             </div>
                         </div>
-                        <div className={`${styles.userTextPost} glass-area`}>
-                            <span>{post.postInfo.caption}</span>
+                        <div className={`${styles.userTextPost} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
+                            <span>{post.caption}</span>
                         </div>
                     </div>
                 </div>
@@ -148,17 +166,42 @@ export default function Post(post: any) {
                         <DrawerTitle style={{padding: "1rem"}}>Comments</DrawerTitle>
                     </DrawerHeader>
                     <div style={{ padding: '0rem 1rem 5rem 1rem', minHeight: '75vh', display: 'flex', flexDirection: 'column', gap: '1rem', overflowY: 'auto' }}>
-                        {post.postInfo.comments.map((c: any, i: number) => (
+                        {post.comments ? post.comments.map((c: any, i: number) => (
                             <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                                <img src={c.profilePicture} alt={c.username} style={{ width: '36px', height: '36px', borderRadius: '50%' }} />
+                                <img src={c.pfpUrl} alt={c.displayName} style={{ width: '36px', height: '36px', borderRadius: '50%' }} />
                                 <div>
-                                    <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{c.username}</div>
+                                    <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{c.displayName}</div>
                                     <div style={{ fontSize: '0.875rem' }}>{c.comment}</div>
                                     <div style={{ fontSize: '0.75rem', color: '#666' }}>{c.likes} likes</div>
-                                    <div style={{ fontSize: '0.75rem', color: '#666' }}>{timeAgo(c.time)}</div>
+                                    <div style={{ fontSize: '0.75rem', color: '#666' }}>{timeAgo(c.createdAt)}</div>
                                 </div>
                             </div>
-                        ))}
+                        )) : null}
+                    </div>
+                </DrawerContent>
+            </Drawer>
+            <Drawer open={listenOpen} onOpenChange={setListenOpen}>
+                <DrawerContent>
+                    <DrawerHeader>
+                        <DrawerTitle style={{padding: "1rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem"}}>Open in <Share size={16} /></DrawerTitle>
+                    </DrawerHeader>
+                    <div className={styles.drawerListenButtons}>
+                        <div></div>
+                        {post.track.appleMusicUrl ? <a href={post.track.appleMusicUrl} target="_blank" rel="noopener noreferrer">
+                            <img 
+                                src={appleMusicLockup} 
+                                alt="Apple Music" 
+                                style={{height: '30px' }} 
+                            />
+                        </a> : null}
+                        {post.track.spotifyUrl ? <a href={post.track.spotifyUrl} target="_blank" rel="noopener noreferrer">
+                            <img 
+                                src={spotifyFullLogo} 
+                                alt="Spotify" 
+                                style={{ height: '30px' }} 
+                            />
+                        </a> : null}
+                        <div></div>
                     </div>
                 </DrawerContent>
             </Drawer>
