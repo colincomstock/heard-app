@@ -14,9 +14,13 @@ import {
 import { useAudioPlayer } from '@/context/AudioPlayerContext'
 import appleMusicLockup from '../../assets/apple-music-lockup-white.svg'
 import spotifyFullLogo from '../../assets/spotify-full-logo-white.png'
+import { likePost, unlikePost } from '../../lib/api/post'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { UserAuth } from '@/context/AuthContext'
 
 export default function Post(post: QueuePost) {
     
+    // Audio player context
     const {
         activeId,
         isPlaying,
@@ -25,25 +29,91 @@ export default function Post(post: QueuePost) {
         play,
         pause,
     } = useAudioPlayer();
-    const cardRef = useRef<HTMLDivElement>(null);
-
+    
+    // Determines if this post is the active one in the audio player 
+    // and calculates the progress and play/pause state accordingly
     const isActive = activeId === post.id;
     const displayProgress = isActive ? progress : 0;
     const showPause = isActive && isPlaying;
-
+    
+    // Query client for invalidating queries after like/unlike actions
+    const queryClient = useQueryClient();
+    
+    // Auth context to get the current user's session for like/unlike actions
+    const { session } = UserAuth()!;
+    
+    // State for managing drawer visibility
     const [commentsOpen, setCommentsOpen] = useState(false);
     const [listenOpen, setListenOpen] = useState(false);
+    
+    // State for managing like status and count
+    const [likedByMe, setLikedByMe] = useState(post.likedByMe);
+    const [likeCount, setLikeCount] = useState(post.likeCount);
+    
+    // Derive colors for the post card based on the track's Apple Music background color and genre badge color
+    const derivedColors = derivePostColors(post.track.appleBgColor, post.track.genres[0].badgeColor);
 
+    // Function to toggle play/pause for the post's audio preview
     function handlePlayPauseClick() {
         void toggle(post.track.songPreviewUrl, post.id);
     };
     
-    const inViewRef = useRef(false);
+    // Function to handle like/unlike actions with optimistic UI updates
+    function handleLikeClick() {
+        if ( likeMutation.isPending || unlikeMutation.isPending ) {
+            return;
+        }
+        
+        const nextLiked = !likedByMe;
+        
+        setLikedByMe(nextLiked);
+        setLikeCount((count) => nextLiked ? count + 1 : count - 1);
+        
+        if (nextLiked) {
+            likeMutation.mutate();
+        } else {
+            unlikeMutation.mutate();
+        }
+    }
+    
+    // Mutation for liking a post
+    const likeMutation = useMutation({
+        mutationFn: () => likePost(session!.access_token, post.id),
+        onSuccess: () => {
+            console.log("Post liked successfully");
+            queryClient.invalidateQueries({ queryKey: ['queue', session?.user?.id] });
+            queryClient.invalidateQueries({ queryKey: ['me', session?.user?.id] });
+        },
+        onError: (error) => {
+            console.error("Error liking post:", error);
+            setLikedByMe(false);
+            setLikeCount((count) => count - 1);
+        }
+    });
+    
+    // Mutation for unliking a post
+    const unlikeMutation = useMutation({
+        mutationFn: () => unlikePost(session!.access_token, post.id),
+        onSuccess: () => {
+            console.log("Post unliked successfully");
+            queryClient.invalidateQueries({ queryKey: ['queue', session?.user?.id] });
+            queryClient.invalidateQueries({ queryKey: ['me', session?.user?.id] });
+        },
+        onError: (error) => {
+            console.error("Error unliking post:", error);
+            setLikedByMe(true);
+            setLikeCount((count) => count + 1);
+        }
+    });
 
+    // Refs and IntersectionObserver to handle auto-play/pause when the post is in view
+    const cardRef = useRef<HTMLDivElement>(null);
+    const inViewRef = useRef(false);
+    
     useEffect(() => {
         const card = cardRef.current
         if (!card) return
-
+        
         const observer = new IntersectionObserver(
             ([entry]) => {
                 const isInView = entry.intersectionRatio >= 0.5
@@ -66,7 +136,6 @@ export default function Post(post: QueuePost) {
         return () => observer.disconnect()
     }, [post.id, post.track.songPreviewUrl, play, pause])
 
-    const derivedColors = derivePostColors(post.track.appleBgColor, post.track.genres[0].badgeColor);
 
     return (
         <>
@@ -124,8 +193,12 @@ export default function Post(post: QueuePost) {
                                         <span>{post.commentCount}</span>
                                     </div>
                                     <div className={styles.socialControlIndv}>
-                                        <Heart size={30} color={post.track.appleTextColor1} />
-                                        <span>{post.likeCount}</span>
+                                        {likedByMe ? (
+                                            <Heart size={30} color={post.track.appleTextColor1} fill={post.track.appleTextColor1} onClick={handleLikeClick} />
+                                        ) : (
+                                            <Heart size={30} color={post.track.appleTextColor1} onClick={handleLikeClick} />
+                                        )}
+                                        <span>{likeCount}</span>
                                     </div>
                                 </div>
                             </div>
