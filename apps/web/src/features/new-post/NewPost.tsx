@@ -1,11 +1,12 @@
 import styles from './NewPost.module.css'
 import { getSearchResults } from '@/lib/api/search';
 import { useState, useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
 import { UserAuth } from '@/context/AuthContext';
 import { Search } from 'lucide-react';
 import { X, Play, Pause, Check } from 'lucide-react';
 import { useAudioPlayer } from '@/context/AudioPlayerContext';
+import { createPost } from '@/lib/api/post';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 type NewPostProps = {
     onDone: () => void;
@@ -24,6 +25,8 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
     const [searchTerm, setSearchTerm] = useState('')
     const [caption, setCaption] = useState('')
     const [selectedSong, setSelectedSong] = useState<TrackSearchResult | null>(null)
+
+    const queryClient = useQueryClient();
 
     const {
         activeId,
@@ -74,6 +77,15 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
         placeholderData: (previousData) => previousData,
     });
 
+    const createPostMutation = useMutation({
+        mutationFn: (newPost: { caption: string; appleMusicTrackId: string }) => createPost(session!.access_token, newPost),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['me'] });
+            queryClient.invalidateQueries({ queryKey: ['queue'] });
+            _onDone();
+        }
+    });
+
     const hasResults = Boolean(data?.tracks?.length) && debouncedSearchTerm.length > 2;
 
     return (
@@ -83,8 +95,14 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                     <span>back</span>
                 </button>
                 <h1>New Post</h1>
-                <button className={`${styles.newPostSubmitBtn} glass-area`} disabled={!selectedSong || !caption.trim()} onClick={() => {
-                    _onDone();
+                <button className={`${styles.newPostSubmitBtn} glass-area`} disabled={!selectedSong || !caption.trim()} onClick={async () => {
+                    if (selectedSong && caption.trim()) {
+                        try {
+                            await createPostMutation.mutateAsync({ caption, appleMusicTrackId: selectedSong.id });
+                        } catch (error) {
+                            console.error('Failed to create post:', error);
+                        }
+                    }
                 }}>
                     post
                 </button>
