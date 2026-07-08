@@ -89,17 +89,24 @@ meRoute.get("/", async (c) => {
 
     const postIds = posts?.map(post => post.id) || [];
 
-    const { data: currentUserLikedPosts, error: currentUserLikedPostsError } = await supabase
-        .from('post_like')
-        .select('post_id')
-        .eq('user_id', userId)
-        .in('post_id', postIds);
-    
-    if (currentUserLikedPostsError) {
-        return c.json({ error: "Failed to fetch liked posts", details: currentUserLikedPostsError }, 500);
-    }
+    const likedPostIds = new Set<string>();
 
-    const likedPostIds = new Set(currentUserLikedPosts?.map(like => like.post_id) ?? []);
+    if (postIds.length > 0) {
+        const { data: currentUserLikedPosts, error: currentUserLikedPostsError } = await supabase
+            .from('post_like')
+            .select('post_id')
+            .eq('user_id', userId)
+            .in('post_id', postIds);
+    
+        if (currentUserLikedPostsError) {
+            return c.json({ error: "Failed to fetch liked posts", details: currentUserLikedPostsError }, 500);
+    
+        }
+
+        for (const like of currentUserLikedPosts ?? []) {
+            likedPostIds.add(like.post_id);
+        }
+    }
 
     const formattedPosts = posts?.map(post => {
     return {
@@ -109,6 +116,7 @@ meRoute.get("/", async (c) => {
         comment_count: post.comment_count,
         created_at: post.created_at,
         updated_at: post.updated_at,
+        visibility: post.visibility,
         liked_by_me: likedPostIds.has(post.id),
         track: (() => {
         const track = Array.isArray(post.track) ? post.track[0] : post.track;

@@ -76,18 +76,25 @@ queueRoute.get("/", async (c) => {
     // Added logic to check if the current logged in user has liked any of the returned posts
     const postIds = posts?.map(post => post.id) || [];
 
-    const { data: currentUserLikedPosts, error: currentUserLikedPostsError } = await supabase
-        .from('post_like')
-        .select('post_id')
-        .eq('user_id', userId)
-        .in('post_id', postIds);
+    const likedPostIds = new Set<string>();
 
-    if (currentUserLikedPostsError) {
-        return c.json({ error: "Failed to fetch liked posts", details: currentUserLikedPostsError }, 500);
+    if (postIds.length > 0) {
+        const { data: currentUserLikedPosts, error: currentUserLikedPostsError } = await supabase
+            .from('post_like')
+            .select('post_id')
+            .eq('user_id', userId)
+            .in('post_id', postIds);
+    
+        if (currentUserLikedPostsError) {
+            return c.json({ error: "Failed to fetch liked posts", details: currentUserLikedPostsError }, 500);
+    
+        }
+
+        for (const like of currentUserLikedPosts ?? []) {
+            likedPostIds.add(like.post_id);
+        }
     }
-
-    const likedPostIds = new Set(currentUserLikedPosts?.map(like => like.post_id) ?? []);
-
+    
     const formattedPosts = posts?.map(post => {
         return {
             id: post.id,

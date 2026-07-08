@@ -190,12 +190,24 @@ export default function Post(post: QueuePost) {
                                         <MessageCircleMore size={30} color={post.track.appleTextColor1} onClick={() => setCommentsOpen(true)} />
                                         <span>{post.commentCount}</span>
                                     </div>
-                                    <div className={styles.socialControlIndv}>
-                                        {likedByMe ? (
-                                            <Heart size={30} color={post.track.appleTextColor1} fill={post.track.appleTextColor1} onClick={handleLikeClick} />
-                                        ) : (
-                                            <Heart size={30} color={post.track.appleTextColor1} onClick={handleLikeClick} />
-                                        )}
+                                    <div className={styles.socialControlIndv}>                                        
+                                        <button 
+                                            type="button" 
+                                            aria-label={likedByMe ? 'Unlike post' : 'Like post'} 
+                                            onClick={handleLikeClick}
+                                            style={{
+                                                background: 'none',
+                                                border: 'none',
+                                                padding: 0,
+                                                cursor: 'pointer'
+                                            }} 
+                                        >
+                                            <Heart 
+                                                size={30} 
+                                                color={post.track.appleTextColor1} 
+                                                fill={likedByMe ? post.track.appleTextColor1 : 'none'}
+                                            />
+                                        </button>
                                         <span>{likeCount}</span>
                                     </div>
                                 </div>
