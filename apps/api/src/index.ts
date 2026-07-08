@@ -10,6 +10,7 @@ import { queueRoute } from './routes/queue'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
+// CORS middleware currently in dev configuration, should be updated for production to only allow specific origins
 app.use('*', 
   cors({
     origin: '*',

@@ -1,0 +1,1 @@
+// Placeholder for the genres route. This file is currently empty but can be used to define API endpoints related to genres in the future.

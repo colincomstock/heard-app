@@ -11,7 +11,7 @@ import {
     Pause, 
     Share,
 } from 'lucide-react'
-import { useAudioPlayer } from '@/context/AudioPlayerContext'
+import { useAudioPlayer } from '@/context/useAudioPlayer'
 import appleMusicLockup from '../../assets/apple-music-lockup-white.svg'
 import spotifyFullLogo from '../../assets/spotify-full-logo-white.png'
 import { likePost, unlikePost } from '../../lib/api/post'
@@ -249,7 +249,7 @@ export default function Post(post: QueuePost) {
                         <DrawerTitle style={{padding: "1rem"}}>Comments</DrawerTitle>
                     </DrawerHeader>
                     <div style={{ padding: '0rem 1rem 5rem 1rem', minHeight: '75vh', display: 'flex', flexDirection: 'column', gap: '1rem', overflowY: 'auto' }}>
-                        {post.comments ? post.comments.map((c: any, i: number) => (
+                        {post.comments ? post.comments.map((c, i) => (
                             <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
                                 <img src={c.pfpUrl} alt={c.displayName} style={{ width: '36px', height: '36px', borderRadius: '50%' }} />
                                 <div>

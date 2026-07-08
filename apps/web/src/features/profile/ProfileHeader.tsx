@@ -1,8 +1,9 @@
 import styles from './ProfileHeader.module.css';
 import { Button } from "../../components/ui/button";
 import { UserRoundPlus } from "lucide-react";
+import type { ProfileFull } from '@heard/types';
 
-export default function ProfileHeader(profile: any) {
+export default function ProfileHeader(profile: ProfileFull) {
     return (
         <div 
             className={styles.profileHeader}
@@ -42,7 +43,7 @@ export default function ProfileHeader(profile: any) {
             <div className={styles.profileTopGenresArea}>
                 <span className={styles.profileTopGenresLabel}>Top genres:</span>
                 <div className={styles.profileTopGenresBadges}>
-                    {profile.topGenres?.map((genre: any, index: number) => (
+                    {profile.topGenres?.map((genre, index: number) => (
                         <div key={index} className={`${styles.indvBadge} glass-area`} style={{ backgroundColor: `${genre.badgeColor}`, color: 'white' }}>
                             <span>{genre.name}</span>
                         </div>

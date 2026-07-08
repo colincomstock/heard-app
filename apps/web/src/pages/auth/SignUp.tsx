@@ -25,7 +25,7 @@ export default function SignUp() {
                 navigate('/'); // Redirect to queue page after successful signup
             } else {
                 console.error('Signup failed:', result.error);            }
-        } catch (error) {
+        } catch {
             setError('An unexpected error occurred during signup.');
         } finally {
             setLoading(false);

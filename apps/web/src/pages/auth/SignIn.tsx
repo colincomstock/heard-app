@@ -25,7 +25,7 @@ export default function SignIn() {
                 navigate('/'); // Redirect to queue page after successful signin
             } else {
                 console.error('Signin failed:', result.error);            }
-        } catch (error) {
+        } catch {
             setError('An unexpected error occurred during signin.');
         } finally {
             setLoading(false);

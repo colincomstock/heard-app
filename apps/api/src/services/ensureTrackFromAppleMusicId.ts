@@ -38,7 +38,6 @@ export async function ensureTrackFromAppleMusicId({
     }
 
     const spotifyTrackLinkId = await getSpotifyTrackByISRC(env, appleSong.attributes.isrc);
-    console.log("Spotify track data:", spotifyTrackLinkId);
 
     const appleGenres = appleSong?.relationships?.genres?.data ?? [];
     const ensuredAppleGenres = await ensureGenresFromAppleMusicTrack({

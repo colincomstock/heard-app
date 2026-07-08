@@ -1,28 +1,11 @@
 import { 
-    createContext, 
-    useContext, 
     useState, 
     useEffect, 
     useRef, 
     type ReactNode,
     useCallback
 } from 'react'
-
-// Define the shape of the audio player context value
-type AudioPlayerContextValue = {
-    isMuted: boolean;
-    isPlaying: boolean;
-    currentSrc: string | null;
-    activeId: string | null;
-    progress: number;
-    play: (src: string, id: string) => Promise<void>;
-    pause: (ownerId?: string) => void;
-    toggle: (src: string, id: string) => Promise<void>;
-    setMuted: (value: boolean) => void;
-};
-
-// Single Appwide Audio Player Context
-const AudioPlayerContext = createContext<AudioPlayerContextValue | undefined>(undefined);
+import { AudioPlayerContext } from './audioPlayerContext'
 
 // Provider component to wrap the application and provide audio player state and functions
 export function AudioPlayerProvider({ children }: { children: ReactNode }) {
@@ -160,17 +143,6 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
         </AudioPlayerContext.Provider>
     );
 }
-
-// Safety hook to use the AudioPlayerContext, ensuring it is used within the provider
-export function useAudioPlayer() {
-    const context = useContext(AudioPlayerContext);
-
-    if (!context) {
-        throw new Error('useAudioPlayer must be used within an AudioPlayerProvider');
-    }
-
-    return context;
-};
 
 
 
