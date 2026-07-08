@@ -9,6 +9,7 @@ export type PostCore = {
     likeCount: number;
     commentCount: number;
     visibility: 'public' | 'private';
+    likedByMe: boolean;
     createdAt: string;
     updatedAt: string;
 };

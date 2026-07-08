@@ -56,7 +56,7 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                                     <span>{post.commentCount}</span>
                                 </div>
                                 <div>
-                                    <Heart size={14} />
+                                    {post.likedByMe ? <Heart fill={post.track.appleTextColor2} size={14} /> : <Heart size={14} /> }
                                     <span>{post.likeCount}</span>
                                 </div>
                             </div>

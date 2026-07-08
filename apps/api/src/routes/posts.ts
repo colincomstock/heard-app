@@ -5,6 +5,7 @@ import { ensureTrackFromAppleMusicId } from "../services/ensureTrackFromAppleMus
 import { searchTracksToPost } from "../services/searchTracksToPost";
 import { searchAppleMusicTracksByQuery } from "../services/getAppleMusicResource";
 import createUserPost from "../services/createUserPost";
+import { likePost, unlikePost } from "../services/updatePostLike";
 
 export const PostsRoute = new Hono<{ 
     Bindings: Bindings, 
@@ -88,5 +89,57 @@ PostsRoute.get("/search-tracks-test", async (c) => {
         return c.json(
             {
                 error: "Search failed", detail: error instanceof Error ? error.message : String(error) }, 500);
+    }
+});
+
+// Endpoint to like a post
+PostsRoute.post("/:postId/like", async (c) => {
+    try {
+        const postId = c.req.param("postId");
+        if (!postId) {
+            return c.json({ error: "Missing postId" }, 400);
+        }
+
+        const supabase = createSupabaseClient(c.env);
+        const userId = c.get("userId");
+
+        const newLike = await likePost({ supabase, userId, postId });
+
+        return c.json({ message: "Post liked successfully", newLike });
+
+    } catch (error) {
+        console.error("Error liking post:", error);
+        return c.json(
+            {
+                error: error instanceof Error ? error.message : "Like post failed",
+            },
+            500
+        );
+    }
+});
+
+// Endpoint to unlike a post
+PostsRoute.delete("/:postId/unlike", async (c) => {
+    try {
+        const postId = c.req.param("postId");
+        if (!postId) {
+            return c.json({ error: "Missing postId" }, 400);
+        }
+
+        const supabase = createSupabaseClient(c.env);
+        const userId = c.get("userId");
+
+        const newUnlike = await unlikePost({ supabase, userId, postId });
+
+        return c.json({ message: "Post unliked successfully", newUnlike });
+
+    } catch (error) {
+        console.error("Error unliking post:", error);
+        return c.json(
+            {
+                error: error instanceof Error ? error.message : "Unlike post failed",
+            },
+            500
+        );
     }
 });
