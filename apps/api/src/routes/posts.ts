@@ -5,7 +5,7 @@ import { ensureTrackFromAppleMusicId } from "../services/ensureTrackFromAppleMus
 import { searchTracksToPost } from "../services/searchTracksToPost";
 import { searchAppleMusicTracksByQuery } from "../services/getAppleMusicResource";
 import createUserPost from "../services/createUserPost";
-import { likePost , unlikePost } from "../services/updatePostLike";
+import { likePost, unlikePost } from "../services/updatePostLike";
 
 export const PostsRoute = new Hono<{ 
     Bindings: Bindings, 

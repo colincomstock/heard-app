@@ -1,4 +1,3 @@
-
 type PostRequest = {
     caption: string;
     appleMusicTrackId: string;
