@@ -11,9 +11,8 @@ export default function SignUp() {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const { session, signUpNewUser } =  UserAuth()!;
+    const { signUpNewUser } = UserAuth()!;
     const navigate = useNavigate();
-    console.log('Current session:', session);
 
     async function handleSignup(e: React.FormEvent) {
         e.preventDefault();
@@ -21,7 +20,6 @@ export default function SignUp() {
         try {
             const result = await signUpNewUser(email, password);
             if (result.success) {
-                console.log('User signed up successfully:', result.data);
                 navigate('/'); // Redirect to queue page after successful signup
             } else {
                 console.error('Signup failed:', result.error);            }

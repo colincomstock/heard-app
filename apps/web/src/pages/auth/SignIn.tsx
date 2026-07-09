@@ -11,9 +11,8 @@ export default function SignIn() {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const { session, signInUser } = UserAuth()!;
+    const { signInUser } = UserAuth()!;
     const navigate = useNavigate();
-    console.log('Current session:', session);
 
     async function handleSignIn(e: React.FormEvent) {
         e.preventDefault();
@@ -21,7 +20,6 @@ export default function SignIn() {
         try {
             const result = await signInUser(email, password);
             if (result.success) {
-                console.log('User signed in successfully:', result.data);
                 navigate('/'); // Redirect to queue page after successful signin
             } else {
                 console.error('Signin failed:', result.error);            }
