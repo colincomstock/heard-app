@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import type { Bindings } from '../types/bindings'
 import { createSupabaseClient } from '../lib/supabase'
 import keysToCamelCase from '../lib/case'
-import { TrackGenreRow } from '../types/db'
+import type { TrackGenreRow } from '../types/db'
 
 export const profilesRoute = new Hono<{ Bindings: Bindings }>()
 

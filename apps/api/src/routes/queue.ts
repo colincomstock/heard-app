@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { createSupabaseClient } from "../lib/supabase";
 import type { Bindings, AuthVariables } from "../types/bindings";
 import keysToCamelCase from "../lib/case";
-import { TrackGenreRow } from "../types/db";
+import type { TrackGenreRow } from "../types/db";
 
 type CommentProfile = {
     id: string;
