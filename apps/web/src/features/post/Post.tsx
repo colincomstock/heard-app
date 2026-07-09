@@ -233,7 +233,7 @@ export default function Post(post: QueuePost) {
                                 </div>
                             </div>
                             <div className={styles.postTime}>
-                                <span>{timeAgo(post.updatedAt)}</span>
+                                <span>{timeAgo(post.createdAt)}</span>
                             </div>
                         </div>
                         <div className={`${styles.userTextPost} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
