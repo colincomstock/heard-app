@@ -3,7 +3,7 @@ export type TrackSearchResult = {
     name: string;
     artistName: string;
     coverUrl: string;
-    previewUrl: string;
+    previewUrl: string | null;
     appleMusicUrl: string;
     genres: string[];
 };

@@ -1,5 +1,7 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
+
 type LikePostArgs = {
-    supabase: any;
+    supabase: SupabaseClient;
     userId: string;
     postId: string;
 };

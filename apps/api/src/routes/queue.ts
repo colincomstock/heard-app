@@ -2,6 +2,24 @@ import { Hono } from "hono";
 import { createSupabaseClient } from "../lib/supabase";
 import type { Bindings, AuthVariables } from "../types/bindings";
 import keysToCamelCase from "../lib/case";
+import { TrackGenreRow } from "../types/db";
+
+type CommentProfile = {
+    id: string;
+    handle: string;
+    display_name: string;
+    pfp_url: string;
+};
+
+type PostComment = {
+    id: string;
+    user_id: string;
+    body: string;
+    like_count: number;
+    created_at: string;
+    updated_at: string;
+    profile: CommentProfile | CommentProfile[] | null;
+};
 
 export const queueRoute = new Hono<{ Bindings: Bindings, Variables: AuthVariables }>();
 
@@ -134,20 +152,21 @@ queueRoute.get("/", async (c) => {
                     apple_text_color_4: track.apple_text_color_4 ?? '#000000',
                     genres:
                     (Array.isArray(track.track_genre) ? track.track_genre : [])
-                        .map((trackGenre: any) => {
-                        const genre = Array.isArray(trackGenre.genre) ? trackGenre.genre[0] : trackGenre.genre;
+                        .map((trackGenre: TrackGenreRow) => {
+                            const genre = Array.isArray(trackGenre.genre) ? trackGenre.genre[0] : trackGenre.genre;
+                            if (!genre) return null;
                             return {
                                 id: genre.id,
                                 name: genre.name,
                                 slug: genre.slug,
                                 badge_color: genre.badge_color,
                             };
-                            })
+                        })
                         .filter(Boolean) ?? [],
 
                 };
             })(),
-            comments: (Array.isArray(post.post_comment) ? post.post_comment : []).map((comment: any) => {
+            comments: (Array.isArray(post.post_comment) ? post.post_comment : []).map((comment: PostComment) => {
                         const commentProfile = Array.isArray(comment.profile) ? comment.profile[0] : comment.profile;
                         return {
                             id: comment.id,

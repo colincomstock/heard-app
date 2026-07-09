@@ -1,29 +1,15 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Bindings } from "../types/bindings";
 import { ensureGenreByAppleGenre } from "./ensureGenreByAppleGenre";
-import { getAppleMusicGenreById } from "./getAppleMusicResource";
+import type { 
+    NormalizedAppleGenre,
+    AppleMusicGenreRef,
+} from "../types/appleMusic";
 
 type EnsureGenresArgs = {
-    supabase: any;
+    supabase: SupabaseClient;
     env: Bindings;
-    appleMusicTrackGenres: any[];
-};
-
-type AppleMusicGenreRef = {
-    id: string;
-    type: "genres";
-    href: string;
-    attributes: {
-        name: string;
-        parentId?: string;
-        parentName?: string;
-    };
-};
-
-type NormalizedAppleGenre = {
-    id: string;
-    name: string;
-    parentAppleGenreId: string | undefined;
-    parentAppleGenreName: string | undefined;
+    appleMusicTrackGenres: AppleMusicGenreRef[];
 };
 
 function normalizeAppleMusicGenre(raw: AppleMusicGenreRef): NormalizedAppleGenre {

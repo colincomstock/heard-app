@@ -149,6 +149,7 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                                                 }
                                                 onClick={(event) => {
                                                     event.stopPropagation();
+                                                    if (!track.previewUrl) return;
                                                     handlePlayPauseClick(track.previewUrl, track.id);
                                                 }}
                                             >

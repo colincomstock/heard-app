@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { createSupabaseClient } from "../lib/supabase";
 import type { Bindings, AuthVariables } from "../types/bindings";
 import keysToCamelCase from "../lib/case";
+import type { TrackGenreRow } from "../types/db";
 
 export const meRoute = new Hono<{ Bindings: Bindings, Variables: AuthVariables }>();
 
@@ -137,7 +138,7 @@ meRoute.get("/", async (c) => {
             apple_text_color_4: track.apple_text_color_4 ?? '#000000',
             genres:
             (Array.isArray(track.track_genre) ? track.track_genre : [])
-                .map((trackGenre: any) => {
+                .map((trackGenre: TrackGenreRow) => {
                 const genre = Array.isArray(trackGenre.genre) ? trackGenre.genre[0] : trackGenre.genre;
                 if (!genre) return null;
                     return {
