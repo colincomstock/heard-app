@@ -4,20 +4,13 @@ import { useState, useEffect } from 'react'
 import { UserAuth } from '@/context/AuthContext';
 import { Search } from 'lucide-react';
 import { X, Play, Pause, Check } from 'lucide-react';
-import { useAudioPlayer } from '@/context/AudioPlayerContext';
+import { useAudioPlayer } from '@/context/useAudioPlayer';
 import { createPost } from '@/lib/api/post';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { TrackSearchResult } from '@heard/types';
 
 type NewPostProps = {
     onDone: () => void;
-};
-
-type TrackSearchResult = {
-    id: string;
-    name: string;
-    artistName: string;
-    coverUrl: string;
-    previewUrl: string;
 };
 
 export default function NewPost({ onDone: _onDone }: NewPostProps) {
@@ -86,7 +79,8 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
         }
     });
 
-    const hasResults = Boolean(data?.tracks?.length) && debouncedSearchTerm.length > 2;
+    const tracks = data?.tracks || [];
+    const hasResults = tracks.length > 0 && debouncedSearchTerm.length > 2;
 
     return (
         <div className={styles.newPostPage}>
@@ -125,7 +119,7 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                     {hasResults ? 
                         (
                             <div className={styles.searchResultsList}>
-                                {data.tracks.map((track: TrackSearchResult) => {
+                                {tracks.map((track) => {
                                     const isTrackActive = activeId === track.id;
                                     const showTrackPause = isPlaying && isTrackActive;
                                     const trackDisplayProgress = isTrackActive ? progress : 0;
@@ -155,6 +149,7 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
                                                 }
                                                 onClick={(event) => {
                                                     event.stopPropagation();
+                                                    if (!track.previewUrl) return;
                                                     handlePlayPauseClick(track.previewUrl, track.id);
                                                 }}
                                             >

@@ -1,5 +1,7 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
+
 type CreateUserPostArgs = {
-    supabase: any;
+    supabase: SupabaseClient;
     userId: string;
     trackId: string;
     caption?: string;
@@ -30,6 +32,6 @@ export default async function createUserPost({
         return newPost;
     } catch (error) {
         console.error("Error creating post:", error);
-        throw new Error("Create post failed");
+        throw new Error("Create post failed", { cause: error });
     }
 };

@@ -1,11 +1,16 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { supabase } from "../lib/supabaseClient";
+import type { Session, AuthError, AuthResponse } from "@supabase/supabase-js";
+
+type AuthResult<TData = undefined> = 
+    | { success: true; data?: TData }
+    | { success: false; error?: AuthError | Error | string };
 
 interface AuthContextType {
-    session: any;
-    signUpNewUser: (email: string, password: string) => Promise<{ success: boolean; data?: any; error?: any }>;
-    signInUser: (email: string, password: string) => Promise<{ success: boolean; data?: any; error?: any }>;
-    signOutUser: () => Promise<{ success: boolean; error?: any }>;
+    session: Session | undefined | null;
+    signUpNewUser: (email: string, password: string) => Promise<AuthResult<AuthResponse["data"]>>;
+    signInUser: (email: string, password: string) => Promise<AuthResult<AuthResponse["data"]>>;
+    signOutUser: () => Promise<AuthResult>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -15,10 +20,10 @@ interface AuthProviderProps {
 }
 
 export const AuthContextProvider = ({ children }: AuthProviderProps) => {
-    const [session, setSession] = useState<any>(undefined);
+    const [session, setSession] = useState<Session | undefined | null>(undefined);
 
     // Sign Up
-    const signUpNewUser = async (email: string, password: string) => {
+    const signUpNewUser = async (email: string, password: string): Promise<AuthResult<AuthResponse["data"]>> => {
         const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
@@ -46,7 +51,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
     }, []);
 
     // Sign In
-    const signInUser = async (email: string, password: string) => {
+    const signInUser = async (email: string, password: string): Promise<AuthResult<AuthResponse["data"]>> => {
         try {
             const { data, error } = await supabase.auth.signInWithPassword({
                 email: email,
@@ -54,19 +59,19 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
             });
             if (error) {
                 console.error('Error signing in:', error);
-                return { success: false, error: error.message };
+                return { success: false, error };
             }
-            console.log('Sign in successful:', data);
             return { success: true, data };
         } catch (error) {
             console.error('Error signing in:', error);
-            return { success: false, error };
+            return { success: false, error: error instanceof Error ? error : new Error("Unknown sign-in error") };
         }
     };
 
     // Sign Out
-    const signOutUser = async () => {
+    const signOutUser = async (): Promise<AuthResult> => {
         const { error } = await supabase.auth.signOut();
+        
         if (error) {
             console.error('Error signing out:', error);
             return { success: false, error };

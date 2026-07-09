@@ -4,8 +4,7 @@ import Post from '../../features/post/Post'
 import { useQuery } from '@tanstack/react-query'
 import { UserAuth } from '@/context/AuthContext'
 import { getQueuePosts } from '@/lib/api/queue'
-import type { QueuePost } from '@heard/types'
-import { useAudioPlayer } from '@/context/AudioPlayerContext'
+import { useAudioPlayer } from '@/context/useAudioPlayer'
 
 export default function QueueFeed() {
 
@@ -31,7 +30,7 @@ export default function QueueFeed() {
     return (
         <>
             <div className={styles.feed}>
-                {data.posts && data.posts.length > 0 ? data.posts.map((post: QueuePost) => (
+                {data.posts && data.posts.length > 0 ? data.posts.map((post) => (
                     <Post key={post.id} {...post}/>
                 )) : <div>No posts available.</div>}
             </div>

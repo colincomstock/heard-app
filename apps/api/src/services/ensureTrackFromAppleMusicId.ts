@@ -1,10 +1,13 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Bindings } from "../types/bindings";
 import { getAppleMusicTrackById } from "./getAppleMusicResource";
 import { ensureGenresFromAppleMusicTrack } from "./ensureGenresFromAppleMusicTrack";
 import { getSpotifyTrackByISRC } from "./getSpotifyResource";
+import type { AppleMusicSong } from "../types/appleMusic";
+import type { SpotifyTrackMatch } from "../types/spotify";
 
 type EnsureTrackArgs = {
-    supabase: any;
+    supabase: SupabaseClient;
     env: Bindings;
     appleMusicTrackId: string;
 };
@@ -37,8 +40,9 @@ export async function ensureTrackFromAppleMusicId({
         throw new Error("Apple Music track not found");
     }
 
-    const spotifyTrackLinkId = await getSpotifyTrackByISRC(env, appleSong.attributes.isrc);
-    console.log("Spotify track data:", spotifyTrackLinkId);
+    const spotifyTrackLinkId = appleSong.attributes.isrc 
+        ? await getSpotifyTrackByISRC(env, appleSong.attributes.isrc) 
+        : null;
 
     const appleGenres = appleSong?.relationships?.genres?.data ?? [];
     const ensuredAppleGenres = await ensureGenresFromAppleMusicTrack({
@@ -78,7 +82,10 @@ export async function ensureTrackFromAppleMusicId({
 }
 
 // Helper function to map Apple Music track data to the database schema
-function mapAppleSpotifyToTrackInsert(appleSong: any, spotifyTrackLinkId: any): any {
+function mapAppleSpotifyToTrackInsert(
+    appleSong: AppleMusicSong, 
+    spotifyTrackLinkId: SpotifyTrackMatch | null
+) {
     const attrs = appleSong.attributes;
     
     return {

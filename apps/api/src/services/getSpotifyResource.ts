@@ -1,10 +1,10 @@
 import { Bindings } from "../types/bindings";
 import getSpotifyAccessToken from "../lib/getSpotifyAccessToken";
-
-type SpotifyTrackMatch = {
-    spotifyTrackId: string;
-    spotifyUrl: string;
-};
+import type {
+    SpotifyTrackMatch,
+    SpotifyTrackSearchItem,
+    SpotifySearchResponse,
+} from "../types/spotify";
 
 export async function getSpotifyTrackByISRC(
     env: Bindings,
@@ -31,15 +31,15 @@ export async function getSpotifyTrackByISRC(
         throw new Error("Failed to get Spotify track by ISRC");
     }
 
-    const data = await response.json();
+    const data = await response.json() as SpotifySearchResponse;
     const track = data.tracks?.items?.[0];
     if (!track) {
         return null;
     }
-    return TruncateSpotifyTrackResult(track);
+    return truncateSpotifyTrackResult(track);
 }
 
-function TruncateSpotifyTrackResult(track: any): SpotifyTrackMatch {
+function truncateSpotifyTrackResult(track: SpotifyTrackSearchItem): SpotifyTrackMatch {
     return {
         spotifyTrackId: track.id,
         spotifyUrl: track.external_urls?.spotify ?? "",

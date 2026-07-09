@@ -1,4 +1,5 @@
-export type { Genre } from './genre';
+export type { Genre, GenreCore, GenreProfile } from './genre';
 export type { TrackCore, TrackQueue } from './track';
 export type { PostCore, ProfilePost, QueuePost } from './post';
-export type { Profile } from './profile';
+export type { ProfileCore, ProfileFull } from './profile';
+export type { TrackSearchResult, TrackSearchResultResponse } from './searchResult';

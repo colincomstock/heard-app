@@ -1,4 +1,6 @@
-export async function getSearchResults(query: string, token: string): Promise<any> {
+import type { TrackSearchResultResponse } from '@heard/types';
+
+export async function getSearchResults(query: string, token: string): Promise<TrackSearchResultResponse> {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/posts/search-tracks?term=${encodeURIComponent(query)}`, {
         method: "GET",
         headers: {
@@ -9,5 +11,5 @@ export async function getSearchResults(query: string, token: string): Promise<an
     if (!response.ok) {
         throw new Error(`Error fetching search results: ${response.statusText}`);
     }
-    return response.json();
+    return response.json() as Promise<TrackSearchResultResponse>;
 };

@@ -1,0 +1,1 @@
+// Placeholder for the comments route. This file is currently empty but can be used to define API endpoints related to comments in the future.

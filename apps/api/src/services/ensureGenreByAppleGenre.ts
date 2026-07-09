@@ -1,8 +1,13 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Bindings } from "../types/bindings";
 import { getAppleMusicGenreById } from "./getAppleMusicResource";
+import type {
+    AppleMusicGenreRef,
+    NormalizedAppleGenre,
+} from "../types/appleMusic";
 
 type EnsureGenreArgs = {
-    supabase: any;
+    supabase: SupabaseClient;
     env: Bindings;
     appleGenre: NormalizedAppleGenre;
 };
@@ -21,24 +26,6 @@ type DbGenre = {
     needs_review: boolean;
     created_at: string;
     updated_at: string;
-};
-
-type AppleMusicGenreRef = {
-    id: string;
-    type: "genres";
-    href: string;
-    attributes: {
-        name: string;
-        parentId?: string;
-        parentName?: string;
-    };
-};
-
-type NormalizedAppleGenre = {
-    id: string;
-    name: string;
-    parentAppleGenreId: string | undefined;
-    parentAppleGenreName: string | undefined;
 };
 
 const MUSIC_GENRE_ID = "34"; // The Apple Music genre ID for the top-level "Music" genre

@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { Outlet, useMatches } from 'react-router-dom'
 import { Drawer, DrawerContent } from '../components/ui/drawer'
 import NewPost from '../features/new-post/NewPost'
-import { useAudioPlayer } from '@/context/AudioPlayerContext'
+import { useAudioPlayer } from '@/context/useAudioPlayer'
 
 export default function App() {
   const { isMuted, setMuted } = useAudioPlayer()

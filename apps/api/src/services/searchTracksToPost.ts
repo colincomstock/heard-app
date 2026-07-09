@@ -1,6 +1,7 @@
 import type { Bindings } from "../types/bindings";
-import generateAppleMusicToken from "../lib/generateAppleMusicToken";
 import { searchAppleMusicTracksByQuery } from "./getAppleMusicResource";
+import type { TrackSearchResult } from "@heard/types";
+import type { AppleMusicSong } from "../types/appleMusic";
 
 type SearchTrackToPostArgs = {
     env: Bindings;
@@ -11,7 +12,7 @@ type SearchTrackToPostArgs = {
 export async function searchTracksToPost({
     env,
     query,
-}: SearchTrackToPostArgs) {
+}: SearchTrackToPostArgs): Promise<TrackSearchResult[]> {
     const tracks = await searchAppleMusicTracksByQuery(env, query);
 
     if (!tracks || tracks.length === 0) {
@@ -22,13 +23,13 @@ export async function searchTracksToPost({
 }
 
 // Helper function to truncate the track results to only include necessary information for posting
-function truncateTrackResults(tracks: any[]): any[] {
+function truncateTrackResults(tracks: AppleMusicSong[]): TrackSearchResult[] {
     return tracks.map((track) => ({
         id: track.id,
         name: track.attributes.name,
         artistName: track.attributes.artistName,
         coverUrl: track.attributes.artwork.url.replace("{w}x{h}", "200x200"),
-        genres: track.attributes.genreNames,
+        genres: track.attributes.genreNames ?? [],
         previewUrl: track.attributes.previews?.[0]?.url || null,
         appleMusicUrl: track.attributes.url,
     }));

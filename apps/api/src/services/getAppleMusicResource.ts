@@ -1,11 +1,17 @@
 import type { Bindings } from "../types/bindings";
+import type {
+    AppleMusicDataResponse,
+    AppleMusicGenreRef,
+    AppleMusicSong,
+    AppleMusicSearchResponse,
+} from "../types/appleMusic";
 import generateAppleMusicToken from "../lib/generateAppleMusicToken";
 
 // This function fetches a track from Apple Music by its ID and returns the track data.
 export async function getAppleMusicTrackById(
     env: Bindings,
     appleMusicTrackId: string
-) {
+): Promise<AppleMusicSong | null> {
     const token = await generateAppleMusicToken(env);
 
     const appleMusicTrackUrl = `https://api.music.apple.com/v1/catalog/us/songs/${appleMusicTrackId}/?include=genres`;
@@ -23,7 +29,7 @@ export async function getAppleMusicTrackById(
         );
     }
 
-    const json = await res.json() as any;
+    const json = await res.json() as AppleMusicDataResponse<AppleMusicSong>;
     return json.data[0] ?? null;
 };
 
@@ -31,7 +37,7 @@ export async function getAppleMusicTrackById(
 export async function getAppleMusicGenreById(
     env: Bindings,
     appleMusicGenreId: string
-) {
+): Promise<AppleMusicGenreRef | null> {
     const token = await generateAppleMusicToken(env);
 
     const appleMusicGenreUrl = `https://api.music.apple.com/v1/catalog/us/genres/${appleMusicGenreId}`;
@@ -49,7 +55,7 @@ export async function getAppleMusicGenreById(
         );
     }
 
-    const json = await res.json() as any;
+    const json = await res.json() as AppleMusicDataResponse<AppleMusicGenreRef>;
     return json.data[0] ?? null;
 };
 
@@ -58,7 +64,7 @@ export async function getAppleMusicGenreById(
 export async function searchAppleMusicTracksByQuery(
     env: Bindings, 
     query: string
-) {
+): Promise<AppleMusicSong[]> {
     const token = await generateAppleMusicToken(env);
 
     const params = new URLSearchParams(
@@ -84,6 +90,6 @@ export async function searchAppleMusicTracksByQuery(
         );
     }
 
-    const json = await res.json() as any;
+    const json = await res.json() as AppleMusicSearchResponse;
     return json.results.songs?.data ?? [];
 };

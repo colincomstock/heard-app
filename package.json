@@ -8,7 +8,15 @@
   "scripts": {
     "dev:api": "npm run dev --workspace=apps/api",
     "dev:web": "npm run dev:host --workspace=apps/web",
-    "build:api": "npm run deploy --workspace=apps/api",
-    "build:web": "npm run build --workspace=apps/web"
+
+    "deploy:api": "npm run deploy --workspace=apps/api",
+    "build:web": "npm run build --workspace=apps/web",
+
+    "lint:api": "npm run lint --workspace=apps/api",
+    "lint:web": "npm run lint --workspace=apps/web",
+
+    "typecheck:api": "npm run typecheck --workspace=apps/api",
+    
+    "check": "npm run build:web && npm run lint:web && npm run typecheck:api && npm run lint:api"
   }
 }

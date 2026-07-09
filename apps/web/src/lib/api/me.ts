@@ -1,6 +1,6 @@
-import type { Profile, ProfilePost } from '@heard/types';
+import type { ProfileFull, ProfilePost } from '@heard/types';
 
-type MeResponse = { profile: Profile; posts: ProfilePost[] };
+type MeResponse = { profile: ProfileFull; posts: ProfilePost[] };
 
 export async function getMe(token: string): Promise<MeResponse> {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/me`, {
