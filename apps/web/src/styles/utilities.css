@@ -1,17 +1,17 @@
 .glass-area {
   background: #ffffff;
-  background: linear-gradient(10deg, rgba(136, 136, 136, 0.15) 0%, rgba(201, 201, 201, 0.2) 38%, rgba(126, 126, 126, 0.15) 100%);
-  box-shadow: inset 0px 0px 10px #ffffff23;
-  border: 1px solid rgba(255, 255, 255, 0.233);
+  background: linear-gradient(10deg, rgba(136, 136, 136, 0.1) 0%, rgba(201, 201, 201, 0.1) 38%, rgba(126, 126, 126, 0.1) 100%);
+  box-shadow: inset 0px 0px 0.25rem #ffffff12;
+  border: 1px solid rgba(255, 255, 255, 0.133);
   backdrop-filter:brightness(1.2);
 }
 
 .glass-area-light-bg {
   background: #ffffff;
-  background: linear-gradient(10deg, rgba(92, 92, 92, 0.15) 0%, rgba(146, 146, 146, 0.2) 38%, rgba(73, 73, 73, 0.15) 100%);
-  box-shadow: inset 0px 0px 2rem #ffffff5b, 0px 0px 1rem #00000010;
+  background: linear-gradient(10deg, rgba(92, 92, 92, 0.1) 0%, rgba(146, 146, 146, 0.1) 38%, rgba(73, 73, 73, 0.1) 100%);
+  box-shadow: inset 0px 0px 0.25rem #ffffff23, 0px 0px 1rem #00000010;
   backdrop-filter: brightness(1.2);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .single-line-clamp {

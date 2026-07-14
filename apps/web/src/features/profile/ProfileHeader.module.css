@@ -18,17 +18,6 @@
   pointer-events: none;
 }
 
-.profileHeaderTopMask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 0;
-  background: transparent;
-  z-index: 1;
-  pointer-events: none;
-}
-
 .profileHeaderBg::before {
   content: "";
   position: absolute;
@@ -155,6 +144,7 @@
   font-weight: 500;
   width: 100%;
   border-radius: 9999px;
+  background-color: rgb(10, 10, 10);
 
 }
 
