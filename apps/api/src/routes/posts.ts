@@ -6,6 +6,7 @@ import { searchTracksToPost } from "../services/searchTracksToPost";
 import { searchAppleMusicTracksByQuery } from "../services/getAppleMusicResource";
 import createUserPost from "../services/createUserPost";
 import { likePost, unlikePost } from "../services/updatePostLike";
+import createPostComment from "../services/createPostComment";
 
 export const PostsRoute = new Hono<{ 
     Bindings: Bindings, 
@@ -143,3 +144,41 @@ PostsRoute.delete("/:postId/unlike", async (c) => {
         );
     }
 });
+
+// Endpoint to create a comment on a post
+PostsRoute.post("/:postId/add-comment", async (c) => {
+    try {
+        const postId = c.req.param("postId");
+        if (!postId) {
+            return c.json({ error: "Missing postId" }, 400);
+        }
+
+        const { body } = await c.req.json();
+
+        if (!body) {
+            return c.json({ error: "Missing comment body" }, 400);
+        }
+
+        const supabase = createSupabaseClient(c.env);
+        const userId = c.get("userId");
+
+        const newComment = await createPostComment({ 
+            supabase,
+            userId,
+            postId,
+            body
+        });
+
+        return c.json({ message: "Comment created successfully", newComment });
+
+    } catch (error) {
+        console.error("Error creating comment:", error);
+        return c.json(
+            {
+                error: error instanceof Error ? error.message : "Create comment failed",
+            },
+            500
+        );
+    }
+});
+        
