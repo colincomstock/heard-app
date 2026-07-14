@@ -10,6 +10,7 @@ import {
     Play, 
     Pause, 
     Share,
+    PencilLine,
 } from 'lucide-react'
 import { useAudioPlayer } from '@/context/useAudioPlayer'
 import appleMusicLockup from '../../assets/apple-music-lockup-white.svg'
@@ -17,6 +18,7 @@ import spotifyFullLogo from '../../assets/spotify-full-logo-white.png'
 import { likePost, unlikePost } from '../../lib/api/post'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { UserAuth } from '@/context/AuthContext'
+import pfpPlaceholder from '../../assets/profile-picture-icon.png'
 
 export default function Post(post: QueuePost) {
     
@@ -45,6 +47,8 @@ export default function Post(post: QueuePost) {
     // State for managing drawer visibility
     const [commentsOpen, setCommentsOpen] = useState(false);
     const [listenOpen, setListenOpen] = useState(false);
+
+    const [comment, setComment] = useState('');
     
     // State for managing like status and count
     const [likedByMe, setLikedByMe] = useState(post.likedByMe);
@@ -74,6 +78,15 @@ export default function Post(post: QueuePost) {
         } else {
             unlikeMutation.mutate();
         }
+    }
+
+    function handleCommentChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+        const textarea = e.currentTarget;
+
+        textarea.style.height = "auto";
+        textarea.style.height = `${textarea.scrollHeight}px`;
+        
+        setComment(e.target.value.replace(/[\r\n]+/g, " "))
     }
     
     // Mutation for liking a post
@@ -248,18 +261,48 @@ export default function Post(post: QueuePost) {
                     <DrawerHeader>
                         <DrawerTitle style={{padding: "1rem"}}>Comments</DrawerTitle>
                     </DrawerHeader>
-                    <div style={{ padding: '0rem 1rem 5rem 1rem', minHeight: '75vh', display: 'flex', flexDirection: 'column', gap: '1rem', overflowY: 'auto' }}>
-                        {post.comments ? post.comments.map((c, i) => (
+                    <div className={styles.commentArea}>
+                        {post.comments.length > 0 ? post.comments.map((c, i) => (
                             <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                                <img src={c.pfpUrl} alt={c.displayName} style={{ width: '36px', height: '36px', borderRadius: '50%' }} />
+                                <img src={c.profile.pfpUrl} alt={c.profile.displayName} style={{ width: '2.5rem', height: '2.5rem', border: '1px solid #ffffff3f', borderRadius: '50%' }} />
                                 <div>
-                                    <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{c.displayName}</div>
-                                    <div style={{ fontSize: '0.875rem' }}>{c.comment}</div>
-                                    <div style={{ fontSize: '0.75rem', color: '#666' }}>{c.likes} likes</div>
+                                    <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{c.profile.displayName}</div>
+                                    <div style={{ fontSize: '0.875rem' }}>{c.body}</div>
+                                    <div style={{ fontSize: '0.75rem', color: '#666' }}>{c.likeCount} likes</div>
                                     <div style={{ fontSize: '0.75rem', color: '#666' }}>{timeAgo(c.createdAt)}</div>
                                 </div>
                             </div>
-                        )) : null}
+                        )) 
+                            : <div className={styles.noCommentsYet}>
+                                <PencilLine size={20} color={'#ffffffa9'} />
+                                <span>be the first to share your thoughts.</span>
+                            </div>
+                        }
+                        <div className={styles.commentInputContainer}>
+                            <div className={styles.commentDivider}></div>
+                            <div className={styles.commentInputArea}>
+                                <img src={pfpPlaceholder} alt="User profile picture" className={styles.commentInputPfp} />
+                                <textarea
+                                    id="post-comment"
+                                    name="comment"
+                                    value={comment}
+                                    onChange={(e) => {
+                                        handleCommentChange(e);
+                                    }}
+                                    placeholder="add a comment..."
+                                    maxLength={140}
+                                    rows={1}
+                                    style={comment.length > 0 ? { background: 'transparent' } : {} }
+                                />
+                                <button className={`${comment.length > 0 ? styles.activeBtn : styles.inactiveBtn} ${styles.commentPostBtn} glass-area`} disabled={comment.length === 0} onClick={async () => {
+                                }}>
+                                    post
+                                </button>
+                            </div>
+                            {
+                                comment.length > 0 && <span className={styles.commentCharacterCount}>{comment.length}/140</span>
+                            }
+                        </div>
                     </div>
                 </DrawerContent>
             </Drawer>

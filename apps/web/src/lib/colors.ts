@@ -27,13 +27,17 @@ const FALLBACK: DerivedPostColors = {
 }
 
 const BADGE_LOW_CONTRAST_THRESHOLD = 2; // Contrast ratio below which the badge is considered low contrast
-const LUMINANCE_THRESHOLD = 0.5; // Luminance threshold to determine if a color is light or dark
+const LUMINANCE_THRESHOLD = 0.4; // Luminance threshold to determine if a color is light or dark
 const LIGHT_BG_SAT_ADJUSTMENT = -15; // Saturation adjustment for light backgrounds
 const LIGHT_BG_LUM_ADJUSTMENT = -10; // Luminance adjustment for light backgrounds
 const LIGHT_BORDER_SAT_ADJUSTMENT = -30; // Saturation adjustment for borders on light backgrounds
 const LIGHT_BORDER_LUM_ADJUSTMENT = -30; // Luminance adjustment for borders on light backgrounds
 const DARK_BORDER_SAT_ADJUSTMENT = 15; // Saturation adjustment for borders on dark backgrounds
 const DARK_BORDER_LUM_ADJUSTMENT = 15; // Luminance adjustment for borders on dark backgrounds
+const BLACK_BORDER_SAT_ADJUSTMENT = 0; // Saturation adjustment for borders on black backgrounds
+const BLACK_BORDER_LUM_ADJUSTMENT = 15; // Luminance adjustment for borders on black backgrounds
+const BLACK_BG_SAT_ADJUSTMENT = 0; // Saturation adjustment for black backgrounds
+const BLACK_BG_LUM_ADJUSTMENT = 5; // Luminance adjustment for black backgrounds
 
 export default function derivePostColors(bgHexColor: string, badgeHexColor: string): DerivedPostColors {
     const bgNormalized = normalizeHexColor(bgHexColor);
@@ -70,6 +74,24 @@ export default function derivePostColors(bgHexColor: string, badgeHexColor: stri
             bgColor: hslToHex(lightBgColor),
             border: hslToHex(lightBorderColor),
             isLight: true,
+            usedFallback: false,
+            lowContrastBgBadge: lowContrastBgBadge,
+        };
+    } else if (bgLuminance < 0.005) { 
+        const blackBgColor: Hsl = {
+            h: hsl.h,
+            s: clamp(hsl.s + BLACK_BG_SAT_ADJUSTMENT, 0, 100),
+            l: clamp(hsl.l + BLACK_BG_LUM_ADJUSTMENT, 0, 100),
+        };
+        const blackBorderColor: Hsl = {
+            h: hsl.h,
+            s: clamp(hsl.s + BLACK_BORDER_SAT_ADJUSTMENT, 0, 100),
+            l: clamp(hsl.l + BLACK_BORDER_LUM_ADJUSTMENT, 0, 100),
+        };
+        return {
+            bgColor: hslToHex(blackBgColor),
+            border: hslToHex(blackBorderColor),
+            isLight: false,
             usedFallback: false,
             lowContrastBgBadge: lowContrastBgBadge,
         };

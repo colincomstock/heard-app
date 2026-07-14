@@ -168,7 +168,7 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
             </div>
             <label htmlFor="post-caption" className={styles.newPostLabel}>caption</label>
             <div className={styles.captionArea}>
-                    <textarea
+                <textarea
                     id="post-caption"
                     name="caption"
                     value={caption}

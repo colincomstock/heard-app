@@ -1,11 +1,11 @@
+import type { ProfileCore } from './profile';
+
 export type Comment = {
     id: string;
     userId: string;
-    displayName: string;
-    handle: string;
-    pfpUrl: string;
-    comment: string;
-    likes: number;
+    body: string;
+    likeCount: number;
     createdAt: string;
     updatedAt: string;
+    profile: ProfileCore;
 };
