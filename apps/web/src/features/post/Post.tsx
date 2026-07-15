@@ -285,25 +285,36 @@ export default function Post(post: QueuePost) {
             <Drawer open={commentsOpen} onOpenChange={setCommentsOpen}>
                 <DrawerContent>
                     <DrawerHeader>
-                        <DrawerTitle style={{padding: "1rem"}}>Comments</DrawerTitle>
+                        <DrawerTitle style={{padding: "1rem 1rem 0.5rem 1rem"}}>Comments</DrawerTitle>
                     </DrawerHeader>
                     <div className={styles.commentArea}>
-                        {post.comments.length > 0 ? post.comments.map((c, i) => (
-                            <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                                <img src={c.profile.pfpUrl} alt={c.profile.displayName} style={{ width: '2.5rem', height: '2.5rem', border: '1px solid #ffffff3f', borderRadius: '50%' }} />
-                                <div>
-                                    <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{c.profile.displayName}</div>
-                                    <div style={{ fontSize: '0.875rem' }}>{c.body}</div>
-                                    <div style={{ fontSize: '0.75rem', color: '#666' }}>{c.likeCount} likes</div>
-                                    <div style={{ fontSize: '0.75rem', color: '#666' }}>{timeAgo(c.createdAt)}</div>
+                        <div className={`${styles.userComments} hide-scrollbar`}>
+                            {post.comments.length > 0 ? post.comments.map((c, i) => (
+                                <div key={i} className={styles.indivComment}>
+                                    <img src={c.profile.pfpUrl} alt={c.profile.displayName} className={styles.commentPfp} />
+                                    <div className={styles.commentContent}>
+                                        <div className={styles.commentHeader}>
+                                            <div className={styles.commentDisplayName}>{c.profile.displayName}</div>
+                                            <div className={styles.commentMeta}>{timeAgo(c.createdAt)}</div>
+                                        </div>
+                                        <div className={styles.bodyActions}>
+                                            <div className={styles.commentBody}>{c.body}</div>
+                                            <div>
+                                                <Heart 
+                                                    size={20} 
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className={styles.commentMeta}>{c.likeCount} likes</div>
+                                    </div>
                                 </div>
-                            </div>
-                        )) 
-                            : <div className={styles.noCommentsYet}>
-                                <PencilLine size={20} color={'#ffffffa9'} />
-                                <span>be the first to share your thoughts.</span>
-                            </div>
-                        }
+                            )) 
+                                : <div className={styles.noCommentsYet}>
+                                    <PencilLine size={20} color={'#ffffffa9'} />
+                                    <span>be the first to share your thoughts.</span>
+                                </div>
+                            }
+                        </div>
                         <div className={styles.commentInputContainer}>
                             <div className={styles.commentDivider}></div>
                             <div className={styles.commentInputArea}>

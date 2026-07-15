@@ -21,3 +21,10 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.hide-scrollbar {
+   /* Hide scrollbar for Chrome, Safari, Firefox and Opera */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar { display: none; }
+}
