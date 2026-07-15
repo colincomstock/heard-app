@@ -15,7 +15,7 @@ import {
 import { useAudioPlayer } from '@/context/useAudioPlayer'
 import appleMusicLockup from '../../assets/apple-music-lockup-white.svg'
 import spotifyFullLogo from '../../assets/spotify-full-logo-white.png'
-import { likePost, unlikePost } from '../../lib/api/post'
+import { addPostComment, likePost, unlikePost } from '../../lib/api/post'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { UserAuth } from '@/context/AuthContext'
 import pfpPlaceholder from '../../assets/profile-picture-icon.png'
@@ -50,9 +50,10 @@ export default function Post(post: QueuePost) {
 
     const [comment, setComment] = useState('');
     
-    // State for managing like status and count
+    // State for managing like status and count of comments and likes for optimistic UI updates
     const [likedByMe, setLikedByMe] = useState(post.likedByMe);
     const [likeCount, setLikeCount] = useState(post.likeCount);
+    const [commentCount, setCommentCount] = useState(post.commentCount);
     
     // Derive colors for the post card based on the track's Apple Music background color and genre badge color
     const derivedColors = derivePostColors(post.track.appleBgColor, post.track.genres[0].badgeColor);
@@ -85,8 +86,19 @@ export default function Post(post: QueuePost) {
 
         textarea.style.height = "auto";
         textarea.style.height = `${textarea.scrollHeight}px`;
-        
-        setComment(e.target.value.replace(/[\r\n]+/g, " "))
+
+        setComment(e.target.value.replace(/[\r\n]+/g, " "));
+    }
+
+    function handleCommentSubmit() {
+        const body = comment.trim();
+
+        if (body.length === 0 || addCommentMutation.isPending) {
+            return;
+        }
+
+        setCommentCount((count) => count + 1);
+        addCommentMutation.mutate(body);
     }
     
     // Mutation for liking a post
@@ -114,6 +126,20 @@ export default function Post(post: QueuePost) {
             console.error("Error unliking post:", error);
             setLikedByMe(true);
             setLikeCount((count) => count + 1);
+        }
+    });
+
+    // Mutation for adding a comment to a post
+    const addCommentMutation = useMutation({
+        mutationFn: (body: string) => addPostComment(session!.access_token, post.id, body),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['queue', session?.user?.id] });
+            queryClient.invalidateQueries({ queryKey: ['me', session?.user?.id] });
+            setComment('');
+        },
+        onError: (error) => {
+            console.error("Error adding comment:", error);
+            setCommentCount((count) => count - 1);
         }
     });
 
@@ -201,7 +227,7 @@ export default function Post(post: QueuePost) {
                                 <div className={styles.socialControls}>
                                     <div className={styles.socialControlIndv}>
                                         <MessageCircleMore size={30} color={post.track.appleTextColor1} onClick={() => setCommentsOpen(true)} />
-                                        <span>{post.commentCount}</span>
+                                        <span>{commentCount}</span>
                                     </div>
                                     <div className={styles.socialControlIndv}>                                        
                                         <button 
@@ -289,13 +315,18 @@ export default function Post(post: QueuePost) {
                                     onChange={(e) => {
                                         handleCommentChange(e);
                                     }}
+                                    disabled={addCommentMutation.isPending}
                                     placeholder="add a comment..."
                                     maxLength={140}
                                     rows={1}
                                     style={comment.length > 0 ? { background: 'transparent' } : {} }
                                 />
-                                <button className={`${comment.length > 0 ? styles.activeBtn : styles.inactiveBtn} ${styles.commentPostBtn} glass-area`} disabled={comment.length === 0} onClick={async () => {
-                                }}>
+                                <button 
+                                    className={`${comment.length > 0 ? styles.activeBtn : styles.inactiveBtn} ${styles.commentPostBtn} glass-area`} 
+                                    disabled={comment.length === 0} 
+                                    onClick={async () => {
+                                        handleCommentSubmit();
+                                    }}>
                                     post
                                 </button>
                             </div>
