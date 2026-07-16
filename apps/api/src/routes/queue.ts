@@ -21,9 +21,9 @@ type PostComment = {
     profile: CommentProfile | CommentProfile[] | null;
 };
 
-export const queueRoute = new Hono<{ Bindings: Bindings, Variables: AuthVariables }>();
+export const QueueRoute = new Hono<{ Bindings: Bindings, Variables: AuthVariables }>();
 
-queueRoute.get("/", async (c) => {
+QueueRoute.get("/", async (c) => {
     const userId = c.get('userId');
     const supabase = createSupabaseClient(c.env);
 
@@ -112,6 +112,31 @@ queueRoute.get("/", async (c) => {
             likedPostIds.add(like.post_id);
         }
     }
+
+    // Added logic to check if the current logged in user has liked any of the returned comments per post
+    const commentIds = posts?.flatMap((post) =>
+        Array.isArray(post.post_comment) 
+        ? post.post_comment.map(comment => comment.id) : []
+    ) ?? [];
+
+    const likedCommentIds = new Set<string>();
+
+    if (commentIds.length > 0) {
+        const { data: currentUserLikedComments, error: currentUserLikedCommentsError } = await supabase
+            .from('comment_like')
+            .select('comment_id')
+            .eq('user_id', userId)
+            .in('comment_id', commentIds);
+    
+        if (currentUserLikedCommentsError) {
+            return c.json({ error: "Failed to fetch liked comments", details: currentUserLikedCommentsError }, 500);
+    
+        }
+
+        for (const like of currentUserLikedComments ?? []) {
+            likedCommentIds.add(like.comment_id);
+        }
+    }
     
     const formattedPosts = posts?.map(post => {
         return {
@@ -173,6 +198,7 @@ queueRoute.get("/", async (c) => {
                             user_id: comment.user_id,
                             body: comment.body,
                             like_count: comment.like_count,
+                            liked_by_me: likedCommentIds.has(comment.id),
                             created_at: comment.created_at,
                             updated_at: comment.updated_at,
                             profile: commentProfile ? {

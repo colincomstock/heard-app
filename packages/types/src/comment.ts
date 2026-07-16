@@ -5,6 +5,7 @@ export type Comment = {
     userId: string;
     body: string;
     likeCount: number;
+    likedByMe: boolean;
     createdAt: string;
     updatedAt: string;
     profile: ProfileCore;

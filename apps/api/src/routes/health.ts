@@ -1,8 +1,8 @@
 import { Hono } from 'hono'
 
-export const healthRoute = new Hono()
+export const HealthRoute = new Hono()
 
-healthRoute.get('/', (c) => {
+HealthRoute.get('/', (c) => {
     return c.json({ 
         ok: true,
         service: 'Heard API',
