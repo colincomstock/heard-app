@@ -1,0 +1,53 @@
+.indivComment {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.commentPfp {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+}
+
+.commentContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.commentContent > :last-child {
+  margin-top: 0.25rem;
+}
+
+.commentHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.commentDisplayName {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.commentMeta {
+  font-size: 0.75rem;
+  color: #a8a8a8;
+}
+
+.bodyActions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.commentBody {
+  font-size: 0.875rem;
+  padding-right: 1rem;
+}

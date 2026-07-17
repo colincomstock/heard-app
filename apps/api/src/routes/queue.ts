@@ -85,6 +85,8 @@ QueueRoute.get("/", async (c) => {
         .eq('user_id', userId)
         .eq('visibility', 'public')
         .order('created_at', { ascending: false })
+        .order('like_count', { referencedTable: 'post_comment', ascending: false })
+        .order('created_at', { referencedTable: 'post_comment', ascending: false })
         .limit(30);
 
     if (postsError) {

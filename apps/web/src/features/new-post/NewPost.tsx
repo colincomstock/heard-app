@@ -1,7 +1,7 @@
 import styles from './NewPost.module.css'
 import { getSearchResults } from '@/lib/api/search';
 import { useState, useEffect } from 'react'
-import { UserAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/useAuth';
 import { Search } from 'lucide-react';
 import { X, Play, Pause, Check } from 'lucide-react';
 import { useAudioPlayer } from '@/context/useAudioPlayer';
@@ -38,7 +38,7 @@ export default function NewPost({ onDone: _onDone }: NewPostProps) {
     }
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
     
-    const { session } = UserAuth()!;
+    const { session } = useAuth()!;
 
     function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
         pause();

@@ -10,15 +10,13 @@ import {
     Play, 
     Pause, 
     Share,
-    PencilLine,
 } from 'lucide-react'
 import { useAudioPlayer } from '@/context/useAudioPlayer'
 import appleMusicLockup from '../../assets/apple-music-lockup-white.svg'
 import spotifyFullLogo from '../../assets/spotify-full-logo-white.png'
-import { addPostComment, likePost, unlikePost } from '../../lib/api/post'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { UserAuth } from '@/context/AuthContext'
-import pfpPlaceholder from '../../assets/profile-picture-icon.png'
+import { useLikePost } from './hooks/useLikePost'
+import { useUnlikePost } from './hooks/useUnlikePost'
+import CommentDrawer from '../comments/CommentDrawer'
 
 export default function Post(post: QueuePost) {
     
@@ -38,17 +36,9 @@ export default function Post(post: QueuePost) {
     const displayProgress = isActive ? progress : 0;
     const showPause = isActive && isPlaying;
     
-    // Query client for invalidating queries after like/unlike actions
-    const queryClient = useQueryClient();
-    
-    // Auth context to get the current user's session for like/unlike actions
-    const { session } = UserAuth()!;
-    
     // State for managing drawer visibility
     const [commentsOpen, setCommentsOpen] = useState(false);
     const [listenOpen, setListenOpen] = useState(false);
-
-    const [comment, setComment] = useState('');
     
     // State for managing like status and count of comments and likes for optimistic UI updates
     const [likedByMe, setLikedByMe] = useState(post.likedByMe);
@@ -63,6 +53,20 @@ export default function Post(post: QueuePost) {
         void toggle(post.track.songPreviewUrl, post.id);
     };
     
+    const likeMutation = useLikePost(post.id, {
+        onRollback: () => {
+            setLikedByMe(false);
+            setLikeCount((count) => count - 1);
+        }
+    });
+
+    const unlikeMutation = useUnlikePost(post.id, {
+        onRollback: () => {
+            setLikedByMe(true);
+            setLikeCount((count) => count + 1);
+        }
+    });
+
     // Function to handle like/unlike actions with optimistic UI updates
     function handleLikeClick() {
         if ( likeMutation.isPending || unlikeMutation.isPending ) {
@@ -79,69 +83,7 @@ export default function Post(post: QueuePost) {
         } else {
             unlikeMutation.mutate();
         }
-    }
-
-    function handleCommentChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-        const textarea = e.currentTarget;
-
-        textarea.style.height = "auto";
-        textarea.style.height = `${textarea.scrollHeight}px`;
-
-        setComment(e.target.value.replace(/[\r\n]+/g, " "));
-    }
-
-    function handleCommentSubmit() {
-        const body = comment.trim();
-
-        if (body.length === 0 || addCommentMutation.isPending) {
-            return;
-        }
-
-        setCommentCount((count) => count + 1);
-        addCommentMutation.mutate(body);
-    }
-    
-    // Mutation for liking a post
-    const likeMutation = useMutation({
-        mutationFn: () => likePost(session!.access_token, post.id),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['queue', session?.user?.id] });
-            queryClient.invalidateQueries({ queryKey: ['me', session?.user?.id] });
-        },
-        onError: (error) => {
-            console.error("Error liking post:", error);
-            setLikedByMe(false);
-            setLikeCount((count) => count - 1);
-        }
-    });
-    
-    // Mutation for unliking a post
-    const unlikeMutation = useMutation({
-        mutationFn: () => unlikePost(session!.access_token, post.id),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['queue', session?.user?.id] });
-            queryClient.invalidateQueries({ queryKey: ['me', session?.user?.id] });
-        },
-        onError: (error) => {
-            console.error("Error unliking post:", error);
-            setLikedByMe(true);
-            setLikeCount((count) => count + 1);
-        }
-    });
-
-    // Mutation for adding a comment to a post
-    const addCommentMutation = useMutation({
-        mutationFn: (body: string) => addPostComment(session!.access_token, post.id, body),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['queue', session?.user?.id] });
-            queryClient.invalidateQueries({ queryKey: ['me', session?.user?.id] });
-            setComment('');
-        },
-        onError: (error) => {
-            console.error("Error adding comment:", error);
-            setCommentCount((count) => count - 1);
-        }
-    });
+    };
 
     // Refs and IntersectionObserver to handle auto-play/pause when the post is in view
     const cardRef = useRef<HTMLDivElement>(null);
@@ -282,72 +224,14 @@ export default function Post(post: QueuePost) {
                 </div>
                 <div className={styles.feedBuffer}></div>
             </div>
-            <Drawer open={commentsOpen} onOpenChange={setCommentsOpen}>
-                <DrawerContent>
-                    <DrawerHeader>
-                        <DrawerTitle style={{padding: "1rem 1rem 0.5rem 1rem"}}>Comments</DrawerTitle>
-                    </DrawerHeader>
-                    <div className={styles.commentArea}>
-                        <div className={`${styles.userComments} hide-scrollbar`}>
-                            {post.comments.length > 0 ? post.comments.map((c, i) => (
-                                <div key={i} className={styles.indivComment}>
-                                    <img src={c.profile.pfpUrl} alt={c.profile.displayName} className={styles.commentPfp} />
-                                    <div className={styles.commentContent}>
-                                        <div className={styles.commentHeader}>
-                                            <div className={styles.commentDisplayName}>{c.profile.displayName}</div>
-                                            <div className={styles.commentMeta}>{timeAgo(c.createdAt)}</div>
-                                        </div>
-                                        <div className={styles.bodyActions}>
-                                            <div className={styles.commentBody}>{c.body}</div>
-                                            <div>
-                                                <Heart 
-                                                    size={20} 
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className={styles.commentMeta}>{c.likeCount} likes</div>
-                                    </div>
-                                </div>
-                            )) 
-                                : <div className={styles.noCommentsYet}>
-                                    <PencilLine size={20} color={'#ffffffa9'} />
-                                    <span>be the first to share your thoughts.</span>
-                                </div>
-                            }
-                        </div>
-                        <div className={styles.commentInputContainer}>
-                            <div className={styles.commentDivider}></div>
-                            <div className={styles.commentInputArea}>
-                                <img src={pfpPlaceholder} alt="User profile picture" className={styles.commentInputPfp} />
-                                <textarea
-                                    id="post-comment"
-                                    name="comment"
-                                    value={comment}
-                                    onChange={(e) => {
-                                        handleCommentChange(e);
-                                    }}
-                                    disabled={addCommentMutation.isPending}
-                                    placeholder="add a comment..."
-                                    maxLength={140}
-                                    rows={1}
-                                    style={comment.length > 0 ? { background: 'transparent' } : {} }
-                                />
-                                <button 
-                                    className={`${comment.length > 0 ? styles.activeBtn : styles.inactiveBtn} ${styles.commentPostBtn} glass-area`} 
-                                    disabled={comment.length === 0} 
-                                    onClick={async () => {
-                                        handleCommentSubmit();
-                                    }}>
-                                    post
-                                </button>
-                            </div>
-                            {
-                                comment.length > 0 && <span className={styles.commentCharacterCount}>{comment.length}/140</span>
-                            }
-                        </div>
-                    </div>
-                </DrawerContent>
-            </Drawer>
+            <CommentDrawer 
+                postId={post.id}
+                comments={post.comments}
+                commentsOpen={commentsOpen}
+                setCommentsOpen={setCommentsOpen}
+                incrementPostCommentCount={() => setCommentCount((count) => count + 1)}
+                decrementPostCommentCount={() => setCommentCount((count) => count - 1)}
+            />
             <Drawer open={listenOpen} onOpenChange={setListenOpen}>
                 <DrawerContent>
                     <DrawerHeader>

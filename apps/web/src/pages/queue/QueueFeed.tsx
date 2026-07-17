@@ -2,13 +2,13 @@ import { useEffect } from 'react'
 import styles from './QueueFeed.module.css'
 import Post from '../../features/post/Post'
 import { useQuery } from '@tanstack/react-query'
-import { UserAuth } from '@/context/AuthContext'
+import { useAuth } from '@/context/useAuth'
 import { getQueuePosts } from '@/lib/api/queue'
 import { useAudioPlayer } from '@/context/useAudioPlayer'
 
 export default function QueueFeed() {
 
-    const { session } = UserAuth()!;
+    const { session } = useAuth()!;
     const { pause } = useAudioPlayer();
 
     const {data, isPending, isError} = useQuery({
