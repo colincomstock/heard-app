@@ -1,7 +1,7 @@
 import styles from './SignUp.module.css';
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { UserAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/useAuth";
 import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
@@ -11,7 +11,7 @@ export default function SignUp() {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const { signUpNewUser } = UserAuth()!;
+    const { signUpNewUser } = useAuth()!;
     const navigate = useNavigate();
 
     async function handleSignup(e: React.FormEvent) {

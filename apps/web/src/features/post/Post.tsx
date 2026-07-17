@@ -14,9 +14,9 @@ import {
 import { useAudioPlayer } from '@/context/useAudioPlayer'
 import appleMusicLockup from '../../assets/apple-music-lockup-white.svg'
 import spotifyFullLogo from '../../assets/spotify-full-logo-white.png'
-import { likePost, unlikePost } from '../../lib/api/post'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { UserAuth } from '@/context/AuthContext'
+import { useLikePost } from './hooks/useLikePost'
+import { useUnlikePost } from './hooks/useUnlikePost'
+import CommentDrawer from '../comments/CommentDrawer'
 
 export default function Post(post: QueuePost) {
     
@@ -36,19 +36,14 @@ export default function Post(post: QueuePost) {
     const displayProgress = isActive ? progress : 0;
     const showPause = isActive && isPlaying;
     
-    // Query client for invalidating queries after like/unlike actions
-    const queryClient = useQueryClient();
-    
-    // Auth context to get the current user's session for like/unlike actions
-    const { session } = UserAuth()!;
-    
     // State for managing drawer visibility
     const [commentsOpen, setCommentsOpen] = useState(false);
     const [listenOpen, setListenOpen] = useState(false);
     
-    // State for managing like status and count
+    // State for managing like status and count of comments and likes for optimistic UI updates
     const [likedByMe, setLikedByMe] = useState(post.likedByMe);
     const [likeCount, setLikeCount] = useState(post.likeCount);
+    const [commentCount, setCommentCount] = useState(post.commentCount);
     
     // Derive colors for the post card based on the track's Apple Music background color and genre badge color
     const derivedColors = derivePostColors(post.track.appleBgColor, post.track.genres[0].badgeColor);
@@ -58,6 +53,20 @@ export default function Post(post: QueuePost) {
         void toggle(post.track.songPreviewUrl, post.id);
     };
     
+    const likeMutation = useLikePost(post.id, {
+        onRollback: () => {
+            setLikedByMe(false);
+            setLikeCount((count) => count - 1);
+        }
+    });
+
+    const unlikeMutation = useUnlikePost(post.id, {
+        onRollback: () => {
+            setLikedByMe(true);
+            setLikeCount((count) => count + 1);
+        }
+    });
+
     // Function to handle like/unlike actions with optimistic UI updates
     function handleLikeClick() {
         if ( likeMutation.isPending || unlikeMutation.isPending ) {
@@ -74,35 +83,7 @@ export default function Post(post: QueuePost) {
         } else {
             unlikeMutation.mutate();
         }
-    }
-    
-    // Mutation for liking a post
-    const likeMutation = useMutation({
-        mutationFn: () => likePost(session!.access_token, post.id),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['queue', session?.user?.id] });
-            queryClient.invalidateQueries({ queryKey: ['me', session?.user?.id] });
-        },
-        onError: (error) => {
-            console.error("Error liking post:", error);
-            setLikedByMe(false);
-            setLikeCount((count) => count - 1);
-        }
-    });
-    
-    // Mutation for unliking a post
-    const unlikeMutation = useMutation({
-        mutationFn: () => unlikePost(session!.access_token, post.id),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['queue', session?.user?.id] });
-            queryClient.invalidateQueries({ queryKey: ['me', session?.user?.id] });
-        },
-        onError: (error) => {
-            console.error("Error unliking post:", error);
-            setLikedByMe(true);
-            setLikeCount((count) => count + 1);
-        }
-    });
+    };
 
     // Refs and IntersectionObserver to handle auto-play/pause when the post is in view
     const cardRef = useRef<HTMLDivElement>(null);
@@ -188,7 +169,7 @@ export default function Post(post: QueuePost) {
                                 <div className={styles.socialControls}>
                                     <div className={styles.socialControlIndv}>
                                         <MessageCircleMore size={30} color={post.track.appleTextColor1} onClick={() => setCommentsOpen(true)} />
-                                        <span>{post.commentCount}</span>
+                                        <span>{commentCount}</span>
                                     </div>
                                     <div className={styles.socialControlIndv}>                                        
                                         <button 
@@ -243,26 +224,14 @@ export default function Post(post: QueuePost) {
                 </div>
                 <div className={styles.feedBuffer}></div>
             </div>
-            <Drawer open={commentsOpen} onOpenChange={setCommentsOpen}>
-                <DrawerContent>
-                    <DrawerHeader>
-                        <DrawerTitle style={{padding: "1rem"}}>Comments</DrawerTitle>
-                    </DrawerHeader>
-                    <div style={{ padding: '0rem 1rem 5rem 1rem', minHeight: '75vh', display: 'flex', flexDirection: 'column', gap: '1rem', overflowY: 'auto' }}>
-                        {post.comments ? post.comments.map((c, i) => (
-                            <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                                <img src={c.pfpUrl} alt={c.displayName} style={{ width: '36px', height: '36px', borderRadius: '50%' }} />
-                                <div>
-                                    <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{c.displayName}</div>
-                                    <div style={{ fontSize: '0.875rem' }}>{c.comment}</div>
-                                    <div style={{ fontSize: '0.75rem', color: '#666' }}>{c.likes} likes</div>
-                                    <div style={{ fontSize: '0.75rem', color: '#666' }}>{timeAgo(c.createdAt)}</div>
-                                </div>
-                            </div>
-                        )) : null}
-                    </div>
-                </DrawerContent>
-            </Drawer>
+            <CommentDrawer 
+                postId={post.id}
+                comments={post.comments}
+                commentsOpen={commentsOpen}
+                setCommentsOpen={setCommentsOpen}
+                incrementPostCommentCount={() => setCommentCount((count) => count + 1)}
+                decrementPostCommentCount={() => setCommentCount((count) => count - 1)}
+            />
             <Drawer open={listenOpen} onOpenChange={setListenOpen}>
                 <DrawerContent>
                     <DrawerHeader>

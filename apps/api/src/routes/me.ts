@@ -4,9 +4,9 @@ import type { Bindings, AuthVariables } from "../types/bindings";
 import keysToCamelCase from "../lib/case";
 import type { TrackGenreRow } from "../types/db";
 
-export const meRoute = new Hono<{ Bindings: Bindings, Variables: AuthVariables }>();
+export const MeRoute = new Hono<{ Bindings: Bindings, Variables: AuthVariables }>();
 
-meRoute.get("/", async (c) => {
+MeRoute.get("/", async (c) => {
     const userId = c.get('userId');
     const supabase = createSupabaseClient(c.env);
 

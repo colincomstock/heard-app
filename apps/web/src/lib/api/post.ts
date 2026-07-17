@@ -42,3 +42,17 @@ export async function unlikePost(token: string, postId: string): Promise<void> {
         throw new Error('Failed to unlike post');
     }
 };
+
+export async function addPostComment(token: string, postId: string, body: string): Promise<void> {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}/add-comment`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ body })
+    });
+    if (!response.ok) {
+        throw new Error('Failed to add comment');
+    }
+};

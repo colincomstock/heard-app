@@ -1,15 +1,15 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { UserAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
-export default function ProtectedRoute({ children }: { children: React.ReactElement }) { 
-    const { session } = UserAuth()!;
+export default function PrivateRoute({ children }: { children: React.ReactElement }) {
+    const { isAuthLoading, isAuthenticated } = useAuth();
 
-    if (session === undefined) {
-        return <div>Loading...</div>;
+    if (isAuthLoading) {
+        return null;
     }
 
-    if (!session) {
+    if (!isAuthenticated) {
         return <Navigate to="/signin" />;
     }
     return <>{children}</>;

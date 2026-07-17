@@ -11,14 +11,6 @@
   border: solid 1px var(--bgColorBorder);
 }
 
-.profilePostLight {
-  box-shadow: inset 0px 0px 5rem #ffffff38;
-}
-
-.profilePostDark {
-  box-shadow: inset 0px 0px 5rem #ffffff1f;
-}
-
 .profilePostCard {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -163,5 +155,5 @@
 }
 
 .albumCoverDark {
-  border: 1px solid #ffffff25;
+  border: 1px solid var(--bgColorBorder);
 }

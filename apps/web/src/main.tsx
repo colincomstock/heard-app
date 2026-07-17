@@ -4,7 +4,7 @@ import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './app/router.tsx'
 import { AudioPlayerProvider } from './context/AudioPlayerProvider.tsx'
-import { AuthContextProvider } from './context/AuthContext.tsx'
+import { AuthContextProvider } from './context/AuthProvider.tsx'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from './lib/queryClient.ts'
 

@@ -1,14 +1,14 @@
 import styles from './Profile.module.css';
 import ProfilePost from '../../features/post/PostCondensed';
 import ProfileHeader from '../../features/profile/ProfileHeader';
-import { UserAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getMe } from '@/lib/api/me';
 
 export default function Profile() {
 
-    const { session, signOutUser } = UserAuth()!;
+    const { session, signOutUser } = useAuth()!;
     const navigate = useNavigate();
 
     const { data, isPending, isError } = useQuery({

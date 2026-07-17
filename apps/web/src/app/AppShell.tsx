@@ -43,7 +43,7 @@ export default function App() {
           style={{ width: '25px', height: '25px', cursor: 'pointer' }} 
         />
       </div>
-      <div className={styles.mainContainer}>
+      <div className={`${styles.mainContainer} hide-scrollbar`}>
         <Outlet context={{ isMuted }} />
       </div>
       <BottomBar onOpenNewPostDrawer={openNewPostDrawer} />

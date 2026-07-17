@@ -3,3 +3,4 @@ export type { TrackCore, TrackQueue } from './track';
 export type { PostCore, ProfilePost, QueuePost } from './post';
 export type { ProfileCore, ProfileFull } from './profile';
 export type { TrackSearchResult, TrackSearchResultResponse } from './searchResult';
+export type { Comment } from './comment';

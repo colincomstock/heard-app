@@ -1,12 +1,13 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import type { Bindings } from './types/bindings'
-import { healthRoute } from './routes/health'
+import { HealthRoute } from './routes/health'
 import { requireAuth } from './lib/supabaseAuth'
-import { profilesRoute } from './routes/profiles'
-import { meRoute } from './routes/me'
+import { ProfilesRoute } from './routes/profiles'
+import { MeRoute } from './routes/me'
 import { PostsRoute } from './routes/posts'
-import { queueRoute } from './routes/queue'
+import { QueueRoute } from './routes/queue'
+import { CommentsRoute } from './routes/comments'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -23,17 +24,19 @@ app.get('/', (c) => {
   return c.text('Heard API')
 });
 
-app.route('/health', healthRoute);
+app.route('/health', HealthRoute);
 
 app.use('*', requireAuth);
 
-app.route('/profile', profilesRoute);
+app.route('/profile', ProfilesRoute);
 
-app.route('/me', meRoute);
+app.route('/me', MeRoute);
 
 app.route('/posts', PostsRoute);
 
-app.route('/queue', queueRoute);
+app.route('/queue', QueueRoute);
+
+app.route('/comments', CommentsRoute);
 
 app.notFound((c) => {
   return c.json(

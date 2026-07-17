@@ -14,16 +14,16 @@
 }
 
 .postCardLight {
-  box-shadow: inset 0px 0px 4rem #ffffff38;
+  /*box-shadow: inset 0px 0px 2rem #ffffff38;*/
 }
 
 .postCardDark {
-  box-shadow: inset 0px 0px 4rem #ffffff1f;
+  /*box-shadow: inset 0px 0px 2rem #ffffff1f;*/
 }
 
 .feedBuffer {
   height: calc(8vh);
-  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .songArea {
@@ -48,7 +48,7 @@
 }
 
 .albumCoverDark {
-  border: 1px solid #ffffff25;
+  border: 1px solid var(--bgColorBorder);
 }
 
 .songCardInner {
@@ -59,7 +59,6 @@
   flex: 1;
   min-height: 0;
   width: 100%;
-  background: radial-gradient(rgba(255, 255, 255, 0.068) 0%, rgba(255, 255, 255, 0) 70%);
 }
 
 .songMetaListen {
@@ -238,7 +237,7 @@
   line-height: 1.5rem;
   padding: 0.25rem 0.5rem;
   letter-spacing: -0.02em;
-  color: var(--appleTextColor2);
+  color: var(--appleTextColor1);
 }
 
 .badgeColorDot {

@@ -4,9 +4,9 @@ import { createSupabaseClient } from '../lib/supabase'
 import keysToCamelCase from '../lib/case'
 import type { TrackGenreRow } from '../types/db'
 
-export const profilesRoute = new Hono<{ Bindings: Bindings }>()
+export const ProfilesRoute = new Hono<{ Bindings: Bindings }>()
 
-profilesRoute.get('/:handle', async (c) => {
+ProfilesRoute.get('/:handle', async (c) => {
 	const handle = c.req.param("handle");
 	const supabase = createSupabaseClient(c.env);
 

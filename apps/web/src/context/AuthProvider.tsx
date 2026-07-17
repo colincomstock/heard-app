@@ -1,19 +1,8 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
+import { AuthContext } from "./AuthContext";
+import type { AuthResult } from "./AuthContext";
 import { supabase } from "../lib/supabaseClient";
-import type { Session, AuthError, AuthResponse } from "@supabase/supabase-js";
-
-type AuthResult<TData = undefined> = 
-    | { success: true; data?: TData }
-    | { success: false; error?: AuthError | Error | string };
-
-interface AuthContextType {
-    session: Session | undefined | null;
-    signUpNewUser: (email: string, password: string) => Promise<AuthResult<AuthResponse["data"]>>;
-    signInUser: (email: string, password: string) => Promise<AuthResult<AuthResponse["data"]>>;
-    signOutUser: () => Promise<AuthResult>;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import type { Session, AuthResponse } from "@supabase/supabase-js";
 
 interface AuthProviderProps {
     children: React.ReactNode;
@@ -79,13 +68,23 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
         return { success: true };
     };
 
+    const accessToken = session?.access_token ?? null;
+    const userId = session?.user.id ?? null;
+    const isAuthLoading = session === undefined;
+    const isAuthenticated = !!session;
+
     return (
-        <AuthContext.Provider value={{ session, signUpNewUser, signInUser, signOutUser }}>
+        <AuthContext.Provider 
+            value={{ 
+                session, 
+                accessToken, 
+                userId, 
+                isAuthLoading,
+                isAuthenticated,
+                signUpNewUser, 
+                signInUser, 
+                signOutUser }}>
             {children}
         </AuthContext.Provider>
     )
-};
-
-export const UserAuth = () => {
-    return useContext(AuthContext);
 };
