@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-type likeCommentArgs = {
+type LikeCommentArgs = {
     supabase: SupabaseClient;
     userId: string;
     commentId: string;
@@ -10,7 +10,7 @@ export async function LikeComment({
     supabase,
     userId,
     commentId,
-}: likeCommentArgs) {
+}: LikeCommentArgs) {
     const commentLikeResult = await supabase
     .from('comment_like')
     .upsert(
@@ -21,7 +21,8 @@ export async function LikeComment({
     .maybeSingle();
 
     if (commentLikeResult.error) {
-        throw commentLikeResult.error;
+        console.error("Failed to like comment:", commentLikeResult.error);
+        throw new Error("Failed to like comment");
     }
 
     return { commentLike: commentLikeResult.data };
@@ -31,7 +32,7 @@ export async function UnlikeComment({
     supabase,
     userId,
     commentId,
-}: likeCommentArgs) {
+}: LikeCommentArgs) {
     const commentUnlikeResult = await supabase
     .from('comment_like')
     .delete()
@@ -41,7 +42,8 @@ export async function UnlikeComment({
     .maybeSingle();
 
     if (commentUnlikeResult.error) {
-        throw commentUnlikeResult.error;
+        console.error("Failed to unlike comment:", commentUnlikeResult.error);
+        throw new Error("Failed to unlike comment");
     }
 
     return { commentUnlike: commentUnlikeResult.data };

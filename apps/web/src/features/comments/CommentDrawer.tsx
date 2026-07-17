@@ -89,8 +89,8 @@ export default function CommentDrawer({ postId, comments, commentsOpen, setComme
                                 style={comment.length > 0 ? { background: 'transparent' } : {} }
                             />
                             <button 
-                                className={`${comment.length > 0 ? styles.activeBtn : styles.inactiveBtn} ${styles.commentPostBtn} glass-area`} 
-                                disabled={comment.length === 0} 
+                                className={`${comment.trim().length > 0 ? styles.activeBtn : styles.inactiveBtn} ${styles.commentPostBtn} glass-area`} 
+                                disabled={comment.trim().length === 0} 
                                 onClick={async () => {
                                     handleCommentSubmit();
                                 }}>

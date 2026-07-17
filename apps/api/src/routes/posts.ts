@@ -159,6 +159,16 @@ PostsRoute.post("/:postId/add-comment", async (c) => {
             return c.json({ error: "Missing comment body" }, 400);
         }
 
+        if (typeof body !== "string" || body.trim().length === 0) {
+            return c.json({ error: "Comment body must be a non-empty string" }, 400);
+        }
+
+        const trimmedBody = body.trim();
+
+        if (trimmedBody.length > 140) {
+            return c.json({ error: "Comment body must be at most 140 characters" }, 400);
+        }
+
         const supabase = createSupabaseClient(c.env);
         const userId = c.get("userId");
 
@@ -166,7 +176,7 @@ PostsRoute.post("/:postId/add-comment", async (c) => {
             supabase,
             userId,
             postId,
-            body
+            body: trimmedBody
         });
 
         return c.json({ message: "Comment created successfully", newComment });
