@@ -34,7 +34,7 @@ export default function AppHeader({ header }: AppHeaderProps) {
             </div>}
             <div className={`${styles.mainSlot} ${styles.glassBlur}`}>
                 <div className={`${styles.titleArea}`}>
-                    <h1 className={styles.title}>{header.title}</h1>            
+                    <h1>{header.title}</h1>            
                 </div>
                 <div className={`${styles.rightSlots}`}>
                     {rightActions.map((action) => (

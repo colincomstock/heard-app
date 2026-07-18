@@ -11,7 +11,7 @@ import { VolumeX, Volume2 } from 'lucide-react'
 export default function QueueFeed() {
 
     const { setHeader, resetHeader } = useAppChrome();
-    const { isMuted, setMuted } = useAudioPlayer();
+    const { isMuted, setMuted, pause } = useAudioPlayer();
 
     useEffect(() => {
         setHeader({
@@ -30,8 +30,13 @@ export default function QueueFeed() {
         return resetHeader; // Reset header when component unmounts
     }, [setHeader, resetHeader, isMuted, setMuted]);
 
-    const { session } = useAuth()!;
-    const { pause } = useAudioPlayer();
+    // Split resetHeader into a separate effect to prevent 
+    // unnecessary re-renders of the header when the mute state changes
+    useEffect(() => {
+        return resetHeader;
+    }, [resetHeader]);
+
+    const { session } = useAuth();
 
     const {data, isPending, isError} = useQuery({
         queryKey: ['queue', session?.user?.id],
