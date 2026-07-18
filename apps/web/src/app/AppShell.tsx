@@ -1,27 +1,16 @@
 import '../styles/globals.css'
 import '../styles/utilities.css'
 import styles from './AppShell.module.css'
-import volumeOnIcon from '../assets/volume-on-icon.png'
-import volumeMuteIcon from '../assets/volume-mute-icon.png'
 import BottomBar from '../features/navigation/BottomBar'
 import { useState } from 'react'
-import { Outlet, useMatches } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { Drawer, DrawerContent } from '../components/ui/drawer'
 import NewPost from '../features/new-post/NewPost'
-import { useAudioPlayer } from '@/context/useAudioPlayer'
+import { useAppChrome } from '@/context/useAppChrome'
+import AppHeader from '@/features/navigation/AppHeader'
 
 export default function App() {
-  const { isMuted, setMuted } = useAudioPlayer()
   const [isNewPostDrawerOpen, setIsNewPostDrawerOpen] = useState(false)
-
-  const matches = useMatches()
-  const currentMatch = matches[matches.length - 1]
-  const title = (currentMatch?.handle as { title: string })?.title ?? 'queue'
-
-  // Handler for mute/unmute button click
-  function handleMuteClick() {
-    setMuted(!isMuted)
-  }
 
   function openNewPostDrawer() {
     setIsNewPostDrawerOpen(true)
@@ -31,20 +20,13 @@ export default function App() {
     setIsNewPostDrawerOpen(false)
   }
 
+  const { header } = useAppChrome()
+
   return (
     <>
-      <div className={styles.header}>
-        <div style={{width: '30px'}}></div>
-        <h1>{title}</h1>
-        <img 
-          src={isMuted ? volumeMuteIcon : volumeOnIcon} 
-          alt="Volume icon" 
-          onClick={handleMuteClick} 
-          style={{ width: '25px', height: '25px', cursor: 'pointer' }} 
-        />
-      </div>
+      <AppHeader header={header} />
       <div className={`${styles.mainContainer} hide-scrollbar`}>
-        <Outlet context={{ isMuted }} />
+        <Outlet />
       </div>
       <BottomBar onOpenNewPostDrawer={openNewPostDrawer} />
 
