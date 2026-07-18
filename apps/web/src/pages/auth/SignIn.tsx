@@ -1,8 +1,9 @@
 import styles from './SignIn.module.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useAppChrome } from '@/context/useAppChrome';
 
 export default function SignIn() {
 
@@ -13,6 +14,19 @@ export default function SignIn() {
 
     const { signInUser } = useAuth()!;
     const navigate = useNavigate();
+    const { setHeader, resetHeader } = useAppChrome();
+
+    useEffect(() => {
+        setHeader({
+            visible: false,
+            title: '',
+            left: null,
+            right: null,
+        });
+        return () => {
+            resetHeader();
+        };
+    }, [setHeader, resetHeader]);
 
     async function handleSignIn(e: React.FormEvent) {
         e.preventDefault();

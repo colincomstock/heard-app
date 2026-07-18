@@ -135,64 +135,70 @@ export default function Post(post: QueuePost) {
                 <div className={`${styles.postCard} ${derivedColors.isLight ? styles.postCardLight : styles.postCardDark}`} ref={cardRef}>
                     <div className={styles.songArea}>
                         <div className={styles.songCardInner}>
-                            <img src={post.track.coverUrl} alt="Album cover" className={`${styles.albumCover} ${derivedColors.isLight ? '' : styles.albumCoverDark}`} />
-                            <div className={styles.appleMusicAttr}>
-                                <span>Preview provided by Apple Music</span>
-                            </div>
-                            <div className={styles.songMetaListen}>
-                                <div className={styles.songText}>
-                                    <span className={`${styles.trackTitle} single-line-clamp`}>{post.track.title}</span>
-                                    <span className={`${styles.trackArtist} single-line-clamp`}>{post.track.artistName}</span>
+                            <div className={styles.albumCoverContainer}>
+                                <img src={post.track.coverUrl} alt="Album cover" className={`${styles.albumCover} ${derivedColors.isLight ? '' : styles.albumCoverDark}`} />
+                                <div className={styles.appleMusicAttr}>
+                                    <span>Preview provided by Apple Music</span>
                                 </div>
-                                <button onClick={() => setListenOpen(true)}>
-                                    <div className={styles.listenButtonIcon}>
-                                        <Share size={30} color={post.track.appleTextColor1} />
+                            </div>
+                            <div className={styles.songMetaArea}>
+                                <div className={styles.songMetaListen}>
+                                    <div className={styles.songText}>
+                                        <span className={`${styles.trackTitle} single-line-clamp`}>{post.track.title}</span>
+                                        <span className={`${styles.trackArtist} single-line-clamp`}>{post.track.artistName}</span>
+                                    </div>
+                                    <button onClick={() => setListenOpen(true)}>
+                                        <div className={styles.listenButtonIcon}>
+                                            <Share size={30} color={post.track.appleTextColor1} />
 
-                                    </div>
-                                    <div className={styles.listenButtonText}>
-                                        <span>listen</span>
-                                    </div>
-                                </button>
-                            </div>
+                                        </div>
+                                        <div className={styles.listenButtonText}>
+                                            <span>listen</span>
+                                        </div>
+                                    </button>
+                                </div>
 
-                            <div className={`${styles.playerProgressBar} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
-                                <div className={styles.playerProgressFill} style={{ width: `${displayProgress}%` }}></div>
-                            </div>
-                            <div className={styles.controlsSocialArea}>
-                                <div className={`${styles.playerControls} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
-                                    {showPause ? (
-                                        <Pause size={20} color={post.track.appleTextColor1} fill={post.track.appleTextColor1} onClick={handlePlayPauseClick} />
-                                    ) : (
-                                        <Play size={20} color={post.track.appleTextColor1} fill={post.track.appleTextColor1} onClick={handlePlayPauseClick} />
-                                    )}
+                                <div className={`${styles.playerProgressBar} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
+                                    <div className={styles.playerProgressFill} style={{ width: `${displayProgress}%` }}></div>
                                 </div>
-                                <div className={styles.socialControls}>
-                                    <div className={styles.socialControlIndv}>
-                                        <MessageCircleMore size={30} color={post.track.appleTextColor1} onClick={() => setCommentsOpen(true)} />
-                                        <span>{commentCount}</span>
+                                <div className={styles.controlsSocialArea}>
+                                    <div className={`${styles.playerControls} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
+                                        {showPause ? (
+                                            <Pause size={20} color={post.track.appleTextColor1} fill={post.track.appleTextColor1} onClick={handlePlayPauseClick} />
+                                        ) : (
+                                            <Play size={20} color={post.track.appleTextColor1} fill={post.track.appleTextColor1} onClick={handlePlayPauseClick} />
+                                        )}
                                     </div>
-                                    <div className={styles.socialControlIndv}>                                        
-                                        <button 
-                                            type="button" 
-                                            aria-label={likedByMe ? 'Unlike post' : 'Like post'} 
-                                            onClick={handleLikeClick}
-                                            style={{
-                                                background: 'none',
-                                                border: 'none',
-                                                padding: 0,
-                                                cursor: 'pointer'
-                                            }} 
-                                        >
-                                            <Heart 
-                                                size={30} 
-                                                color={post.track.appleTextColor1} 
-                                                fill={likedByMe ? post.track.appleTextColor1 : 'none'}
-                                            />
-                                        </button>
-                                        <span>{likeCount}</span>
+                                    <div className={styles.socialControls}>
+                                        <div className={styles.socialControlIndv}>
+                                            <MessageCircleMore size={30} color={post.track.appleTextColor1} onClick={() => setCommentsOpen(true)} />
+                                            <span>{commentCount}</span>
+                                        </div>
+                                        <div className={styles.socialControlIndv}>                                        
+                                            <button 
+                                                type="button" 
+                                                aria-label={likedByMe ? 'Unlike post' : 'Like post'} 
+                                                onClick={handleLikeClick}
+                                                style={{
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    padding: 0,
+                                                    cursor: 'pointer'
+                                                }} 
+                                            >
+                                                <Heart 
+                                                    size={30} 
+                                                    color={post.track.appleTextColor1} 
+                                                    fill={likedByMe ? post.track.appleTextColor1 : 'none'}
+                                                />
+                                            </button>
+                                            <span>{likeCount}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            {/* Spacer for the space-between justification so that album art snaps to top and player snaps to middle */ }
+                            <div></div>
                         </div>
                     </div>
                     <div className={styles.userPostArea}>

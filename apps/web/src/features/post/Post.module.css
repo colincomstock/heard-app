@@ -6,7 +6,7 @@
   height: auto;
   min-height: 0;
   height: 92vh;
-  padding: 8vh 2rem 1rem 2rem;
+  padding: 4.5rem 2rem 1rem 2rem;
   margin: 0 1rem;
   border-radius: 2rem;
   background: var(--applebgColor);
@@ -31,7 +31,7 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   width: 100%;
   max-width: 600px;
@@ -55,9 +55,24 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-between;
   flex: 1;
   min-height: 0;
+  width: 100%;
+}
+
+.songMetaArea {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.albumCoverContainer {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
 }
 

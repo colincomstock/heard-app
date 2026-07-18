@@ -5,8 +5,30 @@ import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/context/useAuth'
 import { getQueuePosts } from '@/lib/api/queue'
 import { useAudioPlayer } from '@/context/useAudioPlayer'
+import { useAppChrome } from '@/context/useAppChrome'
+import { VolumeX, Volume2 } from 'lucide-react'
 
 export default function QueueFeed() {
+
+    const { setHeader, resetHeader } = useAppChrome();
+    const { isMuted, setMuted } = useAudioPlayer();
+
+    useEffect(() => {
+        setHeader({
+            visible: true,
+            title: 'queue',
+            right: [
+                {
+                    id: 'mute-toggle',
+                    label: isMuted ? 'Unmute' : 'Mute',
+                    icon: isMuted ? <VolumeX /> : <Volume2 />,
+                    onClick: () => setMuted(!isMuted),
+                },
+            ],
+        });
+
+        return resetHeader; // Reset header when component unmounts
+    }, [setHeader, resetHeader, isMuted, setMuted]);
 
     const { session } = useAuth()!;
     const { pause } = useAudioPlayer();

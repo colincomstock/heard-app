@@ -5,9 +5,12 @@ import { useAuth } from '@/context/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getMe } from '@/lib/api/me';
+import { useEffect } from 'react';
+import { useAppChrome } from '@/context/useAppChrome';
+import { Ellipsis } from 'lucide-react';
 
 export default function Profile() {
-
+    
     const { session, signOutUser } = useAuth()!;
     const navigate = useNavigate();
 
@@ -17,6 +20,29 @@ export default function Profile() {
         placeholderData: (previousData) => previousData,
         enabled: !!session?.access_token,
     });
+
+    const { setHeader, resetHeader } = useAppChrome();
+
+    useEffect(() => {
+        return resetHeader; // Reset header when component unmounts
+    }, [resetHeader]);
+
+    useEffect(() => {
+        setHeader({
+            visible: true,
+            title: data?.profile ? `@${data.profile.handle}` : 'loading...',
+            right: [
+                {
+                    id: 'edit-profile',
+                    label: 'Edit Profile',
+                    icon: <Ellipsis />,
+                    onClick: () => {}
+                }
+            ],
+        });
+    }, [setHeader, data?.profile?.handle]);
+    
+    
 
     async function handleSignOut(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
