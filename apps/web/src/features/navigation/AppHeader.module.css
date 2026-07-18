@@ -6,17 +6,29 @@
     right: 0;
     height: 4.5rem;
     z-index: 100;
-    display: grid;
-    grid-template-columns: 72px 1fr 72px;
+    display: flex;
+    /* grid-template-columns: 72px 1fr 72px; */
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem 3rem;
     color: rgba(255, 255, 255, 0.925);
+    gap: 0.5rem;
 }
 
 .leftSlot {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    border-radius: 50%;
+}
+
+.mainSlot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+    border-radius: 3rem;
+
 }
 
 .rightSlots {
@@ -24,9 +36,10 @@
     align-items: center;
     justify-content: flex-end;
     gap: 1rem;
+    padding-right: 0.5rem;
 }
 
-.centerSlot {
+.titleArea {
     height: 2.5rem;
     display: flex;
     align-items: center;
@@ -34,10 +47,9 @@
     justify-self: center;
     border-radius: 3rem;
     padding: 0 1rem;
-
 }
 
-.centerSlot > h1 {
+.titleArea > h1 {
     font-weight: 400;
     font-size: 1.25rem;
 }

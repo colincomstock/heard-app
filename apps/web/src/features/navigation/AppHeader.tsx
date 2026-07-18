@@ -12,7 +12,7 @@ function HeaderButton({ action }: { action: HeaderAction }) {
             aria-label={action.label}
             onClick={action.onClick}
             disabled={action.disabled}
-            className={`${styles.headerButton} ${styles.glassBlur}`}
+            className={`${styles.headerButton}`}
         >
             {action.icon}
         </button>
@@ -28,16 +28,18 @@ export default function AppHeader({ header }: AppHeaderProps) {
 
     return (
         <div className={styles.header}>
-            <div className={`${styles.leftSlot}`}>
-                {header.left && <HeaderButton action={header.left} />}
-            </div>
-            <div className={`${styles.centerSlot} ${styles.glassBlur}`}>
-                <h1 className={styles.title}>{header.title}</h1>            
-            </div>
-            <div className={`${styles.rightSlots}`}>
-                {rightActions.map((action) => (
-                    <HeaderButton key={action.id} action={action} />
-                ))}
+            {header.left && <div className={`${styles.leftSlot} ${styles.glassBlur}`}>
+                <HeaderButton action={header.left} />
+            </div>}
+            <div className={`${styles.mainSlot} ${styles.glassBlur}`}>
+                <div className={`${styles.titleArea}`}>
+                    <h1 className={styles.title}>{header.title}</h1>            
+                </div>
+                <div className={`${styles.rightSlots}`}>
+                    {rightActions.map((action) => (
+                        <HeaderButton key={action.id} action={action} />
+                    ))}
+                </div>
             </div>
         </div>
     );
