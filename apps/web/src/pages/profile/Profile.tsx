@@ -23,8 +23,10 @@ export default function Profile() {
 
     const { setHeader, resetHeader } = useAppChrome();
 
+    // Reset the header to its default state when the component unmounts
+    // Seperated from the other effect to prevent unnecessary re-renders of the header when the profile data changes.
     useEffect(() => {
-        return resetHeader; // Reset header when component unmounts
+        return resetHeader;
     }, [resetHeader]);
 
     useEffect(() => {
