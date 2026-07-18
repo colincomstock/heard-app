@@ -1,5 +1,8 @@
 import { createContext, type ReactNode } from 'react';
 
+// The AppChromeContext provides a way to manage the app's header configuration, including visibility, title, and actions. 
+// It allows components to set and reset the header state as needed.
+
 export type HeaderAction = {
     id: string;
     label: string;

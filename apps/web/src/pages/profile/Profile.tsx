@@ -30,7 +30,7 @@ export default function Profile() {
     useEffect(() => {
         setHeader({
             visible: true,
-            title: data?.profile ? `@${data.profile.handle}` : 'loading...',
+            title: data?.profile?.handle ? `@${data.profile.handle}` : 'loading...',
             right: [
                 {
                     id: 'edit-profile',

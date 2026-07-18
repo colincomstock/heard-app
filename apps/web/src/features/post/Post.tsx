@@ -198,7 +198,7 @@ export default function Post(post: QueuePost) {
                                 </div>
                             </div>
                             {/* Spacer for the space-between justification so that album art snaps to top and player snaps to middle */ }
-                            <div></div>
+                            <div className={styles.postSpacer}></div>
                         </div>
                     </div>
                     <div className={styles.userPostArea}>

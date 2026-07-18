@@ -19,6 +19,7 @@ function HeaderButton({ action }: { action: HeaderAction }) {
     );
 };
 
+// The AppHeader component renders the app's header based on the provided header configuration. It displays the title and any left or right actions as buttons.
 export default function AppHeader({ header }: AppHeaderProps) {
     if (!header.visible) {
         return null;
