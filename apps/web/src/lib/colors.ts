@@ -30,8 +30,8 @@ const BADGE_LOW_CONTRAST_THRESHOLD = 2; // Contrast ratio below which the badge 
 const LUMINANCE_THRESHOLD = 0.4; // Luminance threshold to determine if a color is light or dark
 const LIGHT_BG_SAT_ADJUSTMENT = -10; // Saturation adjustment for light backgrounds
 const LIGHT_BG_LUM_ADJUSTMENT = -10; // Luminance adjustment for light backgrounds
-const LIGHT_BORDER_SAT_ADJUSTMENT = -30; // Saturation adjustment for borders on light backgrounds
-const LIGHT_BORDER_LUM_ADJUSTMENT = -30; // Luminance adjustment for borders on light backgrounds
+const LIGHT_BORDER_SAT_ADJUSTMENT = +10; // Saturation adjustment for borders on light backgrounds
+const LIGHT_BORDER_LUM_ADJUSTMENT = +10; // Luminance adjustment for borders on light backgrounds
 const DARK_BORDER_SAT_ADJUSTMENT = 15; // Saturation adjustment for borders on dark backgrounds
 const DARK_BORDER_LUM_ADJUSTMENT = 15; // Luminance adjustment for borders on dark backgrounds
 

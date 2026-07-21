@@ -33,6 +33,8 @@ export default function Profile() {
         setHeader({
             visible: true,
             title: data?.profile?.handle ? `@${data.profile.handle}` : 'loading...',
+            image: data?.profile?.pfpUrl || null,
+            pfp: !!data?.profile?.pfpUrl,
             right: [
                 {
                     id: 'edit-profile',

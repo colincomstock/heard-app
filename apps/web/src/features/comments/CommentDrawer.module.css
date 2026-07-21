@@ -1,5 +1,5 @@
 .commentArea {
-    padding: 0rem 1rem calc(8vh + 1.75rem) 1rem;
+    padding: 0rem 1rem calc(5rem + 1px) 1rem;
     height: 75vh;
     display: flex;
     flex-direction: column;

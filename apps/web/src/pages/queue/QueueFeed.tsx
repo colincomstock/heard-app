@@ -7,6 +7,7 @@ import { getQueuePosts } from '@/lib/api/queue'
 import { useAudioPlayer } from '@/context/useAudioPlayer'
 import { useAppChrome } from '@/context/useAppChrome'
 import { VolumeX, Volume2 } from 'lucide-react'
+import queueIcon from '../../assets/queue-icon-4.png'
 
 export default function QueueFeed() {
 
@@ -17,6 +18,7 @@ export default function QueueFeed() {
         setHeader({
             visible: true,
             title: 'queue',
+            image: queueIcon,
             right: [
                 {
                     id: 'mute-toggle',
