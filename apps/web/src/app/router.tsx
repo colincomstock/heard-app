@@ -5,6 +5,7 @@ import Profile from '../pages/profile/Profile';
 import SignIn from '../pages/auth/SignIn';
 import SignUp from '../pages/auth/SignUp';
 import PrivateRoute from './PrivateRoute';
+import Saved from '../pages/saved/Saved';
 
 export const router = createBrowserRouter([
     {
@@ -43,7 +44,7 @@ export const router = createBrowserRouter([
                 path: '/saved',
                 element: (
                     <PrivateRoute>
-                        <div>Saved Page</div>
+                        <Saved />
                     </PrivateRoute>
                 ),
                 handle: { title: 'saved' },
