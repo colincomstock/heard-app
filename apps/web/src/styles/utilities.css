@@ -2,7 +2,7 @@
   background: #ffffff;
   background: linear-gradient(10deg, rgba(136, 136, 136, 0.1) 0%, rgba(201, 201, 201, 0.1) 38%, rgba(126, 126, 126, 0.1) 100%);
   box-shadow: inset 0px 0px 0.25rem #ffffff12;
-  border: 1px solid rgba(255, 255, 255, 0.133);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter:brightness(1.2);
 }
 
@@ -11,7 +11,7 @@
   background: linear-gradient(10deg, rgba(92, 92, 92, 0.1) 0%, rgba(146, 146, 146, 0.1) 38%, rgba(73, 73, 73, 0.1) 100%);
   box-shadow: inset 0px 0px 0.25rem #ffffff23, 0px 0px 1rem #00000010;
   backdrop-filter: brightness(1.2);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .single-line-clamp {

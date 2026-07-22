@@ -1,16 +1,32 @@
 .postCard {
+  z-index: 0;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
   height: auto;
   min-height: 0;
-  height: 92vh;
+  height: calc(100vh - 4rem);
   padding: 4.5rem 2rem 1rem 2rem;
   margin: 0 1rem;
   border-radius: 2rem;
   background: var(--applebgColor);
   border: solid 1px var(--bgColorBorder);
+  box-shadow: inset 0px 0px 1rem #00000050;
+}
+
+.postCard::before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.11));
+  pointer-events: none;
 }
 
 .postCardLight {
@@ -22,7 +38,7 @@
 }
 
 .feedBuffer {
-  height: calc(8vh);
+  height: calc(4rem - 1px);
   background-color: rgba(0, 0, 0, 0);
 }
 
@@ -227,6 +243,7 @@
   border-radius: 50%;
   align-self: flex-end;
   border: 1px solid var(--appleTextColor1);
+  box-shadow: 0px 0px 0.5rem #00000020;
 }
 
 .usernameTags {
@@ -234,10 +251,6 @@
   flex-direction: column;
 }
 
-.username {
-  font-weight: 500;
-  color: var(--appleTextColor1);
-}
 
 .postGenreBadges {
   display: flex;
@@ -262,28 +275,65 @@
   font-size: 0.8rem;
 }
 
+
 .userTextPost {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  display: block;
   width: 100%;
   height: auto;
   padding: 0.5rem;
   border-radius: 1rem;
   letter-spacing: -0.02em;
-  line-height: 1.4rem;
+  line-height: 1.3rem;
   font-size: 1rem;
   color: var(--appleTextColor1);
   overflow-wrap: anywhere;
 }
 
+.username {
+  font-weight: 500;
+  color: var(--appleTextColor1);
+  display: block;
+}
+
 .postTime {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   flex: 1;
   color: var(--appleTextColor3);
   margin-top: auto;
   font-size: 0.75rem;
+  margin-left: 0.5rem;
+  line-height: 1.2rem;
+}
+
+.userTextPostContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.userTextPostPfp {
+  float: left;
+  aspect-ratio: 1 / 1;
+  height: 2.5rem;
+  width: auto;
+  border-radius: 50%;
+  align-self: flex-start;
+  border: 1px solid var(--appleTextColor1);
+  box-shadow: 0px 0px 0.5rem #00000020;
+  margin-right: 0.5rem;
+}
+.userNameTimeAgo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  margin-right: 0.5rem;
+}
+.caption {
+  display: inline;
+  width: 100%;
+  font-size: 0.875rem;
 }

@@ -16,6 +16,8 @@ export type HeaderConfig = {
     title: string;
     left?: HeaderAction | null;
     right?: HeaderAction[] | null;
+    image?: string | null | undefined;
+    pfp?: boolean | null | undefined;
 };
 
 export type AppChromeContextValue = {

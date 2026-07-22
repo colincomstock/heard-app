@@ -34,6 +34,7 @@ export default function AppHeader({ header }: AppHeaderProps) {
             </div>}
             <div className={`${styles.mainSlot} ${styles.glassBlur}`}>
                 <div className={`${styles.titleArea}`}>
+                    {header.image && <img src={header.image} alt="App Logo" className={`${styles.icon} ${header.pfp ? styles.pfp : ''}`} />}
                     <h1>{header.title}</h1>            
                 </div>
                 <div className={`${styles.rightSlots}`}>

@@ -37,6 +37,18 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                             </div>
                             <span className={`${styles.profilePostArtist} single-line-clamp`}>{post.track.artistName}</span>
                         </div>
+                        <div className={styles.profilePostInteractions}>
+                            <div>
+                                <div>
+                                    <MessageCircleMore size={14} />
+                                    <span>{post.commentCount}</span>
+                                </div>
+                                <div>
+                                    {post.likedByMe ? <Heart fill={post.track.appleTextColor2} size={14} /> : <Heart size={14} /> }
+                                    <span>{post.likeCount}</span>
+                                </div>
+                            </div>
+                        </div>
                         <div className={styles.postGenreBadges}>
                             {post.track.genres.slice(0, 2).map((genre) => (
                                 <div
@@ -49,24 +61,18 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                                 </div>
                             ))}
                         </div>
-                        <div className={styles.profilePostInteractions}>
-                            <div>
-                                <div>
-                                    <MessageCircleMore size={14} />
-                                    <span>{post.commentCount}</span>
-                                </div>
-                                <div>
-                                    {post.likedByMe ? <Heart fill={post.track.appleTextColor2} size={14} /> : <Heart size={14} /> }
-                                    <span>{post.likeCount}</span>
-                                </div>
-                            </div>
-                            <span className={styles.profilePostTime}>{timeAgo(post.updatedAt)}</span>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div className={`${styles.profilePostCaption} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
-                <span className="single-line-clamp">{post.caption}</span>
+            <div className={`${styles.userTextPost} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
+                <img src={post.profile.pfpUrl} alt="User profile picture" className={styles.userTextPostPfp} />
+                <div className={styles.userTextPostContent}>
+                    <div className={styles.userNameTimeAgo}>
+                        <span className={styles.username}>{post.profile.displayName}</span>
+                        <span className={styles.postTime}>{timeAgo(post.createdAt)}</span>
+                    </div>
+                    <span className={`${styles.caption} single-line-clamp`}>{post.caption}</span>
+                </div>
             </div>
         </div>
     )

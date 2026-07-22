@@ -49,7 +49,8 @@
 
 .titleArea > h1 {
     font-weight: 400;
-    font-size: 1.25rem;
+    font-size: 1.125rem;
+    padding-bottom: 0.125rem;
 }
 
 .headerButton {
@@ -64,10 +65,24 @@
 }
 
 .glassBlur {
-    backdrop-filter: saturate(220%) blur(4px);
-    background: rgba(38, 38, 40, 0.808);
-    box-shadow: 0 1rem 3rem rgba(0,0,0,.2);
+    backdrop-filter: saturate(220%) blur(16px);
+    background: #111113c0;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.2), inset 0 0 0.25rem #ffffff12;
     border: 1px solid rgba(255, 255, 255, 0.185);
 }
 
+.icon {
+    height: 1.25rem;
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.pfp {
+    border-radius: 50%;
+    border: 1px solid white;
+    height: 1.75rem;
+    width: 1.75rem;
+    margin-right: 0.5rem;
+    margin-left: -0.5rem;
+}
 
