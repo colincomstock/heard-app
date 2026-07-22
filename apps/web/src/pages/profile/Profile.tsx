@@ -44,7 +44,7 @@ export default function Profile() {
                 }
             ],
         });
-    }, [setHeader, data?.profile?.handle]);
+    }, [setHeader, data?.profile?.handle, data?.profile?.pfpUrl]);
     
     
 

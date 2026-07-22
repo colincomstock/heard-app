@@ -16,6 +16,7 @@ export type PostCore = {
 
 export type ProfilePost = PostCore & {
     track: TrackCore;
+    profile: ProfileCore;
 };
 
 export type QueuePost = PostCore & {
