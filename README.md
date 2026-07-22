@@ -19,6 +19,7 @@ The app is designed with 5 main sections for navigation:
 - profile
 
 ## Demo
+(Dated UI, to be replaced ASAP)
 
 https://github.com/user-attachments/assets/96dd5112-15dc-4151-8c64-0e0d59b9ec31
 
@@ -28,24 +29,29 @@ https://github.com/user-attachments/assets/96dd5112-15dc-4151-8c64-0e0d59b9ec31
 <table>
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/cdc45d4e-b7c5-4ae0-86a1-17321a6201d2" width="260" alt="Queue screen" />
+      <img src="https://github.com/user-attachments/assets/7b07e33d-8f2b-4b5f-8339-fd7311bb4113" width="260" alt="Queue screen" />
       <br />
       <sub><b>Queue</b> — chronological posts from followed users with music previews.</sub>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/2f73031c-77ca-4fa4-8318-b1fcbb9e8da8" width="260" alt="Create post screen" />
+      <img src="https://github.com/user-attachments/assets/d30ff030-7d70-482d-b1d6-2cee334602f6" width="260" alt="Genre screen" />
+      <br />
+      <sub><b>Comments</b> — View comments, add comments, like comments.</sub>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/bd8f86d0-b4d4-4d64-8ccf-22d21da0aae1" width="260" alt="Create post screen" />
       <br />
       <sub><b>Open Full Track</b> — Select between Spotify and Apple Music to listen to full song.</sub>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/94e7d5a8-1dde-4007-9326-47a08c81762b" width="260" alt="Profile screen" />
+      <img src="https://github.com/user-attachments/assets/19259aea-46fa-422f-a036-ac68ecddcad9" width="260" alt="Profile screen" />
       <br />
       <sub><b>Profile</b> — user posts, top genres, and social context.</sub>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/4aa93afd-52ce-49f3-b9b9-b27fd5f6248f" width="260" alt="Genre screen" />
+      <img src="https://github.com/user-attachments/assets/44c0e4d6-d36c-44f0-9f04-fdfb28b86421" width="260" alt="Genre screen" />
       <br />
       <sub><b>New Post</b> — Apple Music search, track selection, and caption entry.</sub>
     </td>
