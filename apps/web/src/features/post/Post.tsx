@@ -203,11 +203,8 @@ export default function Post(post: QueuePost) {
                     </div>
                     <div className={styles.userPostArea}>
                         <div className={styles.userInfoMetadata}>
-                            <img src={post.profile.pfpUrl} alt="User profile picture"/>
-                            <div>
-                                <span className={styles.username}>{post.profile.displayName}</span>
                                 <div className={styles.postGenreBadges}>
-                                    {post.track.genres.slice(0, 2).map((genre) => (
+                                    {post.track.genres.map((genre) => (
                                         <div
                                             key={genre.name}
                                             className={`${styles.indvBadge} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}
@@ -218,13 +215,14 @@ export default function Post(post: QueuePost) {
                                         </div>
                                     ))}
                                 </div>
-                            </div>
-                            <div className={styles.postTime}>
-                                <span>{timeAgo(post.createdAt)}</span>
-                            </div>
                         </div>
                         <div className={`${styles.userTextPost} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}>
-                            <span>{post.caption}</span>
+                            <img src={post.profile.pfpUrl} alt="User profile picture" className={styles.userTextPostPfp} />
+                            <div className={styles.userNameTimeAgo}>
+                                <span className={styles.username}>{post.profile.displayName}</span>
+                                <span className={styles.postTime}>{timeAgo(post.createdAt)}</span>
+                            </div>
+                            <span className={styles.caption}>{post.caption}</span>
                         </div>
                     </div>
                 </div>

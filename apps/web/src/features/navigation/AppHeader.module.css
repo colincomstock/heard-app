@@ -66,7 +66,7 @@
 
 .glassBlur {
     backdrop-filter: saturate(220%) blur(16px);
-    background: #1111139a;
+    background: #111113c0;
     box-shadow: 0 1rem 3rem rgba(0,0,0,.2), inset 0 0 0.25rem #ffffff12;
     border: 1px solid rgba(255, 255, 255, 0.185);
 }

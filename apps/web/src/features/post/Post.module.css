@@ -251,10 +251,6 @@
   flex-direction: column;
 }
 
-.username {
-  font-weight: 500;
-  color: var(--appleTextColor1);
-}
 
 .postGenreBadges {
   display: flex;
@@ -279,28 +275,65 @@
   font-size: 0.8rem;
 }
 
+
 .userTextPost {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  display: block;
   width: 100%;
   height: auto;
   padding: 0.5rem;
   border-radius: 1rem;
   letter-spacing: -0.02em;
-  line-height: 1.4rem;
+  line-height: 1.3rem;
   font-size: 1rem;
   color: var(--appleTextColor1);
   overflow-wrap: anywhere;
 }
 
+.username {
+  font-weight: 500;
+  color: var(--appleTextColor1);
+  display: block;
+}
+
 .postTime {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   flex: 1;
   color: var(--appleTextColor3);
   margin-top: auto;
   font-size: 0.75rem;
+  margin-left: 0.5rem;
+  line-height: 1.2rem;
+}
+
+.userTextPostContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.userTextPostPfp {
+  float: left;
+  aspect-ratio: 1 / 1;
+  height: 2.5rem;
+  width: auto;
+  border-radius: 50%;
+  align-self: flex-start;
+  border: 1px solid var(--appleTextColor1);
+  box-shadow: 0px 0px 0.5rem #00000020;
+  margin-right: 0.5rem;
+}
+.userNameTimeAgo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  margin-right: 0.5rem;
+}
+.caption {
+  display: inline;
+  width: 100%;
+  font-size: 0.875rem;
 }
