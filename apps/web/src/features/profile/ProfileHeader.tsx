@@ -20,6 +20,7 @@ export default function ProfileHeader(profile: ProfileFull) {
                     <img src={profile.pfpUrl} alt="Profile picture" />
                 </div>
                 <div className={styles.profileHeaderStatsArea}>
+                    <div></div>
                     <div className={styles.profileStat}>
                         <span className={styles.profileStatNumber}>{profile.postCount}</span>
                         <span>Posts</span>
@@ -34,6 +35,7 @@ export default function ProfileHeader(profile: ProfileFull) {
                         <span className={styles.profileStatNumber}>{profile.followingCount}</span>
                         <span>Following</span>
                     </div>
+                    <div></div>
                 </div>
             </div>
             <div className={styles.profileNameBioArea}>
