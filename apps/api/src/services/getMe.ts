@@ -123,6 +123,16 @@ export default async function getMe({ supabase, userId }: GetMeArgs) {
         updated_at: post.updated_at,
         visibility: post.visibility,
         liked_by_me: likedPostIds.has(post.id),
+        profile: (() => {
+            const profile = firstOrNull(post.profile);
+            if (!profile) return null;
+            return {
+                id: profile.id,
+                handle: profile.handle,
+                display_name: profile.display_name,
+                pfp_url: profile.pfp_url,
+            };
+        })(),
         track: (() => {
             const track = firstOrNull(post.track);
             if (!track) return null;
@@ -152,16 +162,6 @@ export default async function getMe({ supabase, userId }: GetMeArgs) {
                         };
                         })
                     .filter(Boolean) ?? [],
-            };
-        })(),
-        profile: (() => {
-            const profile = firstOrNull(post.profile);
-            if (!profile) return null;
-            return {
-                id: profile.id,
-                handle: profile.handle,
-                display_name: profile.display_name,
-                pfp_url: profile.pfp_url,
             };
         })(),
     };
