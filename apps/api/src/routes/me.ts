@@ -4,6 +4,7 @@ import type { Bindings, AuthVariables } from "../types/bindings";
 import keysToCamelCase from "../lib/case";
 import getUserLikedPosts from "../services/getUserLikedPosts";
 import getMe from "../services/getMe";
+import validatePageSize from "../lib/validatePageSize";
 
 export const MeRoute = new Hono<{ Bindings: Bindings, Variables: AuthVariables }>();
 
@@ -37,12 +38,15 @@ MeRoute.get("/liked", async (c) => {
         const userId = c.get('userId');
         const supabase = createSupabaseClient(c.env);
 
-        const likedPosts = await getUserLikedPosts({ supabase, userId });
+        const limit = validatePageSize(c.req.query('limit'), {
+            defaultSize: 10,
+            maxSize: 20,
+        });
+        const cursor = c.req.query('cursor') ?? null;
+        const result = await getUserLikedPosts({ supabase, userId, limit, cursor });
 
         return c.json(
-            keysToCamelCase({
-                liked_posts: likedPosts,
-            })
+            keysToCamelCase(result)
         );
     } catch (error) {
         console.error("Error fetching liked posts:", error);

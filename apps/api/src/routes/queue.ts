@@ -2,7 +2,6 @@ import { Hono } from "hono";
 import { createSupabaseClient } from "../lib/supabase";
 import type { Bindings, AuthVariables } from "../types/bindings";
 import keysToCamelCase from "../lib/case";
-import type { TrackGenreRow } from "../types/db";
 import getQueue from "../services/getQueue";
 
 export const QueueRoute = new Hono<{ Bindings: Bindings, Variables: AuthVariables }>();

@@ -5,12 +5,20 @@ import type { Database } from "../types/database.types";
 type GetUserLikedPostsArgs = {
     supabase: SupabaseClient<Database>;
     userId: string;
+    limit: number;
+    cursor?: string | null;
 };
 
-export default async function getUserLikedPosts({ supabase, userId }: GetUserLikedPostsArgs) {
-    const { data: likedPosts, error: likedPostsError } = await supabase
+export default async function getUserLikedPosts({ 
+    supabase, 
+    userId,
+    limit,
+    cursor,
+}: GetUserLikedPostsArgs) {
+    let query = supabase
         .from('post_like')
         .select(`
+            created_at,
             post (
                 id,
                 caption,
@@ -50,15 +58,32 @@ export default async function getUserLikedPosts({ supabase, userId }: GetUserLik
             )
         `)
         .eq('user_id', userId)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(limit + 1);
     
+    if (cursor) {
+        query = query.lt('created_at', cursor);
+    }
+    
+    const { data: likedPosts, error: likedPostsError } = await query;
+
     if (likedPostsError) {
         throw new Error(`Failed to fetch liked posts: ${likedPostsError.message}`);
     }
 
-    const formattedLikedPosts = likedPosts?.map(likedPost => {
+    const rows = likedPosts ?? [];
+    const pageRows = rows.slice(0, limit);
+    const hasMore = rows.length > limit;
+    const nextCursor = hasMore 
+        ? pageRows[pageRows.length - 1]?.created_at ?? null 
+        : null;
+
+    const formattedLikedPosts = pageRows.map(likedPost => {
         const post = firstOrNull(likedPost.post);
         if (!post) return null;
+
+        const track = firstOrNull(post.track);
+        const profile = firstOrNull(post.profile);
 
         return {
             id: post.id,
@@ -69,11 +94,8 @@ export default async function getUserLikedPosts({ supabase, userId }: GetUserLik
             created_at: post.created_at,
             updated_at: post.updated_at,
             liked_by_me: true,
-            track: (() => {
-                const track = firstOrNull(post?.track);
-                if (!track) return null;
-
-                return {
+            track: track 
+                ? {
                     id: track.id,
                     title: track.title,
                     artist_name: track.artist_name,
@@ -98,21 +120,17 @@ export default async function getUserLikedPosts({ supabase, userId }: GetUserLik
                             } : null;
                         })
                         .filter(Boolean),
-                };
-            })(),
-            profile: (() => {
-                const profile = firstOrNull(post?.profile);
-                if (!profile) return null;
-
-                return {
+                } 
+            : null,
+            profile: profile 
+                ? {
                     id: profile.id,
                     handle: profile.handle,
                     display_name: profile.display_name,
                     pfp_url: profile.pfp_url,
-                };
-            })(),
+                } : null,
         };
     }).filter(Boolean);
 
-    return formattedLikedPosts;
+    return { liked_posts: formattedLikedPosts, next_cursor: nextCursor };
 };
