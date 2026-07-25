@@ -4,23 +4,6 @@ import type { Bindings, AuthVariables } from "../types/bindings";
 import keysToCamelCase from "../lib/case";
 import type { TrackGenreRow } from "../types/db";
 
-type CommentProfile = {
-    id: string;
-    handle: string;
-    display_name: string;
-    pfp_url: string;
-};
-
-type PostComment = {
-    id: string;
-    user_id: string;
-    body: string;
-    like_count: number;
-    created_at: string;
-    updated_at: string;
-    profile: CommentProfile | CommentProfile[] | null;
-};
-
 export const QueueRoute = new Hono<{ Bindings: Bindings, Variables: AuthVariables }>();
 
 QueueRoute.get("/", async (c) => {
@@ -193,7 +176,7 @@ QueueRoute.get("/", async (c) => {
 
                 };
             })(),
-            comments: (Array.isArray(post.post_comment) ? post.post_comment : []).map((comment: PostComment) => {
+            comments: (Array.isArray(post.post_comment) ? post.post_comment : []).map((comment) => {
                         const commentProfile = Array.isArray(comment.profile) ? comment.profile[0] : comment.profile;
                         return {
                             id: comment.id,
