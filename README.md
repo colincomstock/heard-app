@@ -19,7 +19,7 @@ The app is designed with 5 main sections for navigation:
 - profile
 
 ## Demo
-(Dated UI, to be replaced ASAP)
+(Old demo behind main, to be replaced ASAP)
 
 https://github.com/user-attachments/assets/96dd5112-15dc-4151-8c64-0e0d59b9ec31
 
@@ -29,31 +29,36 @@ https://github.com/user-attachments/assets/96dd5112-15dc-4151-8c64-0e0d59b9ec31
 <table>
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/7b07e33d-8f2b-4b5f-8339-fd7311bb4113" width="260" alt="Queue screen" />
+      <img src="https://github.com/user-attachments/assets/55eb4e68-40c6-45f8-8fe0-6c5b733437c5" width="260" alt="Queue screen" />
       <br />
       <sub><b>Queue</b> — chronological posts from followed users with music previews.</sub>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/d30ff030-7d70-482d-b1d6-2cee334602f6" width="260" alt="Genre screen" />
+      <img src="https://github.com/user-attachments/assets/ccf8021a-52e5-4e9f-aead-4c55d8b23058" width="260" alt="Genre screen" />
       <br />
       <sub><b>Comments</b> — View comments, add comments, like comments.</sub>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/bd8f86d0-b4d4-4d64-8ccf-22d21da0aae1" width="260" alt="Create post screen" />
+      <img src="https://github.com/user-attachments/assets/b2001609-f611-479c-8bcd-f24bb2d0a371" width="260" alt="Create post screen" />
       <br />
       <sub><b>Open Full Track</b> — Select between Spotify and Apple Music to listen to full song.</sub>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/19259aea-46fa-422f-a036-ac68ecddcad9" width="260" alt="Profile screen" />
+      <img src="https://github.com/user-attachments/assets/044218ae-88d7-451b-8ff1-afb494eb2b14" width="260" alt="Profile screen" />
       <br />
-      <sub><b>Profile</b> — user posts, top genres, and social context.</sub>
+      <sub><b>Profile</b> — User posts, top genres, and social context.</sub>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/44c0e4d6-d36c-44f0-9f04-fdfb28b86421" width="260" alt="Genre screen" />
+      <img src="https://github.com/user-attachments/assets/f384779e-b10f-447d-b4d0-8ae0fd67ee7b" width="260" alt="Genre screen" />
       <br />
       <sub><b>New Post</b> — Apple Music search, track selection, and caption entry.</sub>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/843291be-2b06-4e40-bcb7-037cd526a60b" width="260" alt="Saved screen" />
+      <br />
+      <sub><b>Saved</b> — Posts a user has liked for later review.</sub>
     </td>
   </tr>
 </table>
