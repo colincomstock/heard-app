@@ -38,13 +38,18 @@ export default function QueueFeed() {
         return resetHeader;
     }, [resetHeader]);
 
-    const { session } = useAuth();
+    const { accessToken, userId } = useAuth();
 
     const {data, isPending, isError} = useQuery({
-        queryKey: ['queue', session?.user?.id],
-        queryFn: () => getQueuePosts(session!.access_token),
+        queryKey: ['queue', userId],
+        queryFn: () => {
+            if (!accessToken) {
+                throw new Error("Cannot fetch queue posts without access token");
+            }
+            return getQueuePosts(accessToken);
+        },
         placeholderData: (previousData) => previousData,
-        enabled: !!session?.access_token,
+        enabled: !!accessToken,
     });
 
     useEffect(() => {
