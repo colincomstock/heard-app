@@ -9,7 +9,7 @@
   min-height: 0;
   height: calc(100vh - 4rem);
   padding: 4.5rem 2rem 1rem 2rem;
-  margin: 0 1rem;
+  margin: 0 0.5rem;
   border-radius: 2rem;
   background: var(--applebgColor);
   border: solid 1px var(--bgColorBorder);
@@ -59,7 +59,7 @@
   width: auto;
   height: auto;
   aspect-ratio: 1 / 1;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   box-shadow: #00000052 0px 4px 15px;
 }
 
