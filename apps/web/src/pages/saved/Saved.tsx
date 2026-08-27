@@ -4,17 +4,20 @@ import { useEffect } from 'react';
 import { ArrowUpDown, MessageCircleHeart } from 'lucide-react';
 import saveIcon from '../../assets/saved-icon-2.png';
 import { useMe } from '@/hooks/useMe';
+import { useGetLiked } from './hooks/useGetLiked';
+import ProfilePost from '@/features/post/PostCondensed';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function Saved() {
 
     const { setHeader, resetHeader } = useAppChrome();
-
+    
     // Reset the header to its default state when the component unmounts
     // Separated from the other effect to prevent unnecessary re-renders of the header when the profile data changes.
     useEffect(() => {
         return resetHeader;
     }, [resetHeader]);
-
+    
     useEffect(() => {
         setHeader({
             visible: true,
@@ -31,8 +34,14 @@ export default function Saved() {
             ],
         });
     }, [setHeader]);
+    
+    const { data: meData } = useMe();
+    const { data: likedData, isPending: likedIsPending, isError: likedIsError } = useGetLiked();
+    const likedPosts = likedData?.likedPosts ?? [];
 
-    const { data: meData, isPending, isError } = useMe();
+    useEffect(() => {
+        console.log('likedData:', likedData);
+    }, [likedData]);
 
     return (
         <div className = {styles.savedPage}>
@@ -55,13 +64,36 @@ export default function Saved() {
                 </div>
             </div>
             <div className={styles.savedPostsArea}>
-                <div className={styles.placeholder}>
-                    <MessageCircleHeart size={25} />
-                    <span>hmm, nothing saved yet...</span>
+                {likedIsPending ? (
+                    <div className={styles.placeholder}><Spinner /></div>
+                ) : null}
+                {likedIsError ? (
+                    <div className={styles.placeholder}>Something went wrong.</div>
+                ) : null}
+                {!likedIsPending && !likedIsError && likedPosts.length > 0 ? likedPosts.map((post, index) => (
+                    <div
+                        key={post.id}
+                        className="condensedPostWrapper"
+                        style={{ '--delay': `${Math.min(index, 6) * 100}ms` } as React.CSSProperties}
+                    >
+                        <ProfilePost
+                            {...post}
+                        />
+                    </div>
+                )) : null}
+
+                {!likedIsPending && !likedIsError && likedPosts.length === 0 ? (
+                    <div className={styles.placeholder}>
+                        <MessageCircleHeart size={25} />
+                        <span>hmm, nothing saved yet...</span>
+                    </div>
+                ) : null}
+            </div>
+                <div className={styles.savedPageBottom}>
+                    {!likedIsPending && !likedIsError && likedPosts.length > 0 && (
+                        <span>end of saved posts.</span>
+                    )}
                 </div>
-            </div>
-            <div className={styles.savedPageBottom}>
-            </div>
         </div>
     );
 }

@@ -31,3 +31,18 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.condensedPostWrapper {
+  width: 100%;
+  opacity: 0;
+  transform: translateY(-1rem);
+  animation: condensed-post-enter 300ms ease-out forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes condensed-post-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
