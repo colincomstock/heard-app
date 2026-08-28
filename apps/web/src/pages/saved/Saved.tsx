@@ -74,7 +74,7 @@ export default function Saved() {
                     <div
                         key={post.id}
                         className="condensedPostWrapper"
-                        style={{ '--delay': `${Math.min(index, 6) * 100}ms` } as React.CSSProperties}
+                        style={{ '--delay': `${Math.min(index, 6) * 150}ms` } as React.CSSProperties}
                     >
                         <ProfilePost
                             {...post}

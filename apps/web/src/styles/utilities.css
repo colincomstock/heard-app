@@ -36,6 +36,7 @@
   width: 100%;
   opacity: 0;
   transform: translateY(-1rem);
+  filter: blur(0.125rem);
   animation: condensed-post-enter 300ms ease-out forwards;
   animation-delay: var(--delay);
 }
@@ -44,5 +45,23 @@
   to {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.postWrapper {
+  width: 100%;
+  opacity: 1;
+
+  filter: blur(0.5rem);
+  animation: post-enter 300ms ease-out forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes post-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }

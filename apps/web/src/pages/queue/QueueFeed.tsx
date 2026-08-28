@@ -64,8 +64,14 @@ export default function QueueFeed() {
     return (
         <>
             <div className={styles.feed}>
-                {data.posts && data.posts.length > 0 ? data.posts.map((post) => (
-                    <Post key={post.id} {...post}/>
+                {data.posts && data.posts.length > 0 ? data.posts.map((post, index) => (
+                    <div
+                        key={post.id}
+                        className="postWrapper"
+                        style={{ '--delay': `${Math.min(index, 3) * 100}ms` } as React.CSSProperties}
+                    >
+                        <Post key={post.id} {...post}/>
+                    </div>
                 )) : <div>No posts available.</div>}
             </div>
             

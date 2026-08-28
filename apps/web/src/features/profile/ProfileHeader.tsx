@@ -8,16 +8,20 @@ export default function ProfileHeader(profile: ProfileFull) {
         <div 
             className={styles.profileHeader}
             style={
-                {
-                    '--profile-bg-image': `url(${profile.pfpUrl})`,
-                } as React.CSSProperties
+                profile.pfpUrl
+                    ? ({ '--profile-bg-image': `url(${profile.pfpUrl})` } as React.CSSProperties)
+                    : undefined
             }
         >
             <div className={styles.profileHeaderBg} />
             <div className={styles.profileHeaderTopMask} />
             <div className={styles.profileHeaderIdentityArea}>
                 <div className={styles.pfpArea}>
-                    <img src={profile.pfpUrl} alt="Profile picture" />
+                    {profile.pfpUrl ? (
+                        <img src={profile.pfpUrl} alt="Profile picture" />
+                        ) : (
+                        <div className={styles.pfpPlaceholder} aria-hidden="true" />
+                    )}
                 </div>
                 <div className={styles.profileHeaderStatsArea}>
                     <div></div>
