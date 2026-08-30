@@ -128,7 +128,8 @@ export default function Post(post: QueuePost) {
                         '--appleTextColor2': post.track.appleTextColor2,
                         '--appleTextColor3': post.track.appleTextColor3,
                         '--appleTextColor4': post.track.appleTextColor4,
-                        '--coverArt': `url(${post.track.coverUrl})`
+                        '--coverArt': `url(${post.track.coverUrl})`,
+                        '--neutralTextColor': derivedColors.isLight ? '#000000' : '#FFFFFF',
                     } as React.CSSProperties
                 }
             >
@@ -149,7 +150,7 @@ export default function Post(post: QueuePost) {
                                     </div>
                                     <button onClick={() => setListenOpen(true)}>
                                         <div className={styles.listenButtonIcon}>
-                                            <Share size={30} color={post.track.appleTextColor1} />
+                                            <Share size={30} color={post.track.appleTextColor2} />
 
                                         </div>
                                         <div className={styles.listenButtonText}>
@@ -171,7 +172,7 @@ export default function Post(post: QueuePost) {
                                     </div>
                                     <div className={styles.socialControls}>
                                         <div className={styles.socialControlIndv}>
-                                            <MessageCircleMore size={30} color={post.track.appleTextColor1} onClick={() => setCommentsOpen(true)} />
+                                            <MessageCircleMore size={30} color={post.track.appleTextColor2} onClick={() => setCommentsOpen(true)} />
                                             <span>{commentCount}</span>
                                         </div>
                                         <div className={styles.socialControlIndv}>                                        
@@ -188,8 +189,8 @@ export default function Post(post: QueuePost) {
                                             >
                                                 <Heart 
                                                     size={30} 
-                                                    color={post.track.appleTextColor1} 
-                                                    fill={likedByMe ? post.track.appleTextColor1 : 'none'}
+                                                    color={post.track.appleTextColor2} 
+                                                    fill={likedByMe ? post.track.appleTextColor2 : 'none'}
                                                 />
                                             </button>
                                             <span>{likeCount}</span>
