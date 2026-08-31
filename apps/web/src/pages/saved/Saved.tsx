@@ -1,6 +1,6 @@
 import { useAppChrome } from '@/context/useAppChrome';
 import styles from './Saved.module.css';
-import { useEffect } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { ArrowUpDown, MessageCircleHeart } from 'lucide-react';
 import saveIcon from '../../assets/saved-icon-2.png';
 import { useMe } from '@/hooks/useMe';
@@ -36,12 +36,47 @@ export default function Saved() {
     }, [setHeader]);
     
     const { data: meData } = useMe();
-    const { data: likedData, isPending: likedIsPending, isError: likedIsError } = useGetLiked();
-    const likedPosts = likedData?.likedPosts ?? [];
+
+    const {
+        data: likedData,
+        isPending: likedIsPending,
+        isError: likedIsError,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+    } = useGetLiked();
+
+    const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+    const likedPosts = likedData?.pages.flatMap(page => page.likedPosts) ?? [];
+    const lastPageIndex = (likedData?.pages.length ?? 0) - 1;
 
     useEffect(() => {
-        console.log('likedData:', likedData);
-    }, [likedData]);
+        const loadMoreElement = loadMoreRef.current;
+
+        if (!loadMoreElement || !hasNextPage || isFetchingNextPage) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+                    void fetchNextPage();
+                }
+            },
+            {
+                root: null,
+                rootMargin: '200px 0px',
+                threshold: 0,
+            }
+        );
+
+        observer.observe(loadMoreElement);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+    const LOAD_TRIGGER_INDEX = 7;
 
     return (
         <div className = {styles.savedPage}>
@@ -70,17 +105,29 @@ export default function Saved() {
                 {likedIsError ? (
                     <div className={styles.placeholder}>Something went wrong.</div>
                 ) : null}
-                {!likedIsPending && !likedIsError && likedPosts.length > 0 ? likedPosts.map((post, index) => (
-                    <div
-                        key={post.id}
-                        className="condensedPostWrapper"
-                        style={{ '--delay': `${Math.min(index, 6) * 150}ms` } as React.CSSProperties}
-                    >
-                        <ProfilePost
-                            {...post}
-                        />
-                    </div>
-                )) : null}
+                {!likedIsPending && !likedIsError && likedPosts.length > 0 ? (
+                    likedData?.pages.map((page, pageIndex) => {
+                        const triggerIndex = Math.min(LOAD_TRIGGER_INDEX, page.likedPosts.length - 1);
+                        const shouldUseLoadTrigger = hasNextPage && pageIndex === lastPageIndex;
+
+                        return page.likedPosts.map((post, postIndex) => (
+                            <Fragment key={post.id}>
+                                {shouldUseLoadTrigger && postIndex === triggerIndex ? (
+                                    <div ref={loadMoreRef} className={styles.loadMoreSentinel} />
+                                ) : null}
+
+                                <div
+                                    className="condensedPostWrapper"
+                                    style={{ '--delay': `${Math.min(postIndex, 6) * 150}ms` } as React.CSSProperties}
+                                >
+                                    <ProfilePost
+                                        {...post}
+                                    />
+                                </div>
+                            </Fragment>
+                        ));
+                    })
+                ) : null}
 
                 {!likedIsPending && !likedIsError && likedPosts.length === 0 ? (
                     <div className={styles.placeholder}>
@@ -89,11 +136,16 @@ export default function Saved() {
                     </div>
                 ) : null}
             </div>
-                <div className={styles.savedPageBottom}>
-                    {!likedIsPending && !likedIsError && likedPosts.length > 0 && (
-                        <span>end of saved posts.</span>
-                    )}
+            {hasNextPage ? (
+                <div className={styles.loadMoreTrigger}>
+                    {isFetchingNextPage ? <Spinner /> : null}
                 </div>
+            ) : null}
+            <div className={styles.savedPageBottom}>
+                {!likedIsPending && !likedIsError && likedPosts.length > 0 && (
+                    <span>end of saved posts.</span>
+                )}
+            </div>
         </div>
     );
 }
