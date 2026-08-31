@@ -142,7 +142,7 @@ export default function Saved() {
                 </div>
             ) : null}
             <div className={styles.savedPageBottom}>
-                {!likedIsPending && !likedIsError && likedPosts.length > 0 && (
+                {!likedIsPending && !likedIsError && !hasNextPage && likedPosts.length > 0 && (
                     <span>end of saved posts.</span>
                 )}
             </div>
