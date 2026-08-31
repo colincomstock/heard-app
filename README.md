@@ -23,40 +23,39 @@ The app is designed with 5 main sections for navigation:
 
 https://github.com/user-attachments/assets/96dd5112-15dc-4151-8c64-0e0d59b9ec31
 
-
 ## Screenshots
 
 <table>
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/55eb4e68-40c6-45f8-8fe0-6c5b733437c5" width="260" alt="Queue screen" />
+      <img src="https://github.com/user-attachments/assets/110b2504-fd61-4930-b625-79e1b808fa97" width="260" alt="Queue screen" />
       <br />
       <sub><b>Queue</b> — chronological posts from followed users with music previews.</sub>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/ccf8021a-52e5-4e9f-aead-4c55d8b23058" width="260" alt="Genre screen" />
+      <img src="https://github.com/user-attachments/assets/1d472282-3113-4fb0-9a45-ca23f8827bd4" width="260" alt="Genre screen" />
       <br />
       <sub><b>Comments</b> — View comments, add comments, like comments.</sub>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/b2001609-f611-479c-8bcd-f24bb2d0a371" width="260" alt="Create post screen" />
+      <img src="https://github.com/user-attachments/assets/d94edb2e-199f-4e2b-8f8f-783a3f4b5fbc" width="260" alt="Create post screen" />
       <br />
       <sub><b>Open Full Track</b> — Select between Spotify and Apple Music to listen to full song.</sub>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/044218ae-88d7-451b-8ff1-afb494eb2b14" width="260" alt="Profile screen" />
+      <img src="https://github.com/user-attachments/assets/0c789e03-912d-445e-8ddf-d1759fc5044a" width="260" alt="Profile screen" />
       <br />
       <sub><b>Profile</b> — User posts, top genres, and social context.</sub>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/f384779e-b10f-447d-b4d0-8ae0fd67ee7b" width="260" alt="Genre screen" />
+      <img src="https://github.com/user-attachments/assets/32538ff9-4772-487f-8202-e3ba645bdd53" width="260" alt="Genre screen" />
       <br />
       <sub><b>New Post</b> — Apple Music search, track selection, and caption entry.</sub>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/843291be-2b06-4e40-bcb7-037cd526a60b" width="260" alt="Saved screen" />
+      <img src="https://github.com/user-attachments/assets/92c73d57-e3d0-4721-ab47-9c9193435d94" width="260" alt="Saved screen" />
       <br />
       <sub><b>Saved</b> — Posts a user has liked for later review.</sub>
     </td>
@@ -124,7 +123,7 @@ This allows the post creation flow to stay simple for the user while the backend
 
 ## <img width="20" height="20" alt="queue-icon-4" src="./apps/web/src/assets/saved-icon-2.png" /> &nbsp;Saved
 
-Saved is planned as a place for users to return to recommendations they liked.
+Saved is the place for users to return to recommendations they liked.
 
 A common problem with music discovery is that recommendations are easy to lose especially when exchange through services like sms. Someone may send a song, or mention an artist, but the moment often disappears before the listener has time to fully engage with it or go back to it.
 
@@ -184,6 +183,7 @@ Implemented or partially implemented areas include:
 - Protected frontend routes
 - Queue feed
 - Profile page
+- Saved Page
 - Post creation flow
 - Apple Music track search
 - Track search preview
