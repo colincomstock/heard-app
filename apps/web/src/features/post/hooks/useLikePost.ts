@@ -24,6 +24,7 @@ export function useLikePost(postId: string, options?: UseLikePostOptions) {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['queue', userId] });
             queryClient.invalidateQueries({ queryKey: ['me', userId] });
+            queryClient.invalidateQueries({ queryKey: ['liked', userId] });
         },
         onError: (error) => {
             console.error("Error liking post:", error);

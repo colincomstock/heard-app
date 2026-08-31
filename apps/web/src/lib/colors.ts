@@ -26,14 +26,27 @@ const FALLBACK: DerivedPostColors = {
     lowContrastBgBadge: false,
 }
 
+// Thresholds
 const BADGE_LOW_CONTRAST_THRESHOLD = 2; // Contrast ratio below which the badge is considered low contrast
 const LUMINANCE_THRESHOLD = 0.4; // Luminance threshold to determine if a color is light or dark
-const LIGHT_BG_SAT_ADJUSTMENT = -10; // Saturation adjustment for light backgrounds
-const LIGHT_BG_LUM_ADJUSTMENT = -10; // Luminance adjustment for light backgrounds
-const LIGHT_BORDER_SAT_ADJUSTMENT = +10; // Saturation adjustment for borders on light backgrounds
-const LIGHT_BORDER_LUM_ADJUSTMENT = +10; // Luminance adjustment for borders on light backgrounds
-const DARK_BORDER_SAT_ADJUSTMENT = 15; // Saturation adjustment for borders on dark backgrounds
-const DARK_BORDER_LUM_ADJUSTMENT = 15; // Luminance adjustment for borders on dark backgrounds
+
+// Light Background Adjustments
+const LIGHT_BG_SAT_ADJUSTMENT = 0; // Saturation adjustment for light backgrounds
+const LIGHT_BG_LUM_ADJUSTMENT = 0; // Luminance adjustment for light backgrounds
+
+// Light Border Adjustments
+const LIGHT_BORDER_SAT_ADJUSTMENT = 5; // Saturation adjustment for borders on light backgrounds
+const LIGHT_BORDER_LUM_ADJUSTMENT = 10; // Luminance adjustment for borders on light backgrounds
+
+// Dark Background Adjustments
+const DARK_BG_SAT_FLOOR = 10; // Saturation floor for dark backgrounds
+const DARK_BG_LUM_FLOOR = 15; // Luminance floor for dark backgrounds
+
+// Dark Border Adjustments
+const DARK_BORDER_SAT_FLOOR = 10; // Saturation floor for borders on dark backgrounds
+const DARK_BORDER_LUM_FLOOR = 15; // Luminance floor for borders on dark backgrounds
+const DARK_BORDER_SAT_ADJUSTMENT = 5; // Saturation adjustment for borders on dark backgrounds
+const DARK_BORDER_LUM_ADJUSTMENT = 10; // Luminance adjustment for borders on dark backgrounds
 
 export default function derivePostColors(bgHexColor: string, badgeHexColor: string): DerivedPostColors {
     const bgNormalized = normalizeHexColor(bgHexColor);
@@ -57,8 +70,8 @@ export default function derivePostColors(bgHexColor: string, badgeHexColor: stri
     if (bgLuminance >= LUMINANCE_THRESHOLD) {
         const lightBgColor: Hsl = {
             h: hsl.h,
-            s: clamp(hsl.s + LIGHT_BG_SAT_ADJUSTMENT, 0, 100),
-            l: clamp(hsl.l + LIGHT_BG_LUM_ADJUSTMENT, 0, 100),
+            s: clamp(hsl.s + LIGHT_BG_SAT_ADJUSTMENT, 0, 90),
+            l: clamp(hsl.l + LIGHT_BG_LUM_ADJUSTMENT, 0, 90),
         };
 
         const lightBorderColor: Hsl = {
@@ -77,14 +90,14 @@ export default function derivePostColors(bgHexColor: string, badgeHexColor: stri
         return {...FALLBACK}
     } else {
         const darkBgColor: Hsl = {
-            h: hsl.h,
-            s: hsl.s,
-            l: hsl.l,
+            h: clamp(hsl.h, 0, 360),
+            s: clamp(hsl.s, DARK_BG_SAT_FLOOR, 100),
+            l: clamp(hsl.l, DARK_BG_LUM_FLOOR, 100),
         };
         const darkBorderColor: Hsl = {
             h: hsl.h,
-            s: clamp(hsl.s + DARK_BORDER_SAT_ADJUSTMENT, 0, 100),
-            l: clamp(hsl.l + DARK_BORDER_LUM_ADJUSTMENT, 0, 100),
+            s: clamp(hsl.s + DARK_BORDER_SAT_ADJUSTMENT, DARK_BORDER_SAT_FLOOR, 100),
+            l: clamp(hsl.l + DARK_BORDER_LUM_ADJUSTMENT, DARK_BORDER_LUM_FLOOR, 100),
         };
         return {
             bgColor: hslToHex(darkBgColor),

@@ -24,6 +24,7 @@ export function useUnlikePost(postId: string, options?: UseUnlikePostOptions) {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['queue', userId] });
             queryClient.invalidateQueries({ queryKey: ['me', userId] });
+            queryClient.invalidateQueries({ queryKey: ['liked', userId] });
         },
         onError: (error) => {
             console.error("Error unliking post:", error);

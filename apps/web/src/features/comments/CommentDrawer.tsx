@@ -6,6 +6,7 @@ import pfpPlaceholder from "../../assets/profile-picture-icon.png";
 import type { Comment } from "@heard/types";
 import { useAddPostComment } from "./hooks/useAddPostComment";
 import CommentItem from "./CommentItem";
+import { useMe } from "@/hooks/useMe";
 
 type CommentDrawerProps = {
     postId: string;
@@ -51,6 +52,8 @@ export default function CommentDrawer({ postId, comments, commentsOpen, setComme
         });
     };
 
+    const { data: meData } = useMe();
+
     return(
         <Drawer open={commentsOpen} onOpenChange={setCommentsOpen}>
             <DrawerContent>
@@ -74,7 +77,7 @@ export default function CommentDrawer({ postId, comments, commentsOpen, setComme
                     <div className={styles.commentInputContainer}>
                         <div className={styles.commentDivider}></div>
                         <div className={styles.commentInputArea}>
-                            <img src={pfpPlaceholder} alt="User profile picture" className={styles.commentInputPfp} />
+                            <img src={meData?.profile?.pfpUrl || pfpPlaceholder} alt="User profile picture" className={styles.commentInputPfp} />
                             <textarea
                                 id="post-comment"
                                 name="comment"

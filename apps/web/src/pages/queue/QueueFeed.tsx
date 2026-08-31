@@ -38,13 +38,18 @@ export default function QueueFeed() {
         return resetHeader;
     }, [resetHeader]);
 
-    const { session } = useAuth();
+    const { accessToken, userId } = useAuth();
 
     const {data, isPending, isError} = useQuery({
-        queryKey: ['queue', session?.user?.id],
-        queryFn: () => getQueuePosts(session!.access_token),
+        queryKey: ['queue', userId],
+        queryFn: () => {
+            if (!accessToken) {
+                throw new Error("Cannot fetch queue posts without access token");
+            }
+            return getQueuePosts(accessToken);
+        },
         placeholderData: (previousData) => previousData,
-        enabled: !!session?.access_token,
+        enabled: !!accessToken,
     });
 
     useEffect(() => {
@@ -59,8 +64,14 @@ export default function QueueFeed() {
     return (
         <>
             <div className={styles.feed}>
-                {data.posts && data.posts.length > 0 ? data.posts.map((post) => (
-                    <Post key={post.id} {...post}/>
+                {data.posts && data.posts.length > 0 ? data.posts.map((post, index) => (
+                    <div
+                        key={post.id}
+                        className="postWrapper"
+                        style={{ '--delay': `${Math.min(index, 3) * 100}ms` } as React.CSSProperties}
+                    >
+                        <Post key={post.id} {...post}/>
+                    </div>
                 )) : <div>No posts available.</div>}
             </div>
             

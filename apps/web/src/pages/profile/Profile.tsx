@@ -3,23 +3,34 @@ import ProfilePost from '../../features/post/PostCondensed';
 import ProfileHeader from '../../features/profile/ProfileHeader';
 import { useAuth } from '@/context/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { getMe } from '@/lib/api/me';
 import { useEffect } from 'react';
 import { useAppChrome } from '@/context/useAppChrome';
 import { Ellipsis } from 'lucide-react';
+import { useMe } from '@/hooks/useMe';
+import { Spinner } from '@/components/ui/spinner';
+import type { ProfileFull } from '@heard/types';
+
+const emptyProfile: ProfileFull = {
+    id: '',
+    handle: '',
+    displayName: '',
+    pfpUrl: '',
+    bio: null,
+    isPrivate: false,
+    postCount: 0,
+    followingCount: 0,
+    followerCount: 0,
+    createdAt: '',
+    updatedAt: '',
+    topGenres: [],
+};
 
 export default function Profile() {
     
     const { session, signOutUser } = useAuth()!;
     const navigate = useNavigate();
 
-    const { data, isPending, isError } = useQuery({
-        queryKey: ['me', session?.user?.id],
-        queryFn: () => getMe(session!.access_token),
-        placeholderData: (previousData) => previousData,
-        enabled: !!session?.access_token,
-    });
+    const { data, isPending, isError } = useMe();
 
     const { setHeader, resetHeader } = useAppChrome();
 
@@ -59,22 +70,38 @@ export default function Profile() {
         }
     }
 
-    if (isPending) return <div>Loading...</div>;
-    if (isError) return <div>Something went wrong.</div>;
+    const posts = data?.posts ?? [];
+    const profile = data?.profile ?? emptyProfile;
 
     return (
         <div className={styles.profilePage}>
-            <ProfileHeader {...data.profile} />
+            <ProfileHeader {...profile} />
             <div className={styles.profilePostsArea}>
-                {data.posts && data.posts.length > 0 ? data.posts.map((post) => (
-                    <ProfilePost
+                {isPending ? (
+                    <div className={styles.placeholder}><Spinner /></div>
+                ) : null}
+                {isError ? (
+                    <div className={styles.placeholder}>Something went wrong.</div>
+                ) : null}
+                {!isPending && !isError && posts.length > 0 ? posts.map((post, index) => (
+                    <div
                         key={post.id}
-                        {...post}
-                    />
-                )) : <p>No posts available.</p>}
+                        className="condensedPostWrapper"
+                        style={{ '--delay': `${Math.min(index, 6) * 150}ms` } as React.CSSProperties}
+                    >
+                        <ProfilePost
+                            {...post}
+                        />
+                    </div>
+                )) : null}
+                {!isPending && !isError && posts.length === 0 ? (
+                    <div className={styles.placeholder}>No posts available.</div>
+                ) : null}
             </div>
             <div className={styles.profilePageBottom}>
-                <span>end of posts.</span>
+                {!isPending && !isError && posts.length > 0 && (
+                    <span>end of posts.</span>
+                )}
             </div>
             <div>
                 <button onClick={handleSignOut}>Sign Out {session?.user?.email}</button>

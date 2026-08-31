@@ -9,7 +9,7 @@
   min-height: 0;
   height: calc(100vh - 4rem);
   padding: 4.5rem 2rem 1rem 2rem;
-  margin: 0 1rem;
+  margin: 0 0.5rem;
   border-radius: 2rem;
   background: var(--applebgColor);
   border: solid 1px var(--bgColorBorder);
@@ -59,7 +59,7 @@
   width: auto;
   height: auto;
   aspect-ratio: 1 / 1;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   box-shadow: #00000052 0px 4px 15px;
 }
 
@@ -117,7 +117,7 @@
 
 .trackArtist {
   font-size: 1rem;
-  color: var(--appleTextColor2);
+  color: var(--appleTextColor1);
   font-weight: 400;
 }
 
@@ -127,7 +127,7 @@
   align-items: center;
   justify-content: center;
   margin-top: 0.25rem;
-  color: var(--appleTextColor1);
+  color: var(--appleTextColor2);
 }
 
 .listenButtonIcon {
@@ -223,7 +223,7 @@
   align-items: flex-start;
   justify-content: center;
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .userInfoMetadata {
@@ -265,7 +265,7 @@
   line-height: 1.5rem;
   padding: 0.25rem 0.5rem;
   letter-spacing: -0.02em;
-  color: var(--appleTextColor1);
+  color: var(--appleTextColor2);
 }
 
 .badgeColorDot {

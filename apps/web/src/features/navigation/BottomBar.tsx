@@ -15,25 +15,25 @@ export default function BottomBar({ onOpenNewPostDrawer }: BottomBarProps) {
         <div className={styles.bottomBar}>
             <Link to="/">
                 <button>
-                    <img src={queueIcon} alt="Queue icon" style={{ width: '25px', height: '25px' }} />
+                    <img src={queueIcon} alt="Queue icon" style={{ width: '1.35rem', height: '1.35rem' }} />
                 </button>
             </Link>
             <Link to="/discover">
                 <button>
-                    <img src={discoverIcon} alt="Discover icon" style={{ width: '25px', height: '25px' }} />
+                    <img src={discoverIcon} alt="Discover icon" style={{ width: '1.35rem', height: '1.35rem' }} />
                 </button>
             </Link>
             <button onClick={onOpenNewPostDrawer}>
-                <img src={newPostIcon} alt="New Post icon" style={{ width: '25px', height: '25px' }} />
+                <img src={newPostIcon} alt="New Post icon" style={{ width: '1.35rem', height: '1.35rem' }} />
             </button>
             <Link to="/saved">
                 <button>
-                    <img src={savedIcon} alt="Saved icon" style={{ width: '25px', height: '25px' }} />
+                    <img src={savedIcon} alt="Saved icon" style={{ width: '1.35rem', height: '1.35rem' }} />
                 </button>
             </Link>
             <Link to="/profile">
                 <button>
-                    <img src={profileIcon} alt="Profile icon" style={{ width: '25px', height: '25px' }} />
+                    <img src={profileIcon} alt="Profile icon" style={{ width: '1.35rem', height: '1.35rem' }} />
                 </button>
             </Link>
         </div>

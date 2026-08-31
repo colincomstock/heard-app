@@ -1,9 +1,9 @@
 .glass-area {
   background: #ffffff;
   background: linear-gradient(10deg, rgba(136, 136, 136, 0.1) 0%, rgba(201, 201, 201, 0.1) 38%, rgba(126, 126, 126, 0.1) 100%);
-  box-shadow: inset 0px 0px 0.25rem #ffffff12;
+  box-shadow: inset 0px 0px 0.25rem #ffffff12, 0px 0px 1rem #00000010;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter:brightness(1.2);
+  backdrop-filter: brightness(1.3);
 }
 
 .glass-area-light-bg {
@@ -30,4 +30,38 @@
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.condensedPostWrapper {
+  width: 100%;
+  opacity: 0;
+  transform: translateY(-1rem);
+  filter: blur(0.125rem);
+  animation: condensed-post-enter 300ms ease-out forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes condensed-post-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.postWrapper {
+  width: 100%;
+  opacity: 1;
+
+  filter: blur(0.5rem);
+  animation: post-enter 300ms ease-out forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes post-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }

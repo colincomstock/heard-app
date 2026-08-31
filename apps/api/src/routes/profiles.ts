@@ -4,6 +4,8 @@ import { createSupabaseClient } from '../lib/supabase'
 import keysToCamelCase from '../lib/case'
 import type { TrackGenreRow } from '../types/db'
 
+// Endpoint to fetch a user's profile and their public posts by handle
+// Currently unused and needs to be updated to match structure of the /me route, but kept for future use
 export const ProfilesRoute = new Hono<{ Bindings: Bindings }>()
 
 ProfilesRoute.get('/:handle', async (c) => {
