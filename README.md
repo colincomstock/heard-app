@@ -18,11 +18,6 @@ The app is designed with 5 main sections for navigation:
 - saved
 - profile
 
-## Demo
-(Old demo behind main, to be replaced ASAP)
-
-https://github.com/user-attachments/assets/96dd5112-15dc-4151-8c64-0e0d59b9ec31
-
 ## Screenshots
 
 <table>
