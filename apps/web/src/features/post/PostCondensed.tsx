@@ -13,7 +13,7 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
 
     return (
         <div 
-            className={`${styles.profilePostBase} ${derivedColors.isLight ? styles.profilePostLight : styles.profilePostDark}`}
+            className={styles.profilePostBase}
             style={
                 {
                     ...post.style,
@@ -36,30 +36,23 @@ export default function ProfilePost(post: ProfilePostType & { style?: React.CSSP
                                 <ArrowUpRight size={20} className={styles.openPostIcon} />
                             </div>
                             <span className={`${styles.profilePostArtist} single-line-clamp`}>{post.track.artistName}</span>
+                            <div className={`${styles.postGenreContainer}`}>
+                                <span className={styles.postGenre}>
+                                    {post.track.genres.map((genre) => genre.name).join(', ')}
+                                </span>
+                            </div>
                         </div>
                         <div className={styles.profilePostInteractions}>
                             <div>
                                 <div>
-                                    <MessageCircleMore size={14} />
+                                    <MessageCircleMore size={12} />
                                     <span>{post.commentCount}</span>
                                 </div>
                                 <div>
-                                    {post.likedByMe ? <Heart fill={post.track.appleTextColor2} size={14} /> : <Heart size={14} /> }
+                                    {post.likedByMe ? <Heart fill={post.track.appleTextColor2} size={12} /> : <Heart size={12} /> }
                                     <span>{post.likeCount}</span>
                                 </div>
                             </div>
-                        </div>
-                        <div className={styles.postGenreBadges}>
-                            {post.track.genres.slice(0, 2).map((genre) => (
-                                <div
-                                key={genre.name}
-                                className={`${styles.indvBadge} ${derivedColors.isLight ? 'glass-area-light-bg' : 'glass-area'}`}
-                                style={{ '--badgeColor': genre.badgeColor } as React.CSSProperties}
-                                >
-                                    <span className={styles.badgeColorDot}>⬤ </span>
-                                    <span>{genre.name}</span>
-                                </div>
-                            ))}
                         </div>
                     </div>
                 </div>

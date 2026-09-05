@@ -29,7 +29,7 @@
 
 .profilePostCard {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 3fr;
   align-items: center;
   justify-content: flex-start;
   width: 100%;
@@ -47,7 +47,6 @@
   align-items: flex-start;
   width: 100%;
   height: 100%;
-  aspect-ratio: 2 / 1;
 }
 
 .profilePostInfo {
@@ -64,6 +63,20 @@
   cursor: pointer;
   margin-left: 0.25rem;
   flex-shrink: 0;
+}
+
+.albumCoverBase {
+  min-height: 0;
+  align-self: center;
+  width: auto;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 1rem;
+  box-shadow: #00000034 0px 0px 1rem;
+}
+
+.albumCoverDark {
+  border: 1px solid var(--bgColorBorder);
 }
 
 .profilePostTitleArtist {
@@ -97,6 +110,19 @@
   color: var(--appleTextColor1);
 }
 
+.postGenreContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.postGenre {
+  font-size: 0.75rem;
+  color: var(--appleTextColor2);
+  background-color: var(--badgeColor);
+  border-radius: 0.5rem;
+}
+
 .profilePostInteractions {
   display: flex;
   flex-direction: row;
@@ -121,44 +147,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
-  font-size: 0.875rem;
-}
-
-.indvBadge {
-  border-radius: 5rem;
-  font-weight: 500;
-  font-size: 0.825rem;
-  line-height: 1.5rem;
-  padding: 0.25rem 0.5rem;
-  letter-spacing: -0.02em;
-  color: var(--appleTextColor2);
-}
-
-.badgeColorDot {
-  color: var(--badgeColor);
-  text-shadow: 0 0 2px black;
-  padding: 0 4px 0 0;
-  font-size: 0.8rem;
-}
-
-.postGenreBadges {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-}
-
-.albumCoverBase {
-  min-height: 0;
-  align-self: center;
-  width: auto;
-  height: auto;
-  aspect-ratio: 1 / 1;
-  border-radius: 1rem;
-  box-shadow: #00000034 0px 0px 1rem;
-}
-
-.albumCoverDark {
-  border: 1px solid var(--bgColorBorder);
+  font-size: 0.75rem;
 }
 
 .userTextPost {
@@ -225,3 +214,4 @@
   width: 100%;
   font-size: 0.875rem;
 }
+
