@@ -15,9 +15,12 @@ export type TrackCore = {
   genres: Genre[];
 };
 
-export type TrackQueue = TrackCore & {
+export type TrackViewer = TrackCore & {
   appleMusicUrl: string;
   spotifyUrl: string | null;
   songPreviewUrl: string;
   releaseDate: string;
 };
+
+// Temporary type to maintain functionality while we refactor the track queue to use TrackViewer instead of TrackCore. This will be removed once the refactor is complete.
+export type TrackQueue = TrackViewer;
