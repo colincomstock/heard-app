@@ -7,6 +7,11 @@ import { searchAppleMusicTracksByQuery } from "../services/getAppleMusicResource
 import createUserPost from "../services/createUserPost";
 import { likePost, unlikePost } from "../services/updatePostLike";
 import createPostComment from "../services/createPostComment";
+import getPostComments from "../services/getPostComments";
+import validatePageSize from "../lib/validatePageSize";
+import keysToCamelCase from "../lib/case";
+import { parseCommentCursor, serializeCommentCursor } from "../lib/commentCursor";
+
 
 export const PostsRoute = new Hono<{ 
     Bindings: Bindings, 
@@ -186,6 +191,53 @@ PostsRoute.post("/:postId/add-comment", async (c) => {
         return c.json(
             {
                 error: error instanceof Error ? error.message : "Create comment failed",
+            },
+            500
+        );
+    }
+});
+
+// Endpoint to get comments for a post
+PostsRoute.get("/:postId/comments", async (c) => {
+    try {
+        const postId = c.req.param("postId");
+        if (!postId) {
+            return c.json({ error: "Missing postId" }, 400);
+        }
+
+        const userId = c.get("userId");
+        const supabase = createSupabaseClient(c.env);
+
+        const limit = validatePageSize(c.req.query("limit"), {
+            defaultSize: 10,
+            maxSize: 20,
+        });
+
+        const rawCursor = c.req.query("cursor");
+        
+        // Parse the comment cursor object for likeCount, createdAt, and id
+        const cursor = rawCursor ? parseCommentCursor(rawCursor) : null;
+
+        if (rawCursor && !cursor) {
+            return c.json({ error: "Invalid comment cursor" }, 400);
+        }
+
+        const commentsRes = await getPostComments({ supabase, userId, postId, limit, cursor });
+
+        return c.json(
+            keysToCamelCase({
+                ...commentsRes,
+                nextCursor: commentsRes.nextCursor
+                    ? serializeCommentCursor(commentsRes.nextCursor)
+                    : null,
+            })
+        );
+
+    } catch (error) {
+        console.error("Error fetching comments:", error);
+        return c.json(
+            {
+                error: error instanceof Error ? error.message : "Fetch comments failed",
             },
             500
         );
