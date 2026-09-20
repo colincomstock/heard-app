@@ -231,7 +231,6 @@ export default function Post(post: QueuePost) {
             </div>
             <CommentDrawer 
                 postId={post.id}
-                comments={post.comments}
                 commentsOpen={commentsOpen}
                 setCommentsOpen={setCommentsOpen}
                 incrementPostCommentCount={() => setCommentCount((count) => count + 1)}

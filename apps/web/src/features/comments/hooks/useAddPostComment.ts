@@ -19,6 +19,7 @@ export function useAddPostComment(postId: string) {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['queue', userId] });
             queryClient.invalidateQueries({ queryKey: ['me', userId] });
+            queryClient.invalidateQueries({ queryKey: ['postComments', postId] });
         },
         onError: (error) => {
             console.error("Error adding comment:", error);

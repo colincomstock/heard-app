@@ -104,6 +104,8 @@
 .userComments {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-height: 0;
     gap: 1.5rem;
     width: 100%;
     padding: 0.5rem 0.5rem;
@@ -124,4 +126,24 @@
         black calc(100% - 0.5rem),
         transparent 100%
     );
+}
+
+.commentPaginationStatus {
+    align-self: center;
+    color: #ffffffa9;
+    font-size: 0.875rem;
+    padding: 0.5rem 0 1rem;
+}
+
+.commentLoadMoreSentinel {
+    min-height: 1px;
+    width: 100%;
+}
+
+.commentRetryButton {
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ffffff4d;
+    border-radius: 0.375rem;
+    color: #ffffff;
+    font-size: 0.875rem;
 }

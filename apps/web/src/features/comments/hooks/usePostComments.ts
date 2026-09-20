@@ -15,7 +15,7 @@ export function usePostComments(
             if (!accessToken) {
                 throw new Error('Cannot fetch post comments without an access token');
             }
-            return getPostComments(postId, accessToken, {
+            return getPostComments(accessToken, postId, {
                 limit: 10,
                 cursor: pageParam,
             });
