@@ -1,4 +1,4 @@
-import styles from './SignIn.module.css';
+import styles from './Auth.module.css';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
@@ -8,7 +8,7 @@ import { ArrowRight, CircleAlert, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail }
 import queueIcon from '../../assets/queue-icon-4.png';
 import googleIcon from '../../assets/google-signin.svg';
 import appleIcon from '../../assets/apple-signin.svg';
-import SignInBackground from './SignInBackground';
+import AuthBackground from './AuthBackground';
 
 export default function SignIn() {
 
@@ -60,8 +60,8 @@ export default function SignIn() {
 
     return (
         <main className={styles.authPage}>
-            <SignInBackground />
-            <div className={styles.signIn}>
+            <AuthBackground />
+            <div className={styles.authContent}>
                 <div className={styles.brand} aria-label="Heard">
                     <img src={queueIcon} alt="" width={36} height={36} />
                     <span>heard</span>
@@ -142,7 +142,7 @@ export default function SignIn() {
                     </button>
                 </div>
             </div>
-            <div className={styles.signUp}>
+            <div className={styles.authFooter}>
                 <span>Don't have an account?</span>
                 <Link to='/signup'>Sign up</Link>
             </div>

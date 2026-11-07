@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import styles from './SignIn.module.css';
+import styles from './Auth.module.css';
 
 const vertexSource = `
     attribute vec2 a_position;
@@ -93,7 +93,7 @@ function compileShader(gl: WebGLRenderingContext, type: number, source: string) 
     return shader;
 }
 
-export default function SignInBackground() {
+export default function AuthBackground() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
