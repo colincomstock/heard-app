@@ -1,6 +1,12 @@
 import { useEffect, useRef } from 'react';
 import styles from './Auth.module.css';
 
+
+// Codex generated shader based on online inspiration. Shader runs at 30fps for performance and is disabled when motion is reduced or WebGL is unavailable.
+//  The shader is a simple procedural cloud effect with domain warping and static grain. It uses a vertex shader to pass through positions and a fragment 
+// shader to compute the color based on noise and time. The canvas is resized based on the bounding rectangle and device pixel ratio, with a cap on pixel 
+// count for performance.
+
 const vertexSource = `
     attribute vec2 a_position;
 
