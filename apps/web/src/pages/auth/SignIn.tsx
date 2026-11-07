@@ -8,6 +8,7 @@ import { ArrowRight, CircleAlert, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail }
 import queueIcon from '../../assets/queue-icon-4.png';
 import googleIcon from '../../assets/google-signin.svg';
 import appleIcon from '../../assets/apple-signin.svg';
+import SignInBackground from './SignInBackground';
 
 export default function SignIn() {
 
@@ -59,6 +60,7 @@ export default function SignIn() {
 
     return (
         <main className={styles.authPage}>
+            <SignInBackground />
             <div className={styles.signIn}>
                 <div className={styles.brand} aria-label="Heard">
                     <img src={queueIcon} alt="" width={36} height={36} />
