@@ -4,6 +4,7 @@ import { AppChromeContext, defaultHeader, type HeaderConfig } from './AppChromeC
 // The AppChromeProvider component provides the AppChromeContext to its children, allowing them to access and modify the app's header configuration.
 export function AppChromeProvider({ children }: { children: ReactNode }) {
     const [header, setHeaderState] = useState<HeaderConfig>(defaultHeader);
+    const [bottomBarVisible, setBottomBarVisible] = useState<boolean>(true);
 
     // Function to set the header configuration, limiting the right actions to a maximum of 2
     const setHeader = useCallback((nextHeader: HeaderConfig) => {
@@ -24,8 +25,10 @@ export function AppChromeProvider({ children }: { children: ReactNode }) {
             header,
             setHeader,
             resetHeader,
+            bottomBarVisible,
+            setBottomBarVisible,
         }),
-        [header, setHeader, resetHeader]
+        [header, setHeader, resetHeader, bottomBarVisible, setBottomBarVisible]
     );
 
     return (

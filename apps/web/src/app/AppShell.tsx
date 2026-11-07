@@ -20,7 +20,7 @@ export default function App() {
     setIsNewPostDrawerOpen(false)
   }
 
-  const { header } = useAppChrome()
+  const { header, bottomBarVisible } = useAppChrome()
 
   return (
     <>
@@ -28,7 +28,9 @@ export default function App() {
       <div className={`${styles.mainContainer} hide-scrollbar`}>
         <Outlet />
       </div>
-      <BottomBar onOpenNewPostDrawer={openNewPostDrawer} />
+      {bottomBarVisible && (
+        <BottomBar onOpenNewPostDrawer={openNewPostDrawer} />
+      )}
 
       <Drawer 
         open={isNewPostDrawerOpen} 

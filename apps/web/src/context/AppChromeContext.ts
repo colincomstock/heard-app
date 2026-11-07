@@ -24,6 +24,8 @@ export type AppChromeContextValue = {
     header: HeaderConfig;
     setHeader: (header: HeaderConfig) => void;
     resetHeader: () => void;
+    bottomBarVisible: boolean;
+    setBottomBarVisible: (visible: boolean) => void;
 };
 
 export const defaultHeader: HeaderConfig = {
