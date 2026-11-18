@@ -2,7 +2,13 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "heard-api",
   "main": "src/index.ts",
-  "compatibility_date": "2026-06-08"
+  "compatibility_date": "2026-06-08",
+  "r2_buckets": [
+    {
+        "binding": "PFPS",
+        "bucket_name": "heard-pfps"
+    }
+  ]
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],

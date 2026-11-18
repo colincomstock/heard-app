@@ -19,6 +19,6 @@
     
     "check": "npm run build:web && npm run lint:web && npm run typecheck:api && npm run lint:api",
 
-    "db:types": "supabase gen types typescript --project-id pmbnzbpxcghgdkevhtxw --schema public > apps/api/src/types/database.types.ts"
+    "db:types": "node scripts/generate-database-types.mjs"
   }
 }

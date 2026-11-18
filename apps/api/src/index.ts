@@ -8,6 +8,7 @@ import { MeRoute } from './routes/me'
 import { PostsRoute } from './routes/posts'
 import { QueueRoute } from './routes/queue'
 import { CommentsRoute } from './routes/comments'
+import { AvatarPreviewRoute, AvatarUploadRoute } from './routes/avatars'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -26,9 +27,13 @@ app.get('/', (c) => {
 
 app.route('/health', HealthRoute);
 
+app.route('/avatars/test', AvatarPreviewRoute);
+
 app.use('*', requireAuth);
 
 app.route('/profile', ProfilesRoute);
+
+app.route('/me/avatar', AvatarUploadRoute);
 
 app.route('/me', MeRoute);
 
