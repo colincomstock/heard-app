@@ -19,5 +19,6 @@ export const requireAuth = createMiddleware<{ Bindings: Bindings, Variables: Aut
     }
 
     c.set('userId', user.id);
+    c.set('supabase', supabase);
     return next();
 });

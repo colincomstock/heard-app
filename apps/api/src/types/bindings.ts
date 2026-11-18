@@ -1,3 +1,5 @@
+import type { createSupabaseClientWithAuth } from '../lib/supabase';
+
 export type Bindings = {
     PFPS: {
         get(key: string): Promise<{ body: ReadableStream<Uint8Array> } | null>;
@@ -22,4 +24,5 @@ export type Bindings = {
 
 export type AuthVariables = {
     userId: string;
+    supabase: ReturnType<typeof createSupabaseClientWithAuth>;
 };
